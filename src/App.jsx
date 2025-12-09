@@ -9,7 +9,7 @@ function App() {
   return (
     <>
       <h1 className="text-2xl">Prism Dashboard</h1>
-      <Button variant={"outline"}>Enter</Button>
+      <Button variant={"destructive"}>Enter</Button>
     </>
   );
 }
