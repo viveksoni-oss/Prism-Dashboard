@@ -1,16 +1,20 @@
-import { useState } from "react";
-
-import "./App.css";
-import { Button } from "./components/ui/button";
+import { ThemeProvider } from "./components/Theme-Provider";
+import NavBar from "./components/NavBar";
+import Home from "./Pages/Home";
+import Dashboard from "./Pages/Dashboard";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <h1 className="text-2xl">Prism Dashboard</h1>
-      <Button variant={"destructive"}>Enter</Button>
-    </>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <NavBar></NavBar>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="dashboard">
+          <Route path="*" element={<Dashboard />} />
+        </Route>
+      </Routes>
+    </ThemeProvider>
   );
 }
 
