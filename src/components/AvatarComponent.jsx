@@ -1,5 +1,11 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import React from "react";
+import { LogOut, User } from "lucide-react";
+import { Link , useNavigate } from "react-router-dom";
+import { useAuth } from "@/components/login/AuthContext"; 
+
+
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,9 +14,15 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { LogOut, User } from "lucide-react";
-import { Link } from "react-router-dom";
+
 function AvatarComponent() {
+  const { logout } = useAuth();
+const navigate = useNavigate();
+
+const handleLogout = () => {
+  logout();             // removes localStorage + updates context
+  navigate("/login");   // redirect
+};
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -27,11 +39,10 @@ function AvatarComponent() {
           Profile
         </DropdownMenuItem>
 
-        <DropdownMenuItem variant="destructive" asChild>
-          <Link to="/login">
-            <LogOut /> Log Out
-          </Link>
+        <DropdownMenuItem onClick={handleLogout}>
+          <LogOut /> Log Out
         </DropdownMenuItem>
+
       </DropdownMenuContent>
     </DropdownMenu>
   );

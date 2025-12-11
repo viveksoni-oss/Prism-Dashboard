@@ -7,24 +7,45 @@ import Login from "./Pages/LogIn";
 import { Toaster } from "react-hot-toast";
 import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
 import SidebarComponents from "./components/SidebarComponents";
+import { AuthProvider } from "./components/login/AuthContext.jsx";
+import ProtectedRoute from "./components/login/ProtectedRoute.jsx";
+
 function App() {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <SidebarProvider>
-        <SidebarComponents></SidebarComponents>
-        <main className="w-full">
-          <NavBar></NavBar>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Home />} />
+    <AuthProvider>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <SidebarProvider>
+          <ProtectedRoute>
+            <SidebarComponents></SidebarComponents>
+          </ProtectedRoute>
+          <main className="w-full">
+            <NavBar></NavBar>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <Home />
+                  </ProtectedRoute>
+                }
+              ></Route>
 
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Routes>
-        </main>
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </main>
 
-        <Toaster></Toaster>
-      </SidebarProvider>
-    </ThemeProvider>
+          <Toaster></Toaster>
+        </SidebarProvider>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 
