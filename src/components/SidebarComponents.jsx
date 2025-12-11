@@ -9,6 +9,7 @@ import {
   Plus,
   Projector,
   ChevronDown,
+  LayoutDashboard,
 } from "lucide-react";
 import {
   Sidebar,
@@ -53,9 +54,9 @@ const items = [
     icon: Inbox,
   },
   {
-    title: "Calendar",
-    url: "#",
-    icon: Calendar,
+    title: "Dashboard",
+    url: "/dashboard",
+    icon: LayoutDashboard,
   },
   {
     title: "Search",
@@ -75,7 +76,7 @@ export function SidebarComponents() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
-              <Link href="/">
+              <Link to="/">
                 <img
                   src="https://github.com/shadcn.png"
                   alt=""
@@ -98,7 +99,7 @@ export function SidebarComponents() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
-                    <Link href={item.url}>
+                    <Link to={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
                     </Link>
