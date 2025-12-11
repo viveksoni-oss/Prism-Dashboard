@@ -1,4 +1,7 @@
+// LoginCard.jsx (fixed)
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,29 +13,38 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+
+import { useAuth } from "./AuthContext"; // adjust path if needed
 
 export function LoginCard() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const allowedEmails = ["Krishlay@iitkfirst.com", "vikve@iitk.com"];
+  // make allowedEmails lowercase to allow case-insensitive match
+  const allowedEmails = ["krishlay@iitkfirst.com", "vikve@iitk.com"];
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // optional: ignore case + spaces
-    const trimmedEmail = email.trim();
 
-    if (!allowedEmails.includes(trimmedEmail)) {
-      setError(" User not found");
+    const trimmedEmail = email.trim();
+    if (!trimmedEmail) {
+      setError("Please enter an email");
+      return;
+    }
+
+    // compare lowercased for case-insensitive match
+    if (!allowedEmails.includes(trimmedEmail.toLowerCase())) {
+      setError("User not found");
       return;
     }
 
     setError("");
-    // alert("Login successful!");
-    toast("Login successfull");
+    // IMPORTANT: call login so AuthProvider updates state + localStorage
+    login(trimmedEmail);
+
+    toast.success("Login successful");
     navigate("/dashboard");
   };
 
@@ -71,7 +83,6 @@ export function LoginCard() {
 
           {error && <p className="text-red-600 text-sm text-center">{error}</p>}
 
-          {/* ✅ Button now inside the form */}
           <CardFooter className="flex-col gap-2 p-0">
             <Button type="submit" className="w-full">
               Login
