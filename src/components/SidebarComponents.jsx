@@ -10,6 +10,7 @@ import {
   Projector,
   ChevronDown,
   LayoutDashboard,
+  Map,
 } from "lucide-react";
 import {
   Sidebar,
@@ -40,7 +41,7 @@ import {
   CollapsibleContent,
   CollapsibleTrigger,
 } from "./ui/collapsible";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 
 const items = [
   {
@@ -49,8 +50,8 @@ const items = [
     icon: Home,
   },
   {
-    title: "Inbox",
-    url: "#",
+    title: "Total Application",
+    url: "",
     icon: Inbox,
   },
   {
@@ -58,10 +59,26 @@ const items = [
     url: "/dashboard",
     icon: LayoutDashboard,
   },
+
   {
-    title: "Search",
+    title: "Geographical Snapshot",
+    url: "/dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    title: "Tocic’s Centre Details",
+    url: "/Tocic-center",
+    icon: LayoutDashboard,
+  },
+  {
+    title: "Start-up/Innovator Details",
+    url: "/dashboard",
+    icon: LayoutDashboard,
+  },
+  {
+    title: "Total Grants Sanctioned",
     url: "#",
-    icon: Search,
+    icon: Map,
   },
   {
     title: "Settings",
