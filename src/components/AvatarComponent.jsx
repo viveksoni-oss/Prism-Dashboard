@@ -27,7 +27,7 @@ function AvatarComponent() {
           Profile
         </DropdownMenuItem>
 
-        <DropdownMenuItem asChild>
+        <DropdownMenuItem variant="destructive" asChild>
           <Link to="/login">
             <LogOut /> Log Out
           </Link>

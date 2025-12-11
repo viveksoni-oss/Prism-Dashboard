@@ -9,18 +9,16 @@ import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
 import SidebarComponents from "./components/SidebarComponents";
 function App() {
   return (
-  
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <SidebarProvider>
         <SidebarComponents></SidebarComponents>
         <main className="w-full">
-          <NavBar ></NavBar>
+          <NavBar></NavBar>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/" element={<Home />} />
-            <Route path="dashboard">
-              <Route path="*" element={<Dashboard />} />
-            </Route>
+
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </main>
 
