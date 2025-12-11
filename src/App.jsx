@@ -9,6 +9,7 @@ import { SidebarProvider, SidebarTrigger } from "./components/ui/sidebar";
 import SidebarComponents from "./components/SidebarComponents";
 import { AuthProvider } from "./components/login/AuthContext.jsx";
 import ProtectedRoute from "./components/login/ProtectedRoute.jsx";
+import TocicDetails from "./Pages/Tocic-center";
 
 function App() {
   return (
@@ -36,6 +37,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/tocic-center"
+                element={
+                  <ProtectedRoute>
+                    <TocicDetails />
                   </ProtectedRoute>
                 }
               />

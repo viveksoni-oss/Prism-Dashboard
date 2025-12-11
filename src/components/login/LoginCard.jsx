@@ -23,7 +23,7 @@ export function LoginCard() {
   const { login } = useAuth();
 
   // make allowedEmails lowercase to allow case-insensitive match
-  const allowedEmails = ["krishlay@iitkfirst.com", "vikve@iitk.com"];
+  const allowedEmails = ["krishlay@tocic.com", "vivek@dsir.com"];
 
   const handleSubmit = (e) => {
     e.preventDefault();

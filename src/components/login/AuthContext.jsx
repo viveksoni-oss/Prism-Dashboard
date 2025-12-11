@@ -14,6 +14,12 @@ export function AuthProvider({ children }) {
   const login = (userEmail) => {
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("email", userEmail);
+    if(userEmail==="vivek@dsir.com"){
+      localStorage.setItem("type","DSIR")
+    }
+    if(userEmail === "krishlay@tocic.com"){
+      localStorage.setItem("type","TOCIC")
+    }
     setIsLoggedIn(true);
     setEmail(userEmail);
   };
@@ -21,6 +27,7 @@ export function AuthProvider({ children }) {
   const logout = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("email");
+    localStorage.removeItem("type");
     setIsLoggedIn(false);
     setEmail(null);
   };
