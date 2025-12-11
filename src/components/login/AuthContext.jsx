@@ -1,0 +1,36 @@
+// src/components/login/AuthContext.jsx
+import { createContext, useContext, useState } from "react";
+
+const AuthContext = createContext();
+
+export function AuthProvider({ children }) {
+  // read from localStorage synchronously at init
+  const [isLoggedIn, setIsLoggedIn] = useState(() => {
+    return localStorage.getItem("isLoggedIn") === "true";
+  });
+  const [email, setEmail] = useState(() => {
+    return localStorage.getItem("email") || null;
+  });
+
+  const login = (userEmail) => {
+    localStorage.setItem("isLoggedIn", "true");
+    localStorage.setItem("email", userEmail);
+    setIsLoggedIn(true);
+    setEmail(userEmail);
+  };
+
+  const logout = () => {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("email");
+    setIsLoggedIn(false);
+    setEmail(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ isLoggedIn, email, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export const useAuth = () => useContext(AuthContext);

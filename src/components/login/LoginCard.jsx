@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -10,13 +12,14 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
+
+import { useAuth } from "./AuthContext" // adjust path if needed
 
 export function LoginCard() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const navigate=useNavigate()
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const allowedEmails = [
     "Krishlay@iitkfirst.com",
@@ -26,19 +29,19 @@ export function LoginCard() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // optional: ignore case + spaces
-    const trimmedEmail = email.trim();
-
-    if (!allowedEmails.includes(trimmedEmail)) {
-      setError(" User not found");
+    // Direct comparison — no trim(), no toLowerCase()
+    if (!allowedEmails.includes(email)) {
+      setError("User not found");
       return;
     }
 
     setError("");
-    // alert("Login successful!");
-    toast("Login successfull")
-    navigate("/")
 
+    // Use context login which also persists to localStorage
+    login(email);
+
+    toast("Login successful");
+    navigate("/");
   };
 
   return (
@@ -74,11 +77,8 @@ export function LoginCard() {
             <Input id="password" type="password" required />
           </div>
 
-          {error && (
-            <p className="text-red-600 text-sm text-center">{error}</p>
-          )}
+          {error && <p className="text-red-600 text-sm text-center">{error}</p>}
 
-          {/* ✅ Button now inside the form */}
           <CardFooter className="flex-col gap-2 p-0">
             <Button type="submit" className="w-full">
               Login

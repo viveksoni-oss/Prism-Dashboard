@@ -5,19 +5,42 @@ import Dashboard from "./Pages/Dashboard";
 import { Route, Routes } from "react-router-dom";
 import Login from "./Pages/LogIn";
 import { Toaster } from "react-hot-toast";
+import { AuthProvider } from "./components/login/AuthContext.jsx";
+import ProtectedRoute from "./components/login/ProtectedRoute.jsx";
+
 function App() {
   return (
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <NavBar></NavBar>
-      <Routes>
-        <Route path="/login" element={<Login/>} />
-        <Route path="/" element={<Home />} />
-        <Route path="dashboard">
-          <Route path="*" element={<Dashboard />} />
-        </Route>
-      </Routes>
-      <Toaster></Toaster>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <NavBar />
+
+        <Routes>
+          <Route path="/login" element={<Login />} />
+
+          {/* Protect Home */}
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            }
+          />
+
+          {/* Protect Dashboard */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+
+        <Toaster />
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 
