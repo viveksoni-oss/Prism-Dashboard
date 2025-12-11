@@ -7,7 +7,7 @@ import ProtectedRoute from "./login/ProtectedRoute";
 
 function NavBar() {
   return (
-    <nav className="p-4 border-b shadow-md mb-2 flex items-center justify-between">
+    <nav className="sticky z-30 top-0 p-4 border-b shadow-md mb-2 flex items-center justify-between">
       <div>
         <ProtectedRoute><SidebarTrigger /></ProtectedRoute>
       </div>
