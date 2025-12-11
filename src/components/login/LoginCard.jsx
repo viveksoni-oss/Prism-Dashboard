@@ -21,27 +21,24 @@ export function LoginCard() {
   const navigate = useNavigate();
   const { login } = useAuth();
 
-  const allowedEmails = [
-    "Krishlay@iitkfirst.com",
-    "vikve@iitk.com",
-  ];
+  const allowedEmails = ["Krishlay@iitkfirst.com", "vikve@iitk.com"];
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Direct comparison — no trim(), no toLowerCase()
-    if (!allowedEmails.includes(email)) {
-      setError("User not found");
+    // optional: ignore case + spaces
+    const trimmedEmail = email.trim();
+
+    if (!allowedEmails.includes(trimmedEmail)) {
+      setError(" User not found");
       return;
     }
 
     setError("");
+    // alert("Login successful!");
+    toast("Login successfull")
+    navigate("/")
 
-    // Use context login which also persists to localStorage
-    login(email);
-
-    toast("Login successful");
-    navigate("/");
   };
 
   return (
