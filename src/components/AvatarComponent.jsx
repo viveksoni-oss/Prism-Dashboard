@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { LogOut, User } from "lucide-react";
+import { Link } from "react-router-dom";
 function AvatarComponent() {
   return (
     <DropdownMenu>
@@ -26,8 +27,10 @@ function AvatarComponent() {
           Profile
         </DropdownMenuItem>
 
-        <DropdownMenuItem>
-          <LogOut /> Log Out
+        <DropdownMenuItem asChild>
+          <Link to="/login">
+            <LogOut /> Log Out
+          </Link>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -5,7 +5,7 @@ import { ModeToggle } from "./ThemeButton";
 
 function NavBar() {
   return (
-    <nav className="p-4  flex items-center justify-between">
+    <nav className="p-4 border-b shadow-md mb-2 flex items-center justify-between">
       <div>collapaseButton</div>
 
       <div className="flex items-center gap-4">
