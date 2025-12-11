@@ -12,24 +12,40 @@ import ProtectedRoute from "./components/login/ProtectedRoute.jsx";
 
 function App() {
   return (
-  
-    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <SidebarProvider>
-        <SidebarComponents></SidebarComponents>
-        <main className="w-full">
-          <NavBar ></NavBar>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/" element={<Home />} />
-            <Route path="dashboard">
-              <Route path="*" element={<Dashboard />} />
-            </Route>
-          </Routes>
-        </main>
+    <AuthProvider>
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+        <SidebarProvider>
+          <ProtectedRoute>
+            <SidebarComponents></SidebarComponents>
+          </ProtectedRoute>
+          <main className="w-full">
+            <NavBar></NavBar>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/"
+                element={
+                  <ProtectedRoute>
+                    <Home />
+                  </ProtectedRoute>
+                }
+              ></Route>
 
-        <Toaster></Toaster>
-      </SidebarProvider>
-    </ThemeProvider>
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </main>
+
+          <Toaster></Toaster>
+        </SidebarProvider>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 
