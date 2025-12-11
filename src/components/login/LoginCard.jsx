@@ -16,16 +16,12 @@ import toast from "react-hot-toast";
 export function LoginCard() {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
-  const allowedEmails = [
-    "Krishlay@iitkfirst.com",
-    "vikve@iitk.com",
-  ];
+  const allowedEmails = ["Krishlay@iitkfirst.com", "vikve@iitk.com"];
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     // optional: ignore case + spaces
     const trimmedEmail = email.trim();
 
@@ -36,9 +32,8 @@ export function LoginCard() {
 
     setError("");
     // alert("Login successful!");
-    toast("Login successfull")
-    navigate("/")
-
+    toast("Login successfull");
+    navigate("/dashboard");
   };
 
   return (
@@ -74,9 +69,7 @@ export function LoginCard() {
             <Input id="password" type="password" required />
           </div>
 
-          {error && (
-            <p className="text-red-600 text-sm text-center">{error}</p>
-          )}
+          {error && <p className="text-red-600 text-sm text-center">{error}</p>}
 
           {/* ✅ Button now inside the form */}
           <CardFooter className="flex-col gap-2 p-0">
