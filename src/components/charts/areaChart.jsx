@@ -4,14 +4,8 @@ import {
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
-  } from "@/components/ui/chart";
-import {
-  Area,
-  AreaChart,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-} from "recharts";
+} from "@/components/ui/chart";
+import { Area, AreaChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 const chartConfig = {
   desktop: {
@@ -22,7 +16,7 @@ const chartConfig = {
     label: "Mobile",
     color: "var(--chart-1)",
   },
-} 
+};
 
 const chartData = [
   { month: "January", desktop: 186, mobile: 80 },
@@ -37,7 +31,7 @@ const AppAreaChart = () => {
   return (
     <div className="">
       <h1 className="text-lg font-medium mb-6">Total Visitors</h1>
-      <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
+      <ChartContainer config={chartConfig} className=" w-full">
         <AreaChart accessibilityLayer data={chartData}>
           <CartesianGrid vertical={false} />
           <XAxis

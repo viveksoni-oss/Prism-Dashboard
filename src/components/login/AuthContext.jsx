@@ -5,7 +5,7 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   // read localStorage synchronously at initialization
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    return localStorage.getItem("isLoggedIn") === "true";
+    return localStorage.getItem("isLoggedIn") ? true : false;
   });
   const [email, setEmail] = useState(() => {
     return localStorage.getItem("email") || null;
@@ -14,11 +14,11 @@ export function AuthProvider({ children }) {
   const login = (userEmail) => {
     localStorage.setItem("isLoggedIn", "true");
     localStorage.setItem("email", userEmail);
-    if(userEmail==="vivek@dsir.com"){
-      localStorage.setItem("type","DSIR")
+    if (userEmail === "vivek@dsir.com") {
+      localStorage.setItem("type", "DSIR");
     }
-    if(userEmail === "krishlay@tocic.com"){
-      localStorage.setItem("type","TOCIC")
+    if (userEmail === "krishlay@tocic.com") {
+      localStorage.setItem("type", "TOCIC");
     }
     setIsLoggedIn(true);
     setEmail(userEmail);
@@ -39,4 +39,4 @@ export function AuthProvider({ children }) {
   );
 }
 
-export const  useAuth = () => useContext(AuthContext);
+export const useAuth = () => useContext(AuthContext);
