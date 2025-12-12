@@ -9,9 +9,7 @@ import { AuthProvider } from "./components/login/AuthContext.jsx"; // <-- import
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <StrictMode>
-      <AuthProvider>
         <App />
-      </AuthProvider>
     </StrictMode>
   </BrowserRouter>
 );

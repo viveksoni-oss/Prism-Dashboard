@@ -1,6 +1,7 @@
 import React from "react";
 import { TableDemo } from "./TocicTabularData";
 
+
 function TocicDetails() {
   return (
     <>
