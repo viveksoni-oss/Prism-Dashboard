@@ -26,9 +26,8 @@ function NavBar() {
   return (
     <nav className="sticky top-0 z-30 p-4 border-b shadow-md mb-2 flex items-center bg-white dark:bg-background justify-between">
       <div className="flex items-center gap-3">
-        <ProtectedRoute>
-          <SidebarTrigger />
-        </ProtectedRoute>
+        <SidebarTrigger />
+
         <Button
           variant="ghost"
           size="sm"

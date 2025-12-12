@@ -8,36 +8,20 @@ import {
   CardDescription,
   CardContent,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import AppPieChart from "@/components/charts/pieChart";
 import { ChartBarMultiple } from "@/components/charts/barChart";
 import AppAreaChart from "@/components/charts/areaChart";
 
-const SIDEBAR_ITEMS = [
-  { label: "Dashboard", active: true },
-  { label: "Programs" },
-  { label: "Startups" },
-  { label: "Reports" },
-  { label: "Settings" },
-];
-
 function DashboardPage() {
-  const [dashboardType, setDashboardType] = useState("DSIR"); // "DSIR" | "TOCIC"
+  const [dashboardType, setDashboardType] = useState("DSIR");
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const storedType = window.localStorage.getItem("type"); // DSIR / TOCIC
+    const storedType = window.localStorage.getItem("type");
     if (storedType === "DSIR" || storedType === "TOCIC") {
       setDashboardType(storedType);
     }
   }, []);
-
-  const handleSwitch = (type) => {
-    setDashboardType(type);
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem("type", type);
-    }
-  };
 
   const heading =
     dashboardType === "DSIR"
@@ -51,13 +35,7 @@ function DashboardPage() {
 
   return (
     <div className="min-h-screen flex bg-slate-950 text-slate-50">
-      {/* Sidebar */}
-
-      {/* Main area */}
       <main className="flex-1 flex flex-col">
-        {/* Top header */}
-
-        {/* Content */}
         <section className="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
           {/* Page heading + filters */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -92,7 +70,7 @@ function DashboardPage() {
   );
 }
 
-/* ----------------- DSIR DASHBOARD ----------------- */
+/* -------- DSIR DASHBOARD -------- */
 
 function DsirDashboard() {
   const summary = [
@@ -127,21 +105,9 @@ function DsirDashboard() {
   ];
 
   const upcomingReviews = [
-    {
-      title: "Cohort‑3 review panel",
-      date: "18 Dec",
-      type: "Pitch",
-    },
-    {
-      title: "Disbursement committee",
-      date: "22 Dec",
-      type: "Finance",
-    },
-    {
-      title: "IP review for short‑listed",
-      date: "28 Dec",
-      type: "Legal",
-    },
+    { title: "Cohort‑3 review panel", date: "18 Dec", type: "Pitch" },
+    { title: "Disbursement committee", date: "22 Dec", type: "Finance" },
+    { title: "IP review for short‑listed", date: "28 Dec", type: "Legal" },
   ];
 
   return (
@@ -171,36 +137,34 @@ function DsirDashboard() {
         ))}
       </div>
 
-      {/* Charts row */}
+      {/* Charts row: 3 columns (Pie | Bar | Area) */}
       <div className="grid grid-cols-12 gap-4 md:gap-6">
-        <Card className="col-span-12 lg:col-span-4">
+        <Card className="col-span-12 lg:col-span-3">
           <CardHeader>
             <CardTitle className="text-base">Projects by Stage</CardTitle>
             <CardDescription>
-              Idea, Prototype, Commercialization, Scale‑up.
+              Idea, Prototype, Commercialization.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="h-64">
             <AppPieChart />
           </CardContent>
         </Card>
-        <div className="col-span-8">
+
+        <div className="col-span-6">
           <ChartBarMultiple />
         </div>
-      </div>
 
-      {/* Area chart full width */}
-      <Card className="mt-2 col-span-4 ">
-        <CardHeader>
-          <CardTitle className="text-base">Disbursement Timeline</CardTitle>
-          <CardDescription>
-            Quarterly grant disbursement trend (dummy).
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <AppAreaChart />
-        </CardContent>
-      </Card>
+        <Card className="col-span-12 lg:col-span-3">
+          <CardHeader>
+            <CardTitle className="text-base">Disbursement Trend</CardTitle>
+            <CardDescription>Compact FY overview.</CardDescription>
+          </CardHeader>
+          <CardContent className="h-40">
+            <AppAreaChart />
+          </CardContent>
+        </Card>
+      </div>
 
       {/* Table + activity */}
       <div className="grid grid-cols-12 gap-4 md:gap-6 mt-2">
@@ -271,7 +235,7 @@ function DsirDashboard() {
   );
 }
 
-/* ----------------- TOCIC DASHBOARD ----------------- */
+/* -------- TOCIC DASHBOARD (Identical Layout) -------- */
 
 function TocicDashboard() {
   const summary = [
@@ -338,9 +302,9 @@ function TocicDashboard() {
         ))}
       </div>
 
-      {/* Charts row */}
+      {/* Charts row: 3 columns (Pie | Bar | Area) */}
       <div className="grid grid-cols-12 gap-4 md:gap-6">
-        <Card className="col-span-12 lg:col-span-4">
+        <Card className="col-span-12 lg:col-span-3">
           <CardHeader>
             <CardTitle className="text-base">Domain Mix</CardTitle>
             <CardDescription>
@@ -351,30 +315,20 @@ function TocicDashboard() {
             <AppPieChart />
           </CardContent>
         </Card>
+        <div className="col-span-6">
+          <ChartBarMultiple />
+        </div>
 
-        <Card className="col-span-12 lg:col-span-8">
+        <Card className="col-span-12 lg:col-span-3">
           <CardHeader>
-            <CardTitle className="text-base">Cohort Funding Raised</CardTitle>
-            <CardDescription>Dummy cohort‑wise bar chart.</CardDescription>
+            <CardTitle className="text-base">Application Pipeline</CardTitle>
+            <CardDescription>Compact trend view.</CardDescription>
           </CardHeader>
-          <CardContent className="h-72">
-            <ChartBarMultiple />
+          <CardContent className="h-40">
+            <AppAreaChart />
           </CardContent>
         </Card>
       </div>
-
-      {/* Area chart */}
-      <Card className="mt-2">
-        <CardHeader>
-          <CardTitle className="text-base">Application Pipeline</CardTitle>
-          <CardDescription>
-            Monthly applications vs onboarded startups.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="h-80">
-          <AppAreaChart />
-        </CardContent>
-      </Card>
 
       {/* Table + events */}
       <div className="grid grid-cols-12 gap-4 md:gap-6 mt-2">

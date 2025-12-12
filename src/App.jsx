@@ -1,6 +1,6 @@
 import { ThemeProvider } from "./components/Theme-Provider";
 import NavBar from "./components/NavBar";
-import Home from "./Pages/Website/Home";
+import Home from "./Pages/Home/index";
 import Dashboard from "./Pages/Dashboard";
 import { Route, Routes } from "react-router-dom";
 import Login from "./Pages/LogIn";
@@ -11,8 +11,7 @@ import { AuthProvider, useAuth } from "./components/login/AuthContext.jsx";
 import ProtectedRoute from "./components/login/ProtectedRoute.jsx";
 import TocicDetails from "./Pages/Tocic-center";
 
-function AppContent() {
-  const { isLoggedIn } = useAuth(); // 👈 IMPORTANT
+function App() {
 
   return (
     <AuthProvider>
@@ -21,9 +20,8 @@ function AppContent() {
           {/* Sidebar + content side by side */}
           <div className="flex min-h-screen w-full bg-background">
             {/* LEFT: sidebar */}
-            <ProtectedRoute>
-              <SidebarComponents />
-            </ProtectedRoute>
+
+            {<SidebarComponents />}
 
             {/* RIGHT: navbar + routes, inset by sidebar */}
             <SidebarInset className="flex flex-1 flex-col">
@@ -32,14 +30,7 @@ function AppContent() {
               <main className="flex-1 w-full">
                 <Routes>
                   <Route path="/login" element={<Login />} />
-                  <Route
-                    path="/"
-                    element={
-                      <ProtectedRoute>
-                        <Home />
-                      </ProtectedRoute>
-                    }
-                  />
+                  <Route path="/" element={<Home />} />
                   <Route
                     path="/dashboard"
                     element={
