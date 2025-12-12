@@ -1,17 +1,19 @@
 import { ThemeProvider } from "./components/Theme-Provider";
 import NavBar from "./components/NavBar";
-import Home from "./Pages/Home";
+import Home from "./Pages/Website/Home";
 import Dashboard from "./Pages/Dashboard";
 import { Route, Routes } from "react-router-dom";
 import Login from "./Pages/LogIn";
 import { Toaster } from "react-hot-toast";
 import { SidebarInset, SidebarProvider } from "./components/ui/sidebar";
 import SidebarComponents from "./components/SidebarComponents";
-import { AuthProvider } from "./components/login/AuthContext.jsx";
+import { AuthProvider, useAuth } from "./components/login/AuthContext.jsx";
 import ProtectedRoute from "./components/login/ProtectedRoute.jsx";
 import TocicDetails from "./Pages/Tocic-center";
 
-function App() {
+function AppContent() {
+  const { isLoggedIn } = useAuth(); // 👈 IMPORTANT
+
   return (
     <AuthProvider>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">

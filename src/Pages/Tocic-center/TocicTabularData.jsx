@@ -81,7 +81,7 @@ const invoices = [
 export function TableDemo() {
   return (
     <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
+      <TableCaption>All TOCIC CENTER</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">TOCIC CENTER</TableHead>
@@ -100,12 +100,12 @@ export function TableDemo() {
           </TableRow>
         ))}
       </TableBody>
-      <TableFooter>
+      {/* <TableFooter>
         <TableRow>
           <TableCell colSpan={3}>Total</TableCell>
           <TableCell className="text-right">$2,500.00</TableCell>
         </TableRow>
-      </TableFooter>
+      </TableFooter> */}
     </Table>
   )
 }
