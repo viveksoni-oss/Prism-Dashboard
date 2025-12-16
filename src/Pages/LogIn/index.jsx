@@ -4,11 +4,11 @@ import React from "react";
 
 function Login() {
   return (
-    <div className="min-h-screen flex justify-center items-center -mt-10 relative">
+    <div className="min-h-screen flex justify-center items-center relative">
       {" "}
       <div
         className="absolute inset-0 min-h-screen"
-        style={{ width: "100%", height: "400px", position: "relative" }}
+        style={{ width: "100%", height: "600px", position: "relative" }}
       >
         <Prism
           animationType="rotate"

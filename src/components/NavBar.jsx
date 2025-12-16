@@ -39,22 +39,7 @@ function NavBar() {
 
       <div className="flex items-center gap-4">
         {/* DSIR / TOCIC switch */}
-        <div className="hidden sm:flex items-center gap-1">
-          <Button
-            size="sm"
-            variant={dashboardType === "DSIR" ? "default" : "outline"}
-            onClick={() => handleSwitch("DSIR")}
-          >
-            DSIR
-          </Button>
-          <Button
-            size="sm"
-            variant={dashboardType === "TOCIC" ? "default" : "outline"}
-            onClick={() => handleSwitch("TOCIC")}
-          >
-            TOCIC
-          </Button>
-        </div>
+        <div className="hidden sm:flex items-center gap-1"></div>
 
         <Button
           variant="outline"
