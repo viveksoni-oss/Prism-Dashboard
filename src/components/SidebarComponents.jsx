@@ -1,33 +1,28 @@
 import {
   Home,
-  Inbox,
-  Calendar,
-  Search,
+  LayoutDashboard,
+  FileText,
+  Trophy,
+  CalendarDays,
+  FileBarChart2,
   Settings,
   User2,
   ChevronUp,
-  Plus,
-  Projector,
-  ChevronDown,
-  LayoutDashboard,
-  Map,
+  Inbox,
+  Building2,
 } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
-  SidebarGroupAction,
   SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
+  SidebarMenuBadge,
   SidebarSeparator,
 } from "./ui/sidebar";
 import {
@@ -36,116 +31,137 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import {
-  Collapsible,
-  CollapsibleContent,
-  CollapsibleTrigger,
-} from "./ui/collapsible";
-import { Link, Navigate } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-const items = [
-  {
-    title: "Home",
-    url: "/",
-    icon: Home,
-  },
-  {
-    title: "Total Application",
-    url: "",
-    icon: Inbox,
-  },
-  {
-    title: "Dashboard",
-    url: "/dashboard",
-    icon: LayoutDashboard,
-  },
+export  default function SidebarComponents() {
+  const location = useLocation();
+  const isActive = (url) => location.pathname === url;
 
-  {
-    title: "Geographical Snapshot",
-    url: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Tocic’s Centre Details",
-    url: "/Tocic-center",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Start-up/Innovator Details",
-    url: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    title: "Total Grants Sanctioned",
-    url: "#",
-    icon: Map,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
-];
-export function SidebarComponents() {
   return (
-    <Sidebar collapsible="icon" className="">
+    <Sidebar collapsible="icon">
       <SidebarHeader className="py-4">
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild>
+            <SidebarMenuButton size="lg" asChild>
               <Link to="/">
-                <img
-                  src="https://github.com/shadcn.png"
-                  alt=""
-                  className="rounded-full"
-                  width={30}
-                  height={30}
-                />
-                <span>PRISM Dashboard</span>
+                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
+                  <Building2 className="size-4" />
+                </div>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate font-semibold">PRISM Portal</span>
+                  <span className="truncate text-xs">TOCIC Center</span>
+                </div>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarSeparator />
-      <SidebarContent>
+
+      <SidebarContent className={"overflow-x-hidden"}>
+        {/* SECTION 1: CORE WORKFLOW */}
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel>Core</SidebarGroupLabel>
           <SidebarGroupContent>
-            <SidebarMenu className={"space-y-4"}>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton className={"text-lg"} asChild>
-                    <Link to={item.url}>
-                      <item.icon />
-                      <span className="">{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                  {item.title === "Inbox" && (
-                    <SidebarMenuBadge>24</SidebarMenuBadge>
-                  )}
-                </SidebarMenuItem>
-              ))}
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={isActive("/dashboard")}>
+                  <Link to="/dashboard">
+                    <LayoutDashboard />
+                    <span className="truncate">Dashboard</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              {/* Simplified Application Link */}
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={isActive("/applications")}>
+                  <Link to="/applications">
+                    <Inbox />
+                    <span className="truncate">Applications</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
 
-        {/* COLLAPSABLE */}
+        <SidebarSeparator />
 
-        {/* NESTED */}
+        {/* SECTION 2: IMPACT & STORIES (New Request) */}
+        <SidebarGroup>
+          <SidebarGroupLabel>Impact & Outreach</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={isActive("/success-stories")}
+                >
+                  <Link to="/success-stories">
+                    <Trophy />
+                    <span>Success Stories</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={isActive("/activities")}>
+                  <Link to="/activities">
+                    <CalendarDays />
+                    <span className="truncate">Activities</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        {/* SECTION 3: REPORTING */}
+        <SidebarGroup>
+          <SidebarGroupLabel>Analysis</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={isActive("/reports")}>
+                  <Link to="/reports">
+                    <FileBarChart2 />
+                    <span className="truncate">Reports</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup className="mt-auto">
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={isActive("/settings")}>
+                  <Link to="/settings">
+                    <Settings />
+                    <span className="truncate">Settings</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
+
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <SidebarMenuButton>
+                <SidebarMenuButton size="lg">
                   <User2 /> John Doe <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent
+                side="top"
+                className="w-[--radix-dropdown-menu-trigger-width]"
+              >
                 <DropdownMenuItem>Account</DropdownMenuItem>
-                <DropdownMenuItem>Setting</DropdownMenuItem>
                 <DropdownMenuItem>Sign out</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -155,4 +171,3 @@ export function SidebarComponents() {
     </Sidebar>
   );
 }
-export default SidebarComponents;

@@ -1,95 +1,64 @@
-// LoginCard.jsx (fixed)
-import { useState } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
-
+import { useAuth } from "@/Context/AuthContext";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-import { useAuth } from "./AuthContext"; // adjust path if needed
-
-export function LoginCard() {
+export default function LoginCard() {
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
+
   const { login } = useAuth();
+  const navigate = useNavigate();
 
-  // make allowedEmails lowercase to allow case-insensitive match
-  const allowedEmails = ["krishlay@tocic.com", "vivek@dsir.com"];
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const trimmedEmail = email.trim();
-    if (!trimmedEmail) {
-      setError("Please enter an email");
-      return;
-    }
-
-    // compare lowercased for case-insensitive match
-    if (!allowedEmails.includes(trimmedEmail.toLowerCase())) {
-      setError("User not found");
-      return;
-    }
-
     setError("");
-    // IMPORTANT: call login so AuthProvider updates state + localStorage
-    login(trimmedEmail);
 
-    toast.success("Login successful");
-    navigate("/dashboard");
+    const result = await login(email, password);
+
+    if (result.success) {
+      // Redirect based on role
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user.role === "DSIR_ADMIN") navigate("/dsir-dashboard");
+      else if (user.role === "TOCIC_ADMIN") navigate("/tocic-dashboard");
+      else navigate("/");
+    } else {
+      setError(result.message);
+    }
   };
 
   return (
-    <Card className="w-full max-w-sm">
-      <CardHeader>
-        <CardTitle className="text-center text-2xl">PRISM</CardTitle>
-      </CardHeader>
-
-      <CardContent>
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-          <div className="grid gap-2">
-            <Label htmlFor="email">Email</Label>
+    <div className="flex h-50 items-center justify-center bg-gray-100">
+      <Card className="w-[350px]">
+        <CardHeader>
+          <CardTitle>System Login</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
             <Input
-              id="email"
               type="email"
-              placeholder="m@example.com"
-              required
+              placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
-          </div>
-
-          <div className="grid gap-2">
-            <div className="flex items-center">
-              <Label htmlFor="password">Password</Label>
-              <a
-                href="#"
-                className="ml-auto inline-block text-sm underline-offset-4 hover:underline"
-              >
-                Forgot your password?
-              </a>
-            </div>
-            <Input id="password" type="password" required />
-          </div>
-
-          {error && <p className="text-red-600 text-sm text-center">{error}</p>}
-
-          <CardFooter className="flex-col gap-2 p-0">
+            <Input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            {error && <p className="text-sm text-red-500">{error}</p>}
             <Button type="submit" className="w-full">
-              Login
+              Sign In
             </Button>
-          </CardFooter>
-        </form>
-      </CardContent>
-    </Card>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
   );
 }
