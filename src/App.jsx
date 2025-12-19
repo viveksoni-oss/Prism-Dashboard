@@ -34,54 +34,33 @@ const DashboardLayout = () => {
 };
 
 function App() {
-  // Get current location
-  const location = useLocation();
-
-  // Define which paths should HIDE the sidebar/header
-  // Currently checking if path is exactly "/"
-  const isLandingPage = location.pathname === "/";
-
-  // Optional: If you also want to hide it on login, use this instead:
-  // const isFullScreen = location.pathname === "/" || location.pathname === "/login";
-
   return (
     <AuthProvider>
       <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-        <SidebarProvider>
-          {/* Sidebar + content side by side */}
-          <div className="flex min-h-screen w-full bg-background">
-            {/* LEFT: sidebar - Only render if NOT on landing page */}
-            {!isLandingPage && <SidebarComponents />}
+        {/* Note: SidebarProvider is now inside DashboardLayout */}
 
-            {/* RIGHT: navbar + routes, inset by sidebar */}
-            <SidebarInset className="flex flex-1 flex-col">
-              {/* Navbar - Only render if NOT on landing page */}
-              {!isLandingPage && <NavBar />}
+        <Routes>
+          {/* --- PUBLIC ROUTES (No Sidebar/Navbar) --- */}
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
 
-              <main className="flex-1 w-full">
-                <Routes>
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/" element={<Home />} />
-                  <Route
-                    path="/dashboard"
-                    element={
-                      <ProtectedRoute>
-                        <Dashboard />
-                      </ProtectedRoute>
-                    }
-                  />
-                  <Route
-                    path="/tocic-center"
-                    element={
-                      <ProtectedRoute>
-                        <TocicDetails />
-                      </ProtectedRoute>
-                    }
-                  />
-                </Routes>
-              </main>
-            </SidebarInset>
-          </div>
+          {/* --- PROTECTED ROUTES (With Sidebar/Navbar) --- */}
+          <Route element={<DashboardLayout />}>
+            {/* 1. Generic Protected Route (Any logged in user) */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/applications" element={<ApplicationsPage />} />
+              <Route path="/tocic-center" element={<TocicDetails />} />
+            </Route>
+
+            {/* 2. Example: DSIR Admin Only (If you need role specific pages later) */}
+            {/* 
+            <Route element={<ProtectedRoute allowedRoles={['DSIR_ADMIN']} />}>
+               <Route path="/admin-settings" element={<AdminSettings />} />
+            </Route> 
+            */}
+          </Route>
+        </Routes>
 
         <Toaster />
       </ThemeProvider>
