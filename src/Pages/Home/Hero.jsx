@@ -3,7 +3,7 @@ import TextType from "@/components/TextType";
 import { SparkleParticles } from "@/components/ui/sparkle-particles";
 const Hero7 = () => {
   return (
-    <section className="relative min-h-screen overflow-hidden py-28">
+    <section className="relative o  verflow-hidden py-28">
 
       {/* Background particles */}
      <div className="absolute inset-0 z-20 pointer-events-none">

@@ -1,14 +1,6 @@
 import React from "react";
 import {
-  ArrowRight,
-  Zap,
-  TrendingUp,
-  Users,
-  Target,
-  Lightbulb,
-  Rocket,
-  Award,
-  CheckCircle,
+
   LogIn, // Added Icon
   ExternalLink,
 } from "lucide-react";
@@ -23,13 +15,11 @@ import GalleryAndNews from "./GalleryAndNews";
 import SuccessStoryCarousel from "./SuccessStory";
 import Map from "./Map";
 
-
-
-
 function Home() {
+  const navigate = useNavigate();
   return (
     <div className="ml-2 ">
-      <section className="header justify-items-center" >
+      <section className="header justify-items-center">
         <nav className=" border-b ">
           <div className="max-w-7xl mx-auto px-6 py-6">
             <div className="flex flex-col md:flex-row items-center justify-between gap-6">
@@ -111,9 +101,7 @@ function Home() {
               font-medium
               transition-all duration-300"
                 >
-                  <span
-                    className="relative after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-sky-600 after:transition-all after:duration-300 group-hover:after:w-full"
-                  >
+                  <span className="relative after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-sky-600 after:transition-all after:duration-300 group-hover:after:w-full">
                     Log in
                   </span>
                   <LogIn className="h-4 transition-transform group-hover:translate-x-0.5" />
