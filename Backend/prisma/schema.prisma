@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String   // In real app, hash this!
+  role      String   @default("GUEST") // SQLite limitation: use String for Enums
+  tocicId   String?
+  tocic     TOCIC?   @relation(fields: [tocicId], references: [id])
+}
+
+model TOCIC {
+  id             String    @id @default(uuid())
+  name           String
+  state          String
+  city           String
+  headName       String
+  contactEmail   String
+  users          User[]
+  projects       Project[]
+}
+
+model Project {
+  id             String   @id @default(uuid())
+  title          String
+  domain         String   // e.g., "GREEN_TECH"
+  tocicId        String
+  tocic          TOCIC    @relation(fields: [tocicId], references: [id])
+  
+  innovatorName  String
+  fundsSanctioned Float
+  fundsUtilized   Float
+  
+  status         String   @default("DRAFT") // "PENDING_APPROVAL", "APPROVED"
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
