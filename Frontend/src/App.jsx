@@ -36,7 +36,7 @@ const DashboardLayout = () => {
 function App() {
   return (
     <AuthProvider>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         {/* Note: SidebarProvider is now inside DashboardLayout */}
 
         <Routes>
