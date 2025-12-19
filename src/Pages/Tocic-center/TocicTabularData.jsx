@@ -8,7 +8,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import axios from "axios";
+import { useEffect } from "react"
 
+// useEffect(()=>{
+
+// },[])
+console.log(import.meta.env.BACKEND_URL);
+const fetchTocicCenters = async () => {
+  // try {
+  //   const response = await axios.get("/api/projects");
+  //   console.log(response.data);
+  // } catch (error) {
+  //   console.error("Error fetching data:", error);
+  // }
+};
 const invoices = [
   {
     TOCICCenterName: "SPMVV, Tirupati",

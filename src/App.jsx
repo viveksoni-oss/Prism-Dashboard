@@ -2,18 +2,39 @@ import { ThemeProvider } from "./components/Theme-Provider";
 import NavBar from "./components/NavBar";
 import Home from "./Pages/Home/index";
 import Dashboard from "./Pages/Dashboard";
-import { Route, Routes, useLocation } from "react-router-dom"; // Added useLocation
+import { Route, Routes, Outlet } from "react-router-dom"; // Added Outlet
 import Login from "./Pages/LogIn";
 import { Toaster } from "react-hot-toast";
 import { SidebarInset, SidebarProvider } from "./components/ui/sidebar";
 import SidebarComponents from "./components/SidebarComponents";
-import { AuthProvider, useAuth } from "./components/login/AuthContext.jsx";
-import ProtectedRoute from "./components/login/ProtectedRoute.jsx";
+import { AuthProvider } from "@/Context/AuthContext.jsx";
 import TocicDetails from "./Pages/Tocic-center";
+import ApplicationsPage from "./Pages/Applications/ApplicationsPage";
+import ProtectedRoute from "./components/ProtectedRoute";
 
+// --- LAYOUT COMPONENT ---
+// This wrapper ensures Sidebar and Navbar only show for dashboard pages
+const DashboardLayout = () => {
+  return (
+    <SidebarProvider>
+      <div className="flex min-h-screen w-full bg-background">
+        <SidebarComponents />
+        <SidebarInset className="flex flex-1 flex-col">
+          <NavBar />
+          <main className="flex-1 w-full p-4">
+            {" "}
+            {/* Added padding for consistency */}
+            <Outlet />{" "}
+            {/* Renders the child route (Dashboard, Applications, etc.) */}
+          </main>
+        </SidebarInset>
+      </div>
+    </SidebarProvider>
+  );
+};
 
 function App() {
-
+  // Get current location
   const location = useLocation();
 
   // Define which paths should HIDE the sidebar/header
@@ -25,7 +46,7 @@ function App() {
 
   return (
     <AuthProvider>
-      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
         <SidebarProvider>
           {/* Sidebar + content side by side */}
           <div className="flex min-h-screen w-full bg-background">
@@ -62,8 +83,7 @@ function App() {
             </SidebarInset>
           </div>
 
-          <Toaster />
-        </SidebarProvider>
+        <Toaster />
       </ThemeProvider>
     </AuthProvider>
   );

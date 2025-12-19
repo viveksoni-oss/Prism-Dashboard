@@ -1,5 +1,5 @@
 import Prism from "@/components/background/prismBg";
-import { LoginCard } from "@/components/login/LoginCard";
+import LoginCard from "@/components/login/LoginCard";
 import React from "react";
 
 function Login() {
