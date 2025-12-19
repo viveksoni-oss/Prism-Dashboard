@@ -9,7 +9,10 @@ import {
   Rocket,
   Award,
   CheckCircle,
-  LogIn, // Added Icon
+  LogIn,
+  UsersRound,
+  DollarSign,
+  Sprout, // Added Icon
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SpotlightCard from "../../components/SpotlightCard";
@@ -25,13 +28,13 @@ export default function Cards() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
   {[
     {
-      icon: Lightbulb,
+      icon: UsersRound,
       title: "Total Innovators",
-      desc: "Validate your concept and secure initial seed funding",
+      desc: "",
       color: "from-sky-300 to-cyan-300",
     },
     {
-      icon: Target,
+      icon: DollarSign,
       title: "Funds Sanctioned",
       desc: "Build and refine your prototype with expert guidance",
       color: "from-cyan-300 to-blue-300",
@@ -43,7 +46,7 @@ export default function Cards() {
       color: "from-blue-300 to-indigo-300",
     },
     {
-      icon: Award,
+      icon: Sprout,
       title: "Growth",
       desc: "Access networks and expand globally",
       color: "from-indigo-300 to-violet-300",
