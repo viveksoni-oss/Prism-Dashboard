@@ -7,42 +7,42 @@ const stories = [
     designation: "Founder, TechNova",
     story:
       "With PRISM's mentorship and funding, we transformed our idea into a scalable product that now serves thousands of users across India.",
-    image: "/public/logos/alex-suprun-ZHvM3XIOHoE-unsplash.jpg",
+    image: "/logos/alex-suprun-ZHvM3XIOHoE-unsplash.jpg",
   },
   {
     name: "Anita Verma",
     designation: "CEO, InnovateX",
     story:
       "The ecosystem support helped us bridge the gap between research and real-world deployment, accelerating our growth journey.",
-    image: "/public/logos/christopher-campbell-rDEOVtE7vOs-unsplash.jpg",
+    image: "/logos/christopher-campbell-rDEOVtE7vOs-unsplash.jpg",
   },
   {
     name: "Suresh Patel",
     designation: "Director, MSME Solutions",
     story:
       "Digital transformation through PRISM enabled us to modernize operations and expand into new markets confidently.",
-    image: "/public/logos/close-up-portrait-young-bearded-man-white-shirt-jacket-posing-camera-with-broad-smile-isolated-gray.jpg",
+    image: "/logos/close-up-portrait-young-bearded-man-white-shirt-jacket-posing-camera-with-broad-smile-isolated-gray.jpg",
   },
   {
     name: "Neha Gupta",
     designation: "Co-founder, SmartLabs",
     story:
       "From idea validation to go-to-market, the guidance we received played a crucial role in our success.",
-    image: "/public/logos/michael-dam-mEZ3PoFGs_k-unsplash.jpg",
+    image: "/logos/michael-dam-mEZ3PoFGs_k-unsplash.jpg",
   },
   {
     name: "Amit Singh",
     designation: "CTO, FutureWorks",
     story:
       "PRISM’s innovation support helped us adopt cutting-edge technologies and build future-ready solutions.",
-    image: "/public/logos/jurica-koletic-7YVZYZeITc8-unsplash.jpg",
+    image: "/logos/jurica-koletic-7YVZYZeITc8-unsplash.jpg",
   },
   {
     name: "Pooja Nair",
     designation: "Founder, ScaleUp Hub",
     story:
       "The collaborative environment and expert mentoring accelerated our journey from prototype to production.",
-    image: "/public/logos/8b97e421-39d2-4295-854f-d194e06a99fc.jpg",
+    image: "/logos/8b97e421-39d2-4295-854f-d194e06a99fc.jpg",
   },
 ];
 
