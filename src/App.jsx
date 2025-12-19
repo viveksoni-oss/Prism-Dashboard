@@ -11,8 +11,9 @@ import { AuthProvider, useAuth } from "./components/login/AuthContext.jsx";
 import ProtectedRoute from "./components/login/ProtectedRoute.jsx";
 import TocicDetails from "./Pages/Tocic-center";
 
+
 function App() {
-  // Get current location
+
   const location = useLocation();
 
   // Define which paths should HIDE the sidebar/header
@@ -24,7 +25,7 @@ function App() {
 
   return (
     <AuthProvider>
-      <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         <SidebarProvider>
           {/* Sidebar + content side by side */}
           <div className="flex min-h-screen w-full bg-background">
