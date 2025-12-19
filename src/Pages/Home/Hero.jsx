@@ -1,6 +1,5 @@
 import React from "react";
 import TextType from "@/components/TextType";
-import ShinyText from "@/components/ShinyText";
 import { SparkleParticles } from "@/components/ui/sparkle-particles";
 const Hero7 = () => {
   return (
