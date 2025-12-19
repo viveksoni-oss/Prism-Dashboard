@@ -22,8 +22,8 @@ export default function LoginCard() {
     if (result.success) {
       // Redirect based on role
       const user = JSON.parse(localStorage.getItem("user"));
-      if (user.role === "DSIR_ADMIN") navigate("/dsir-dashboard");
-      else if (user.role === "TOCIC_ADMIN") navigate("/tocic-dashboard");
+      if (user.role === "DSIR_ADMIN") navigate("/dashboard");
+      else if (user.role === "TOCIC_ADMIN") navigate("/dashboard");
       else navigate("/");
     } else {
       setError(result.message);
