@@ -1,28 +1,30 @@
+// Hero.tsx
 import React from "react";
 import TextType from "@/components/TextType";
 import { SparkleParticles } from "@/components/ui/sparkle-particles";
+
 const Hero7 = () => {
   return (
-    <section className="relative o  verflow-hidden py-28">
-
+    <section className="relative overflow-hidden bg-background py-20">
       {/* Background particles */}
-     <div className="absolute inset-0 z-20 pointer-events-none">
-  <SparkleParticles
-  
-/>
-</div>
-
+      <div className="pointer-events-none absolute inset-0 z-0">
+        <SparkleParticles />
+      </div>
 
       {/* Content */}
       <div className="relative z-10 container mx-auto px-6 text-center">
-        <h1 className="mx-auto max-w-5xl text-6xl font-semibold tracking-tight lg:text-8xl">
-          <span className="">
-            {/* <ShinyText text="PRISM" speed={5} /> */}
-            PRISM
-          </span>
+        <p className="text-sm font-medium text-muted-foreground">
+          Ministry of Science and Technology, Government of India
+        </p>
+        <p className="mt-1 text-sm font-medium text-muted-foreground">
+          Department of Scientific and Industrial Research (DSIR)
+        </p>
+
+        <h1 className="mx-auto mt-6 max-w-5xl text-5xl font-semibold tracking-tight text-foreground lg:text-7xl">
+          PRISM
         </h1>
 
-        <p className="mt-6 text-lg text-slate-600 lg:text-xl">
+        <p className="mt-4 text-lg text-muted-foreground lg:text-xl">
           <TextType
             text={["Promoting Innovations in Individuals, Start-ups and MSMEs"]}
             typingSpeed={60}
@@ -32,7 +34,7 @@ const Hero7 = () => {
           />
         </p>
 
-        <p className="mx-auto mt-8 max-w-3xl text-base leading-relaxed text-slate-700">
+        <p className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-muted-foreground">
           PRISM is a government initiative that empowers individual innovators,
           start-ups, and MSMEs by supporting cutting-edge indigenous technology.
         </p>
@@ -40,6 +42,5 @@ const Hero7 = () => {
     </section>
   );
 };
-
 
 export default Hero7;

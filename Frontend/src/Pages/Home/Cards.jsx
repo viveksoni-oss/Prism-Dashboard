@@ -1,121 +1,94 @@
+// StatsSection.tsx
 import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Lightbulb,
-  Target,
-  Rocket,
-  Award,
-  Users,
-  Briefcase, // For Jobs
-  Banknote, // For Funds
-  ScrollText, // For Patents
-  FlaskConical, // For Labs/Research
-} from "lucide-react";
-import { CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import SpotlightCard from "../../components/SpotlightCard"; // Assuming this path is correct
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
-export default function InnovationStats() {
-  const stats = [
-    {
-      icon: Lightbulb,
-      title: "Total Startups",
-      value: "120+",
-      desc: "Incubated & Accelerated",
-      color: "from-amber-200 to-yellow-400",
-    },
-    {
-      icon: Banknote,
-      title: "Funds Raised",
-      value: "₹50 Cr",
-      desc: "Seed & External Funding",
-      color: "from-emerald-200 to-green-400",
-    },
-    {
-      icon: ScrollText,
-      title: "Patents Filed",
-      value: "45",
-      desc: "IPRs Generated",
-      color: "from-purple-200 to-violet-400",
-    },
-    {
-      icon: Users,
-      title: "Mentors",
-      value: "80+",
-      desc: "Industry Experts",
-      color: "from-blue-200 to-indigo-400",
-    },
-    {
-      icon: Briefcase,
-      title: "Jobs Created",
-      value: "1,500+",
-      desc: "Direct Employment",
-      color: "from-orange-200 to-red-400",
-    },
-    {
-      icon: FlaskConical,
-      title: "Labs Support",
-      value: "12",
-      desc: "R&D Facilities Access",
-      color: "from-cyan-200 to-sky-400",
-    },
-  ];
+const stats = [
+  {
+    id: "total-projects",
+    label: "Total Projects",
+    value: "1,250",
+    description:
+      "Total number of PRISM-supported projects across all TOCIC centers.",
+  },
+  {
+    id: "total-funds",
+    label: "Funds Sanctioned",
+    value: "₹ 185 Cr",
+    description:
+      "Cumulative funds sanctioned under PRISM Phase I & II schemes.",
+  },
+  {
+    id: "startups-supported",
+    label: "Start-ups Supported",
+    value: "430+",
+    description:
+      "Start-ups receiving mentoring or financial support through PRISM.",
+  },
+  {
+    id: "innovators",
+    label: "Individual Innovators",
+    value: "780+",
+    description:
+      "Individual innovators who have received PRISM support for PoC or scaling.",
+  },
+  {
+    id: "tocic-centers",
+    label: "TOCIC Centers",
+    value: "12",
+    description:
+      "TePP Outreach cum Cluster Innovation Centers implementing PRISM at state/cluster level.",
+  },
+  {
+    id: "states-covered",
+    label: "States & UTs Covered",
+    value: "15+",
+    description:
+      "Geographical spread of PRISM-supported activities across India.",
+  },
+];
 
+export function StatsSection() {
   return (
-    <section className="py-8 px-4">
-      <div className="max-w-[1400px] mx-auto ">
-        {/* Header (Optional) */}
-        <div className="mb-8 flex justify-center items-center  flex-col">
-          <h2 className="text-2xl  font-bold tracking-tight text-slate-900">
-            Innovation Impact
-          </h2>
-          <p className="text-slate-500">Key metrics and ecosystem growth</p>
+    <section className="bg-card py-10">
+      <div className="container mx-auto px-4">
+        <div className="mb-6 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-muted-foreground">
+            PRISM at a glance
+          </p>
         </div>
 
-        {/* Grid: 2 cols mobile, 3 cols tablet, 6 cols desktop */}
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-          {stats.map((stat, index) => (
-            <div key={index} className="group relative h-full">
-              {/* Hover Glow Effect */}
-              <div
-                className="absolute inset-0 -z-10 rounded-xl bg-gradient-to-br opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-40"
-                style={{
-                  background: `linear-gradient(to bottom right, var(--tw-gradient-stops))`,
-                }}
-              />
-
-              
-                <CardHeader className="p-4 pb-2 space-y-0">
-                  <div className="flex items-center justify-between mb-2">
-                    <div
-                      className={`
-                        p-2.5
-                        rounded-lg
-                        bg-linear-to-tl ${stat.color}
-                        shadow-sm
-                        
-                      `}
-                    >
-                      <stat.icon className="h-5 w-5 text-slate-900/80" />
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:grid-rows-2">
+          {stats.map((stat) => (
+            <Dialog key={stat.id}>
+              <DialogTrigger asChild>
+                <Card className="cursor-pointer border-border bg-background/80 shadow-sm transition hover:-translate-y-1 hover:shadow-md">
+                  <CardHeader className="space-y-1 pb-2">
+                    <CardTitle className="text-sm font-medium text-muted-foreground">
+                      {stat.label}
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="text-3xl font-semibold text-foreground">
+                      {stat.value}
                     </div>
-                  </div>
-
-                  {/* Big Number Value */}
-                  <div className="text-2xl font-bold text-slate-800">
-                    {stat.value}
-                  </div>
-
-                  {/* Title */}
-                  <CardTitle className="text-sm font-medium text-slate-600 mt-1">
-                    {stat.title}
-                  </CardTitle>
-                </CardHeader>
-
-                <CardContent className="p-4 pt-0">
-                  <p className="text-xs text-slate-500 leading-tight">
-                    {stat.desc}
-                  </p>
-                </CardContent>
-
-            </div>
+                  </CardContent>
+                </Card>
+              </DialogTrigger>
+              <DialogContent className="max-w-md">
+                <DialogHeader>
+                  <DialogTitle>{stat.label}</DialogTitle>
+                  <DialogDescription>{stat.description}</DialogDescription>
+                </DialogHeader>
+              </DialogContent>
+            </Dialog>
           ))}
         </div>
       </div>

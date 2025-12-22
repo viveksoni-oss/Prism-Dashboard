@@ -18,8 +18,6 @@ import Footer from "./Footer";
 import PrismVideoPage from "./YtPage";
 
 function Home() {
-
-
   const navigate = useNavigate();
   return (
     <div className="ml-2 ">
@@ -28,8 +26,6 @@ function Home() {
       <GalleryAndNews />
       <SuccessStoryCarousel />
       <Map />
-
-    
     </div>
   );
 }
