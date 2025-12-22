@@ -20,12 +20,19 @@ import PrismVideoPage from "./YtPage";
 function Home() {
   const navigate = useNavigate();
   return (
-    <div className="ml-2 ">
+    <div className="bg-background  mx-auto text-foreground">
       <Hero7 />
-      <Cards />
-      <GalleryAndNews />
-      <SuccessStoryCarousel />
-      <Map />
+
+      {/* Divider */}
+      <div className="border-b border-border" />
+
+      {/* Rest of home content */}
+      <div className="mt-8 space-y-12">
+        <Cards />
+        <GalleryAndNews />
+        <SuccessStoryCarousel />
+        <Map />
+      </div>
     </div>
   );
 }

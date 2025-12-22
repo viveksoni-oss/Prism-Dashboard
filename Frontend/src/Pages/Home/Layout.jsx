@@ -1,5 +1,5 @@
 import React from "react";
-import { LogIn, ExternalLink } from "lucide-react";
+import { LogIn, ExternalLink, MoveUpRight, ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Outlet, useNavigate } from "react-router-dom";
 import Footer from "./Footer";
@@ -28,11 +28,17 @@ export default function Layout() {
       <section className="header">
         <nav className="border-b">
           <div className="max-w-7xl mx-auto px-6 py-6">
-            <div className="grid grid-cols-4 gap-4 items-center">
-              <img src="/logos/emblem-dark.png" className="h-12 object-contain" />
-              <img src="/logos/G.20.png" className="h-12 object-contain grayscale" />
+            <div className="flex justify-evenly gap-4 items-center">
+              <img
+                src="/logos/emblem-dark.png"
+                className="h-12 object-contain"
+              />
+              <img src="/logos/G.20.png" className="h-12 object-contain" />
               <img src="/logos/azadi.jpg" className="h-12 object-contain" />
-              <img src="/logos/swach-bharat.png" className="h-12 object-contain" />
+              <img
+                src="/logos/swach-bharat.png"
+                className="h-12 object-contain"
+              />
             </div>
           </div>
         </nav>
@@ -41,8 +47,7 @@ export default function Layout() {
       {/* NAVBAR */}
       <section className="navbar">
         <nav className="border-b">
-          <div className="max-w-7xl mx-auto px-4 py-3 flex justify-between items-center flex-wrap gap-4">
-
+          <div className="max-w-7xl mx-auto py-3 flex justify-between items-center flex-wrap gap-4">
             {/* LEFT LINKS */}
             <div className="flex gap-4">
               {navItems.map((item) =>
@@ -70,7 +75,7 @@ export default function Layout() {
                     <span className="relative after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:w-0 after:bg-sky-600 after:transition-all group-hover:after:w-full">
                       {item.label}
                     </span>
-                    <ExternalLink className="h-4" />
+                    <ArrowUpRight size={18} />
                   </a>
                 )
               )}
@@ -84,7 +89,6 @@ export default function Layout() {
             >
               Log in <LogIn className="h-4" />
             </Button>
-
           </div>
         </nav>
       </section>
