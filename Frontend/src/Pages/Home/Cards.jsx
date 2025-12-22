@@ -82,29 +82,16 @@ export default function InnovationStats() {
                 }}
               />
 
-              <SpotlightCard
-                spotlightColor="rgba(255, 255, 255, 0.4)"
-                className="
-                  h-full
-                  rounded-xl
-                  border border-white/20
-                  bg-white/40          /* Glass opacity */
-                  backdrop-blur-md     /* The Blur Effect */
-                  shadow-sm
-                  transition-all duration-300
-                  hover:shadow-md
-                  hover:bg-white/60    /* Lighten on hover */
-                  hover:-translate-y-1
-                "
-              >
+              
                 <CardHeader className="p-4 pb-2 space-y-0">
                   <div className="flex items-center justify-between mb-2">
                     <div
                       className={`
                         p-2.5
                         rounded-lg
-                        bg-gradient-to-br ${stat.color}
+                        bg-linear-to-tl ${stat.color}
                         shadow-sm
+                        
                       `}
                     >
                       <stat.icon className="h-5 w-5 text-slate-900/80" />
@@ -127,7 +114,7 @@ export default function InnovationStats() {
                     {stat.desc}
                   </p>
                 </CardContent>
-              </SpotlightCard>
+
             </div>
           ))}
         </div>
