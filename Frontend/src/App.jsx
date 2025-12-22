@@ -1,6 +1,6 @@
 import { ThemeProvider } from "./components/Theme-Provider";
 import NavBar from "./components/NavBar";
-import Home from "./Pages/Home/index";
+import Home from "./Pages/Home/Home";
 import Dashboard from "./Pages/Dashboard";
 import { Route, Routes, Outlet } from "react-router-dom"; // Added Outlet
 import Login from "./Pages/LogIn";
@@ -11,7 +11,8 @@ import { AuthProvider } from "@/Context/AuthContext.jsx";
 import TocicDetails from "./Pages/Tocic-center";
 import ApplicationsPage from "./Pages/Applications/ApplicationsPage";
 import ProtectedRoute from "./components/ProtectedRoute";
-
+import PrismVideoPage from "./Pages/Home/YtPage";
+import Layout from "./Pages/Home/Layout";
 // --- LAYOUT COMPONENT ---
 // This wrapper ensures Sidebar and Navbar only show for dashboard pages
 const DashboardLayout = () => {
@@ -40,9 +41,12 @@ function App() {
         {/* Note: SidebarProvider is now inside DashboardLayout */}
 
         <Routes>
-          {/* --- PUBLIC ROUTES (No Sidebar/Navbar) --- */}
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
+          <Route element={<Layout />}>
+            <Route path="/YtPage" element={<PrismVideoPage />} />
+
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/login" element={<Login />} />
+          </Route>
 
           {/* --- PROTECTED ROUTES (With Sidebar/Navbar) --- */}
           <Route element={<DashboardLayout />}>
