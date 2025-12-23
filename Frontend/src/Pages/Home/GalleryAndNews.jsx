@@ -1,5 +1,6 @@
 import React from "react";
 import EmblaCarousel from "../../components/ui/EmblaCarousel";
+import SectionHeading from "@/components/SectionHeading";
 
 /* ---------- DATA (JSON) ---------- */
 const newsData = [
@@ -49,8 +50,12 @@ export default function GalleryAndNews() {
   return (
     <section className="w-full px-4 py-4 bg-white">
       <div className="max-w-7xl mx-auto">
+        
+        <SectionHeading
+          heading={"News and"}
+          headingSuffix={"Events"}
+        ></SectionHeading>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
           {/* LEFT: IMAGE GALLERY */}
           <div
             className="
@@ -70,11 +75,11 @@ export default function GalleryAndNews() {
           </div>
 
           {/* RIGHT: NEWS + EVENTS */}
+
           <div className="flex flex-col gap-6">
             <VerticalMarquee title="News" data={newsData} />
             <VerticalMarquee title="Events" data={eventsData} />
           </div>
-
         </div>
       </div>
     </section>

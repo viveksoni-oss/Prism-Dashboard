@@ -10,22 +10,18 @@ import GradientText from "@/components/GradientText";
 import FloatingLines from "@/components/FloatingLines";
 import { useNavigate } from "react-router-dom";
 import Hero7 from "./Hero";
-import Cards from "./Cards";
+import InnovationStats from "./StatsLayout";
 import GalleryAndNews from "./GalleryAndNews";
 import SuccessStoryCarousel from "./SuccessStory";
 import Map from "./Map";
-import Footer from "./Footer";
-import PrismVideoPage from "./YtPage";
 
 function Home() {
   const navigate = useNavigate();
   return (
-    <div className="bg-background  mx-auto text-foreground">
-      <Hero7 />
+    <div className="  mx-auto text-foreground">
+      <div className="space-y-12">
+        <InnovationStats />
 
-      {/* Rest of home content */}
-      <div className="-mt-10 space-y-12">
-        <Cards />
         <GalleryAndNews />
         <SuccessStoryCarousel />
         <Map />

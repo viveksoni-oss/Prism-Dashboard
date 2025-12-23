@@ -20,49 +20,17 @@ const Footer = () => {
             <h3 className="mb-4 text-sm font-semibold text-foreground">
               Quick Links
             </h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              {["Home", "About PRISM", "DSIR", "TOCIC"].map((item) => (
-                <li
-                  key={item}
-                  className="cursor-pointer hover:text-primary transition-colors"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* PROGRAMS */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold text-foreground">
-              Programs
-            </h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              {[
-                "Startup Support",
-                "MSME Innovation",
-                "Research Commercialization",
-                "Mentorship",
-              ].map((item) => (
-                <li
-                  key={item}
-                  className="cursor-pointer hover:text-primary transition-colors"
-                >
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* CONTACT */}
-          <div>
-            <h3 className="mb-4 text-sm font-semibold text-foreground">
-              Contact
-            </h3>
-            <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>Email: prism@gov.in</li>
-              <li>Phone: +91 11 2345 6789</li>
-              <li>Location: New Delhi, India</li>
+            <ul className="space-y-2 w-full text-sm flex justify-between items-center text-muted-foreground">
+              {["Home", "How to Apply", "About PRISM", "DSIR", "TOCIC"].map(
+                (item) => (
+                  <li
+                    key={item}
+                    className="cursor-pointer hover:text-primary transition-colors"
+                  >
+                    {item}
+                  </li>
+                )
+              )}
             </ul>
           </div>
         </div>
@@ -72,9 +40,7 @@ const Footer = () => {
 
         {/* BOTTOM BAR */}
         <div className="flex flex-col gap-4 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <p>
-            © {new Date().getFullYear()} PRISM. All rights reserved.
-          </p>
+          <p>© {new Date().getFullYear()} PRISM. All rights reserved.</p>
 
           <div className="flex gap-6">
             <span className="cursor-pointer hover:text-primary transition-colors">

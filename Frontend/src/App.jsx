@@ -44,7 +44,7 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/YtPage" element={<PrismVideoPage />} />
-            <Route path="/tocicPage" element={<TocicPage />} />
+            <Route path="/tocic" element={<TocicPage />} />
 
             <Route path="/" element={<Home />}></Route>
             <Route path="/login" element={<Login />} />

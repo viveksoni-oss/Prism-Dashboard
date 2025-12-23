@@ -80,7 +80,7 @@ export default function SuccessStoryCarousel() {
   };
 
   return (
-    <section className="relative w-full py-15 ">
+    <section className="relative w-full py-4 ">
       <div className="mx-auto max-w-7xl px-6">
         <h2 className="mb-12 text-center text-4xl font-semibold">
           Success Stories
