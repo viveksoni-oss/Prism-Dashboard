@@ -14,7 +14,7 @@ export default function Layout() {
     },
     {
       label: "Tocic Outreach",
-      route: "/tocic",
+      route: "/tocicPage",
     },
     {
       label: "Media",
