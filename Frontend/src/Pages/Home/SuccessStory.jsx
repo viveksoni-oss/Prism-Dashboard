@@ -21,7 +21,8 @@ const stories = [
     designation: "Director, MSME Solutions",
     story:
       "Digital transformation through PRISM enabled us to modernize operations and expand into new markets confidently.",
-    image: "/logos/close-up-portrait-young-bearded-man-white-shirt-jacket-posing-camera-with-broad-smile-isolated-gray.jpg",
+    image:
+      "/logos/close-up-portrait-young-bearded-man-white-shirt-jacket-posing-camera-with-broad-smile-isolated-gray.jpg",
   },
   {
     name: "Neha Gupta",
@@ -108,29 +109,27 @@ export default function SuccessStoryCarousel() {
                   .map((item, i) => (
                     <div
                       key={i}
-                      className="rounded-3xl border border-white/20 bg-gradient-to-br from-neutral-900 to-neutral-800 p-6 text-white shadow-xl"
+                      className="rounded-3xl border border-black/20  bg-blue-100 text-slate-700  p-6 shadow-xl"
                     >
                       <div className="flex items-center gap-6">
                         {/* Left Circle Image */}
                         <img
                           src={item.image}
                           alt={item.name}
-                          className="h-24 w-24 rounded-full border border-white/30 object-cover"
+                          className="h-24 w-24 rounded-full border border-black/30 object-cover"
                         />
 
                         {/* Title + Designation */}
                         <div>
-                          <h3 className="text-lg font-semibold">
-                            {item.name}
-                          </h3>
-                          <p className="text-sm text-white/70">
+                          <h3 className="text-lg font-semibold">{item.name}</h3>
+                          <p className="text-sm text-slate-700">
                             {item.designation}
                           </p>
                         </div>
                       </div>
 
                       {/* Story */}
-                      <p className="mt-6 text-sm leading-relaxed text-white/80">
+                      <p className="mt-6 text-sm leading-relaxed text-slate-600">
                         {item.story}
                       </p>
                     </div>

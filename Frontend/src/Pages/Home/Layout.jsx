@@ -9,11 +9,11 @@ export default function Layout() {
 
   const navItems = [
     {
-      label: "Prism Innovation",
+      label: "PRISM Innovation",
       href: "https://www.dsir.gov.in/promoting-innovations-individuals-start-ups-and-msmes-prism",
     },
     {
-      label: "Tocic Outreach",
+      label: "TOCIC Outreach",
       route: "/tocic",
     },
     {

@@ -1,9 +1,9 @@
 import { ThemeProvider } from "./components/Theme-Provider";
 import NavBar from "./components/NavBar";
 import Home from "./Pages/Home/Home";
-import Dashboard from "./Pages/Dashboard";
+import Dashboard from "./Pages/Dashboard/Dashboard";
 import { Route, Routes, Outlet } from "react-router-dom"; // Added Outlet
-import Login from "./Pages/LogIn";
+import Login from "./Pages/LogIn/Login";
 import { Toaster } from "react-hot-toast";
 import { SidebarInset, SidebarProvider } from "./components/ui/sidebar";
 import SidebarComponents from "./components/SidebarComponents";

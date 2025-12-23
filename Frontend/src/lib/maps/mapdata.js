@@ -1,62 +1,80 @@
 var simplemaps_countrymap_mapdata = {
   main_settings: {
-    // ... keep your existing main_settings as-is ...
+    // Layout & performance
     width: "responsive",
-    background_color: "#FFFFFF",
+    height: 600, // keep it inside container
+    background_color: "#0f172a", // or your section bg if needed
     background_transparent: "yes",
-    border_color: "#ffffff",
-    pop_ups: "",
-    state_description: "State description",
-    state_color: "#88A4BC",
-    state_hover_color: "#3B729F",
-    state_url: "",
-    border_size: 1.5,
+    div: "map",
+    auto_load: "no", // manual load from React to avoid blocking initial render
+
+    // Borders & base colors (blue/white tone)
+    border_color: "#0f172a",
+    border_size: 1.2,
+    state_color: "#e5f0ff", // light blue
+    state_hover_color: "#2563eb", // primary blue
+    state_description: "",
+    pop_ups: "detect",
+
+    // Interactivity
     all_states_inactive: "no",
     all_states_zoomable: "no",
-    location_description: "Location description",
+
+    // Locations (markers) – subtle blue
+    location_description: "",
     location_url: "",
-    location_color: "#FF0067",
-    location_opacity: 0.8,
+    location_color: "#1d4ed8",
+    location_opacity: 0.9,
     location_hover_opacity: 1,
-    location_size: 25,
-    location_type: "square",
-    location_image_source: "frog.png",
-    location_border_color: "#FFFFFF",
+    location_size: 18,
+    location_type: "circle",
+    location_image_source: "default",
+    location_border_color: "#e5f0ff",
     location_border: 2,
     location_hover_border: 2.5,
     all_locations_inactive: "no",
     all_locations_hidden: "no",
-    label_color: "#ffffff",
-    label_hover_color: "#ffffff",
-    label_size: 16,
-    label_font: "Arial",
+
+    // Labels
+    label_color: "#ffffff", // text color = white
+    label_hover_color: "#e5f0ff", // lighter blue on hover
+    label_size: 12,
+    label_font:
+      "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
     label_display: "auto",
     label_scale: "yes",
     hide_labels: "no",
     hide_eastern_labels: "no",
+
+    // Zoom & animation
     zoom: "no",
     manual_zoom: "no",
-    back_image: "no",
-    initial_back: "no",
     initial_zoom: "-1",
     initial_zoom_solo: "no",
-    region_opacity: 1,
-    region_hover_opacity: 0.6,
-    zoom_out_incrementally: "yes",
     zoom_percentage: 0.99,
     zoom_time: 0.5,
-    popup_color: "white",
-    popup_opacity: 0.9,
+    zoom_out_incrementally: "yes",
+
+    // Regions
+    region_opacity: 1,
+    region_hover_opacity: 0.7,
+
+    // Popup styling
+    popup_color: "#1d4ed8", // blue background
+    popup_opacity: 0.95,
     popup_shadow: 1,
-    popup_corners: 5,
-    popup_font: "12px/1.5 Verdana, Arial, Helvetica, sans-serif",
+    popup_corners: 6,
+    popup_font:
+      "12px/1.5 system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
     popup_nocss: "no",
-    div: "map",
-    auto_load: "yes",
-    url_new_tab: "no",
+    link_text: "Know more",
+
+    // Misc
+    back_image: "no",
+    initial_back: "no",
+    url_new_tab: "yes",
     images_directory: "default",
     fade_time: 0.1,
-    link_text: "View Website",
   },
 
   state_specific: {
