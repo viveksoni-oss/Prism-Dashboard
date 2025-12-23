@@ -23,11 +23,8 @@ function Home() {
     <div className="bg-background  mx-auto text-foreground">
       <Hero7 />
 
-      {/* Divider */}
-      <div className="border-b border-border" />
-
       {/* Rest of home content */}
-      <div className="mt-8 space-y-12">
+      <div className="-mt-10 space-y-12">
         <Cards />
         <GalleryAndNews />
         <SuccessStoryCarousel />

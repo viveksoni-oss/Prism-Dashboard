@@ -21,14 +21,14 @@ const Hero7 = () => {
           </Badge>
         </div>
 
-        <p className="text-sm font-medium text-muted-foreground">
+        <p className="text-xs text-muted-foreground">
           Ministry of Science and Technology, Government of India
         </p>
-        <p className="mt-1 text-sm font-medium text-muted-foreground">
+        <p className="mt-1 text-xs text-muted-foreground">
           Department of Scientific and Industrial Research (DSIR)
         </p>
 
-        <h1 className="mx-auto mt-6 max-w-5xl text-5xl font-semibold tracking-tight text-primary lg:text-7xl">
+        <h1 className="mx-auto mt-6 max-w-5xl text-5xl font-semibold tracking-tight text-foreground lg:text-7xl">
           PRISM
         </h1>
 
@@ -42,10 +42,10 @@ const Hero7 = () => {
           />
         </p>
 
-        <p className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-muted-foreground">
+        {/* <p className="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-muted-foreground">
           PRISM is a government initiative that empowers individual innovators,
           start-ups, and MSMEs by supporting cutting-edge indigenous technology.
-        </p>
+        </p> */}
       </div>
     </section>
   );

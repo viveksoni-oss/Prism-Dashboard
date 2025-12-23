@@ -76,7 +76,7 @@ const stats = [
 
 export default function InnovationStats() {
   return (
-    <section className="bg-card py-10 px-4">
+    <section className=" backdrop-blur-2xl py-10 px-4">
       <div className="mx-auto max-w-[1400px]">
         {/* Header */}
         <div className="mb-8 flex flex-col items-center justify-center text-center">
@@ -99,12 +99,12 @@ export default function InnovationStats() {
                 >
                   {/* Hover glow */}
                   <div
-                    className={`pointer-events-none absolute inset-0 -z-10 rounded-xl bg-gradient-to-br ${stat.color} opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-40`}
+                    className={`pointer-events-none absolute inset-0 -z-10 rounded-xl bg-gradient-to-br ${stat.color} opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-40 `}
                   />
 
                   <div className="h-full rounded-xl border border-border bg-background/90 shadow-sm transition-transform duration-200 group-hover:-translate-y-1 group-hover:shadow-md">
-                    <CardHeader className="space-y-0 p-4 pb-2">
-                      <div className="mb-2 flex items-center justify-between">
+                    <CardHeader className="space-y-0 p-4 pb-2 text-center ">
+                      <div className="mb-2 flex items-center justify-center">
                         <div
                           className={`
                             inline-flex items-center justify-center
@@ -125,7 +125,7 @@ export default function InnovationStats() {
                       </CardTitle>
                     </CardHeader>
 
-                    <CardContent className="p-4 pt-0">
+                    <CardContent className="p-4 pt-0 text-center">
                       <p className="text-xs leading-tight text-muted-foreground">
                         {stat.desc}
                       </p>
