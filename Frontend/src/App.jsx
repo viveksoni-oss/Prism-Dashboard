@@ -13,6 +13,7 @@ import ApplicationsPage from "./Pages/Applications/ApplicationsPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PrismVideoPage from "./Pages/Home/YtPage";
 import Layout from "./Pages/Home/Layout";
+import TocicPage from "./Pages/Home/TocicPage";
 // --- LAYOUT COMPONENT ---
 // This wrapper ensures Sidebar and Navbar only show for dashboard pages
 const DashboardLayout = () => {
@@ -43,6 +44,7 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/YtPage" element={<PrismVideoPage />} />
+            <Route path="/tocicPage" element={<TocicPage />} />
 
             <Route path="/" element={<Home />}></Route>
             <Route path="/login" element={<Login />} />
