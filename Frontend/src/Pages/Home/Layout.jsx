@@ -72,15 +72,12 @@ export default function Layout() {
 
             {/* CENTER: PRISM & Ministry Text */}
             <div className="text-center">
-              <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground md:text-2xl">
-                Department of Scientific and Industrial Research
+              <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground md:text-lg">
+                Ministry of Science and Technology
               </h3>
-              <h1 className="mt-1 text-3xl font-semibold tracking-tight text-primary md:text-4xl lg:text-6xl">
+              <h1 className="mt-1 text-3xl font-semibold tracking-tight text-primary md:text-4xl lg:text-4xl">
                 PRISM Pluse Connect
               </h1>
-              <p className="text-xs font-medium text-slate-600 dark:text-slate-400 md:text-lg">
-                Promoting Innovations in Individuals, Start-ups and MSMEs
-              </p>
             </div>
 
             {/* RIGHT: Campaign Logos */}
@@ -118,7 +115,7 @@ export default function Layout() {
           STICKY NAVBAR
           ========================================= */}
       <nav className="sticky top-0 z-50 w-full border-b backdrop-blur-xl bg-blue-100">
-        <div className="container  flex h-16 items-center justify-between px-4 md:px-6">
+        <div className="container  flex h-12 items-center justify-between px-4 md:px-6">
           {/* LEFT SIDE: Mobile Menu + Home Icon */}
           {/* Mobile Menu Trigger */}
           <div className="flex md:hidden">

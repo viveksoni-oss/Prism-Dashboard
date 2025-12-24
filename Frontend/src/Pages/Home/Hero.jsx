@@ -31,9 +31,9 @@ const Marquee = ({ children, speed = "20s" }) => {
 
 const Hero7 = () => {
   return (
-    <section className="relative overflow-hidden bg-background py-20">
+    <section className="relative overflow-hidden bg-background pb-5 ">
       {/* Background particles */}
-      <div className="pointer-events-none absolute inset-0 z-0">
+      <div className="pointer-events-none absolute inset-0 z-0 ">
         <SparkleParticles enableParallax="true" particleColor="#0ea5e9" />
       </div>
 
@@ -41,29 +41,22 @@ const Hero7 = () => {
       <div className="relative z-10 container mx-auto px-6 text-center">
         {/* Marquee ribbon */}
         <div className="mb-4 flex justify-center">
-          <div className="w-full max-w-2xl">
-            <Marquee speed="22s">
-              PRISM is open all year long · Applications accepted anytime
-            </Marquee>
-          </div>
+          <div className="w-full max-w-2xl"></div>
         </div>
 
-        <p className="text-xs text-muted-foreground">
-          Ministry of Science and Technology, Government of India
-        </p>
-        <p className="mt-1 text-xs text-muted-foreground">
+        <p className="mt-1 text-2xl capitalize font-medium text-muted-foreground ">
           Department of Scientific and Industrial Research (DSIR)
         </p>
 
-        <h1 className="mx-auto mt-6 max-w-5xl text-5xl font-semibold tracking-tight text-foreground lg:text-7xl">
+        <h1 className="mx-auto mt-6 max-w-5xl text-primary text-5xl font-semibold tracking-tight  lg:text-7xl">
           PRISM
         </h1>
 
-        <p className="mt-4 text-lg text-muted-foreground lg:text-xl">
+        <p className="mt-4 text-lg text-muted-foreground italic lg:text-xl">
           <TextType
             text={["Promoting Innovations in Individuals, Start-ups and MSMEs"]}
             typingSpeed={60}
-            pauseDuration={5000}
+            pauseDuration={500000000}
             showCursor
             cursorCharacter="|"
           />

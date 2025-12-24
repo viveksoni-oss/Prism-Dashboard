@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
 
 const stories = [
   {
@@ -82,9 +83,10 @@ export default function SuccessStoryCarousel() {
   return (
     <section className="relative w-full py-4 ">
       <div className="mx-auto max-w-7xl px-6">
-        <h2 className="mb-12 text-center text-4xl font-semibold">
-          Success Stories
-        </h2>
+        <SectionHeading
+          heading="Innovation success"
+          headingSuffix="stories"
+        ></SectionHeading>
 
         <div
           className="relative overflow-hidden"

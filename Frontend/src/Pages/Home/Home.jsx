@@ -19,11 +19,12 @@ function Home() {
   const navigate = useNavigate();
   return (
     <div className="  mx-auto text-foreground">
+      <Hero7></Hero7>
       <div className="space-y-12">
+        <SuccessStoryCarousel />
         <InnovationStats />
 
         <GalleryAndNews />
-        <SuccessStoryCarousel />
         <Map />
       </div>
     </div>
