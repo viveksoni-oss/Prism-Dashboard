@@ -4,63 +4,62 @@ import SectionHeading from "@/components/SectionHeading";
 
 const stories = [
   {
-    name: "Rahul Sharma",
-    designation: "Founder, TechNova",
+    name: "Dr. Binta Shrivastava",
+    designation: "SPMVV – TOCIC",
     story:
-      "With PRISM's mentorship and funding, we transformed our idea into a scalable product that now serves thousands of users across India.",
-    image: "/logos/alex-suprun-ZHvM3XIOHoE-unsplash.jpg",
+      "Validation of a single diagnostic device for detection of the three most prevalent mosquito-borne diseases, including malaria and chikungunya, enabling faster and more reliable diagnosis.",
+    image: "/success_stories/project1.jpg",
   },
   {
-    name: "Anita Verma",
-    designation: "CEO, InnovateX",
+    name: "Mr. Kaushik",
+    designation: "University of Madras – TOCIC",
     story:
-      "The ecosystem support helped us bridge the gap between research and real-world deployment, accelerating our growth journey.",
-    image: "/logos/christopher-campbell-rDEOVtE7vOs-unsplash.jpg",
+      "Development of a point-of-care biosensor for early and accurate diagnosis of chronic kidney disease, making diagnostics more accessible and affordable.",
+    image: "/success_stories/project2.jpg",
   },
   {
-    name: "Suresh Patel",
-    designation: "Director, MSME Solutions",
+    name: "Mr. Uddip Kashyap",
+    designation: "IIT Guwahati – TOCIC",
     story:
-      "Digital transformation through PRISM enabled us to modernize operations and expand into new markets confidently.",
-    image:
-      "/logos/close-up-portrait-young-bearded-man-white-shirt-jacket-posing-camera-with-broad-smile-isolated-gray.jpg",
+      "A smart nest management system designed to support small-scale businesses in rural areas by improving operational efficiency and resource management.",
+    image: "/success_stories/project3.jpg",
   },
   {
-    name: "Neha Gupta",
-    designation: "Co-founder, SmartLabs",
+    name: "Dr. Chander Prakash",
+    designation: "CSIR – CSIO, Chandigarh",
     story:
-      "From idea validation to go-to-market, the guidance we received played a crucial role in our success.",
-    image: "/logos/michael-dam-mEZ3PoFGs_k-unsplash.jpg",
+      "Design and development of a novel hybrid ball burnishing assisted 3-axis wire arc additive manufacturing machine for advanced industrial applications.",
+    image: "/success_stories/project5.jpg",
   },
   {
-    name: "Amit Singh",
-    designation: "CTO, FutureWorks",
+    name: "Dr. Jayendra Diwan",
+    designation: "GSBTM – Gujarat",
     story:
-      "PRISM’s innovation support helped us adopt cutting-edge technologies and build future-ready solutions.",
-    image: "/logos/jurica-koletic-7YVZYZeITc8-unsplash.jpg",
+      "Making of transfemoral and transtibial mechanical prosthetic leg for improving mobility and quality of life.",
+    image: "/success_stories/project5.jpg",
   },
   {
-    name: "Pooja Nair",
-    designation: "Founder, ScaleUp Hub",
+    name: "Mr. David Roshan Cyril",
+    designation: "University of Madras",
     story:
-      "The collaborative environment and expert mentoring accelerated our journey from prototype to production.",
-    image: "/logos/8b97e421-39d2-4295-854f-d194e06a99fc.jpg",
+      "A Novel Acupuncture Treatment Planning and navigation support device for accurate positioning and needling for Acupuncture practitioners.",
+    image: "/success_stories/project5.jpg",
   },
 ];
-
-const ITEMS_PER_SLIDE = 3;
 
 export default function SuccessStoryCarousel() {
   const [index, setIndex] = useState(0);
   const intervalRef = useRef(null);
 
+  const isMobile = window.innerWidth < 768;
+  const ITEMS_PER_SLIDE = isMobile ? 1 : 2;
   const totalSlides = Math.ceil(stories.length / ITEMS_PER_SLIDE);
 
   const startAutoplay = () => {
     stopAutoplay();
     intervalRef.current = setInterval(() => {
       setIndex((prev) => (prev + 1) % totalSlides);
-    }, 3500);
+    }, 4000);
   };
 
   const stopAutoplay = () => {
@@ -69,31 +68,22 @@ export default function SuccessStoryCarousel() {
 
   useEffect(() => {
     startAutoplay();
-    return () => stopAutoplay();
+    return stopAutoplay;
   }, [totalSlides]);
 
-  const prev = () => {
-    setIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
-  };
-
-  const next = () => {
-    setIndex((prev) => (prev + 1) % totalSlides);
-  };
-
   return (
-    <section className="relative w-full py-4 ">
+    <section className="relative w-full py-15 ">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading
-          heading="Innovation success"
-          headingSuffix="stories"
-        ></SectionHeading>
+        <h2 className="mb-12 text-center text-4xl font-semibold text-white">
+          Success Stories
+        </h2>
 
         <div
           className="relative overflow-hidden"
           onMouseEnter={stopAutoplay}
           onMouseLeave={startAutoplay}
         >
-          {/* Slider */}
+          {/* SLIDER */}
           <div
             className="flex transition-transform duration-700 ease-in-out"
             style={{ transform: `translateX(-${index * 100}%)` }}
@@ -101,7 +91,7 @@ export default function SuccessStoryCarousel() {
             {Array.from({ length: totalSlides }).map((_, slideIndex) => (
               <div
                 key={slideIndex}
-                className="grid w-full flex-shrink-0 grid-cols-1 gap-6 px-4 md:grid-cols-3"
+                className="grid w-full flex-shrink-0 grid-cols-1 gap-8 px-4 md:grid-cols-2"
               >
                 {stories
                   .slice(
@@ -111,27 +101,29 @@ export default function SuccessStoryCarousel() {
                   .map((item, i) => (
                     <div
                       key={i}
-                      className="rounded-3xl border border-black/20  bg-blue-100 text-slate-700  p-6 shadow-xl"
+                      className="rounded-3xl border border-white/20 bg-gradient-to-br from-neutral-900 to-neutral-800 p-6 text-white shadow-xl"
                     >
                       <div className="flex items-center gap-6">
                         {/* Left Circle Image */}
                         <img
                           src={item.image}
                           alt={item.name}
-                          className="h-24 w-24 rounded-full border border-black/30 object-cover"
+                          className="h-24 w-24 rounded-full border border-white/30 object-cover"
                         />
 
                         {/* Title + Designation */}
                         <div>
-                          <h3 className="text-lg font-semibold">{item.name}</h3>
-                          <p className="text-sm text-slate-700">
+                          <h3 className="text-lg font-semibold">
+                            {item.name}
+                          </h3>
+                          <p className="text-sm text-white/70">
                             {item.designation}
                           </p>
                         </div>
                       </div>
 
                       {/* Story */}
-                      <p className="mt-6 text-sm leading-relaxed text-slate-600">
+                      <p className="mt-6 text-sm leading-relaxed text-white/80">
                         {item.story}
                       </p>
                     </div>
@@ -140,28 +132,35 @@ export default function SuccessStoryCarousel() {
             ))}
           </div>
 
-          {/* Arrows */}
+          {/* ARROWS */}
           <button
-            onClick={prev}
-            className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
+            onClick={() =>
+              setIndex((prev) => (prev - 1 + totalSlides) % totalSlides)
+            }
+            className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full 
+                       bg-black/10 p-2 hover:bg-black/20"
           >
             <ChevronLeft />
           </button>
+
           <button
-            onClick={next}
-            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full bg-white/10 p-2 text-white hover:bg-white/20"
+            onClick={() =>
+              setIndex((prev) => (prev + 1) % totalSlides)
+            }
+            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full 
+                       bg-black/10 p-2 hover:bg-black/20"
           >
             <ChevronRight />
           </button>
         </div>
 
-        {/* Dots */}
-        <div className="mt-8 flex justify-center gap-2">
+        {/* DOTS */}
+        <div className="mt-10 flex justify-center gap-2">
           {Array.from({ length: totalSlides }).map((_, i) => (
             <span
               key={i}
-              className={`h-2 w-2 rounded-full transition-all ${
-                i === index ? "bg-white w-4" : "bg-white/40"
+              className={`h-2 rounded-full transition-all ${
+                i === index ? "w-6 bg-black" : "w-2 bg-black/30"
               }`}
             />
           ))}
