@@ -1,64 +1,78 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { motion } from "framer-motion";
 
+// --- Data Mapped to Specific Images in /public/success_stories/ ---
 const stories = [
   {
-    name: "Dr. Binta Shrivastava",
-    designation: "SPMVV – TOCIC",
-    story:
-      "Validation of a single diagnostic device for detection of the three most prevalent mosquito-borne diseases, including malaria and chikungunya, enabling faster and more reliable diagnosis.",
-    image: "/success_stories/project1.jpg",
+    title: "Fire Fighter Drone",
+    name: "Quazi Tarique A Ally",
+    designation: "IIT Kharagpur",
+    story: "Reduces fire response time in high-rise buildings.",
+    // Matches file: Bebeto Ally.jpg
+    image: "/success_stories/Bebeto Ally.jpg",
   },
   {
-    name: "Mr. Kaushik",
-    designation: "University of Madras – TOCIC",
+    title: "Malnutrition Detection",
+    name: "Dr. Komal Shah",
+    designation: "GSBTM Gujarat",
     story:
-      "Development of a point-of-care biosensor for early and accurate diagnosis of chronic kidney disease, making diagnostics more accessible and affordable.",
-    image: "/success_stories/project2.jpg",
+      "CASAM – Malnutrition Detection Solution via community health workers.",
+    // Matches file: Dr. Komal Shah Prototype.png
+    image: "/success_stories/Dr. Komal Shah Prototype.png",
   },
   {
-    name: "Mr. Uddip Kashyap",
-    designation: "IIT Guwahati – TOCIC",
+    title: "EV Motor Innovation",
+    name: "Sumeet Gattewar",
+    designation: "IIT Kharagpur",
     story:
-      "A smart nest management system designed to support small-scale businesses in rural areas by improving operational efficiency and resource management.",
-    image: "/success_stories/project3.jpg",
+      "Switched Reluctance Motor boosts EV efficiency and supports self-reliant manufacturing.",
+    // Matches file: Sumeet Gattewar prototype.png
+    image: "/success_stories/Sumeet Gattewar prototype.png",
   },
   {
-    name: "Dr. Chander Prakash",
-    designation: "CSIR – CSIO, Chandigarh",
+    title: "Smart Energy Monitor",
+    name: "Ms. Devalina Das",
+    designation: "CSIR-CGCRI",
     story:
-      "Design and development of a novel hybrid ball burnishing assisted 3-axis wire arc additive manufacturing machine for advanced industrial applications.",
-    image: "/success_stories/project5.jpg",
+      "Automatic Energy Monitoring Device that monitors appliance-wise energy usage via SMS.",
+    // Matches file: Devlina Das prototype.png
+    image: "/success_stories/Devlina Das prototype.png",
   },
   {
-    name: "Dr. Jayendra Diwan",
-    designation: "GSBTM – Gujarat",
+    title: "Livestock Health Device",
+    name: "Dr. Debeshi Dutta",
+    designation: "CSIR-CGCRI",
     story:
-      "Making of transfemoral and transtibial mechanical prosthetic leg for improving mobility and quality of life.",
-    image: "/success_stories/project5.jpg",
-  },
-  {
-    name: "Mr. David Roshan Cyril",
-    designation: "University of Madras",
-    story:
-      "A Novel Acupuncture Treatment Planning and navigation support device for accurate positioning and needling for Acupuncture practitioners.",
-    image: "/success_stories/project5.jpg",
+      "Wearable device for Estrous & FMD detection in cattle for early disease detection.",
+    // Matches file: Dr. Debeshi Dutta Biswas prototype (1).png
+    image: "/success_stories/Dr. Debeshi Dutta Biswas prototype (1).png",
   },
 ];
 
 export default function SuccessStoryCarousel() {
   const [index, setIndex] = useState(0);
   const intervalRef = useRef(null);
+  const [itemsPerSlide, setItemsPerSlide] = useState(3);
 
-  const isMobile = window.innerWidth < 768;
-  const ITEMS_PER_SLIDE = isMobile ? 1 : 2;
-  const totalSlides = Math.ceil(stories.length / ITEMS_PER_SLIDE);
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) setItemsPerSlide(1);
+      else if (window.innerWidth < 1024) setItemsPerSlide(2);
+      else setItemsPerSlide(3);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const totalSlides = Math.ceil(stories.length / itemsPerSlide);
 
   const startAutoplay = () => {
     stopAutoplay();
     intervalRef.current = setInterval(() => {
       setIndex((prev) => (prev + 1) % totalSlides);
-    }, 4000);
+    }, 6000);
   };
 
   const stopAutoplay = () => {
@@ -71,105 +85,126 @@ export default function SuccessStoryCarousel() {
   }, [totalSlides]);
 
   return (
-    <section className="relative w-full py-10 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <h2 className="mb-14 text-center text-4xl font-semibold text-black">
-          Innovation Success Stories
-        </h2>
-
+    <section className="relative w-full py-20 pt-5 bg-slate-50/50">
+      <div className="max-w-[1400px] mx-auto px-6">
         <div
-          className="relative overflow-hidden"
+          className="relative group/carousel"
           onMouseEnter={stopAutoplay}
           onMouseLeave={startAutoplay}
         >
-          {/* SLIDER */}
-          <div
-            className="flex transition-transform duration-700 ease-in-out"
-            style={{ transform: `translateX(-${index * 100}%)` }}
-          >
-            {Array.from({ length: totalSlides }).map((_, slideIndex) => (
-              <div
-                key={slideIndex}
-                className="grid w-full flex-shrink-0 grid-cols-1 gap-8 px-4 md:grid-cols-2"
-              >
-                {stories
-                  .slice(
-                    slideIndex * ITEMS_PER_SLIDE,
-                    slideIndex * ITEMS_PER_SLIDE + ITEMS_PER_SLIDE
-                  )
-                  .map((item, i) => (
-                    <div
-                      key={i}
-                      className="h-[320px] rounded-[2rem] border border-slate-200
-                                 bg-blue-50 p-6 shadow-xl"
-                    >
-                      <div className="flex h-full gap-6">
-                        {/* IMAGE */}
-                        <div className="h-[240px] w-[250px] overflow-hidden rounded-xl border shrink-0">
+          {/* SLIDER TRACK */}
+          <div className="overflow-hidden py-4 -mx-4 px-4">
+            <motion.div
+              className="flex"
+              initial={false}
+              animate={{ x: `-${index * 100}%` }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            >
+              {Array.from({ length: totalSlides }).map((_, slideIndex) => (
+                <div
+                  key={slideIndex}
+                  className="grid w-full flex-shrink-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                >
+                  {stories
+                    .slice(
+                      slideIndex * itemsPerSlide,
+                      slideIndex * itemsPerSlide + itemsPerSlide
+                    )
+                    .map((item, i) => (
+                      <motion.div
+                        key={i}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.1 }}
+                        className="group relative h-[450px] w-full overflow-hidden rounded-3xl bg-slate-900 shadow-lg hover:shadow-2xl transition-all duration-500"
+                      >
+                        {/* 1. FULL BACKGROUND IMAGE */}
+                        <div className="absolute inset-0 z-0 bg-slate-800">
                           <img
                             src={item.image}
                             alt={item.name}
-                            className="h-full w-full object-cover"
+                            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                            onError={(e) => {
+                              e.target.style.display = "none"; // Hide broken images if path is wrong
+                            }}
                           />
+
+                          {/* Gradient Overlays for Readability */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-80" />
+                          <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent opacity-60" />
                         </div>
 
-                        {/* CONTENT */}
-                        <div className="flex flex-col flex-1 h-full">
-                          {/* SCROLLABLE TEXT */}
-                          <div className="flex-1 overflow-y-auto pr-2">
-                            <p className="text-base leading-relaxed text-black ">
+                        {/* 2. CONTENT OVERLAY */}
+                        <div className="relative z-10 flex h-full flex-col justify-end p-6 md:p-8">
+                          {/* Top Badge (Designation) */}
+                          <div className="absolute top-6 left-6">
+                            <span className="inline-flex items-center rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-md border border-white/10 shadow-sm">
+                              {item.designation}
+                            </span>
+                          </div>
+
+                          {/* Text Content */}
+                          <div className="transform transition-transform duration-300 translate-y-2 group-hover:translate-y-0">
+                            {/* Project Title */}
+                            <h3 className="text-2xl font-bold text-white mb-2 leading-tight drop-shadow-md">
+                              {item.title}
+                            </h3>
+
+                            {/* Innovator Name */}
+                            <p className="text-blue-300 font-medium mb-4 text-sm uppercase tracking-wider">
+                              {item.name}
+                            </p>
+
+                            {/* Separator Line */}
+                            <div className="h-0.5 w-12 bg-blue-500 mb-4 transition-all duration-300 group-hover:w-20" />
+
+                            {/* Description */}
+                            <p className="text-slate-200 text-sm leading-relaxed line-clamp-3 group-hover:line-clamp-none group-hover:text-white transition-colors duration-300 drop-shadow-sm">
                               {item.story}
                             </p>
                           </div>
-
-                          <div className="pt-4 text-right">
-                            <p className="font-semibold text-black">
-                              {item.name}
-                            </p>
-                            <p className="italic text-black/70 mt-1">
-                              {item.designation}
-                            </p>
-                          </div>
                         </div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            ))}
+                      </motion.div>
+                    ))}
+                </div>
+              ))}
+            </motion.div>
           </div>
 
-          {/* ARROWS */}
+          {/* ARROWS (Floating) */}
           <button
             onClick={() =>
               setIndex((prev) => (prev - 1 + totalSlides) % totalSlides)
             }
-            className="absolute left-2 top-1/2 -translate-y-1/2 rounded-full 
-                       bg-black/10 p-2 hover:bg-black/20"
+            className="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white shadow-xl text-slate-800 hover:text-blue-600 hover:scale-110 transition-all z-20 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100 disabled:opacity-50"
+            aria-label="Previous slide"
           >
-            <ChevronLeft />
+            <ChevronLeft className="w-6 h-6" />
           </button>
 
           <button
-            onClick={() =>
-              setIndex((prev) => (prev + 1) % totalSlides)
-            }
-            className="absolute right-2 top-1/2 -translate-y-1/2 rounded-full 
-                       bg-black/10 p-2 hover:bg-black/20"
+            onClick={() => setIndex((prev) => (prev + 1) % totalSlides)}
+            className="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 p-3 rounded-full bg-white shadow-xl text-slate-800 hover:text-blue-600 hover:scale-110 transition-all z-20 opacity-0 group-hover/carousel:opacity-100 focus:opacity-100"
+            aria-label="Next slide"
           >
-            <ChevronRight />
+            <ChevronRight className="w-6 h-6" />
           </button>
-        </div>
 
-        {/* DOTS */}
-        <div className="mt-10 flex justify-center gap-2">
-          {Array.from({ length: totalSlides }).map((_, i) => (
-            <span
-              key={i}
-              className={`h-2 rounded-full transition-all ${
-                i === index ? "w-6 bg-black" : "w-2 bg-black/30"
-              }`}
-            />
-          ))}
+          {/* DOTS */}
+          <div className="mt-8 flex justify-center gap-2">
+            {Array.from({ length: totalSlides }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setIndex(i)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${
+                  i === index
+                    ? "w-8 bg-blue-600"
+                    : "w-2 bg-slate-300 hover:bg-blue-400"
+                }`}
+                aria-label={`Go to slide ${i + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

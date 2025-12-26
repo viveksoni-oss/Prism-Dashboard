@@ -1,9 +1,9 @@
 import { ThemeProvider } from "./components/Theme-Provider";
 import NavBar from "./components/NavBar";
 import Home from "./Pages/Home/Home";
-import Dashboard from "./Pages/Dashboard";
+import Dashboard from "./Pages/Dashboard/Dashboard";
 import { Route, Routes, Outlet } from "react-router-dom"; // Added Outlet
-import Login from "./Pages/LogIn";
+import Login from "./Pages/LogIn/Login";
 import { Toaster } from "react-hot-toast";
 import { SidebarInset, SidebarProvider } from "./components/ui/sidebar";
 import SidebarComponents from "./components/SidebarComponents";
@@ -11,9 +11,10 @@ import { AuthProvider } from "@/Context/AuthContext.jsx";
 import TocicDetails from "./Pages/Tocic-center";
 import ApplicationsPage from "./Pages/Applications/ApplicationsPage";
 import ProtectedRoute from "./components/ProtectedRoute";
-import PrismVideoPage from "./Pages/Home/YtPage";
+import PrismVideoPage from "./Pages/MediaPage/YtPage";
 import Layout from "./Pages/Home/Layout";
 import TocicPage from "./Pages/Home/TocicPage";
+import PrismApplyPage from "./Pages/Home/HowToApply";
 // --- LAYOUT COMPONENT ---
 // This wrapper ensures Sidebar and Navbar only show for dashboard pages
 const DashboardLayout = () => {
@@ -44,7 +45,8 @@ function App() {
         <Routes>
           <Route element={<Layout />}>
             <Route path="/YtPage" element={<PrismVideoPage />} />
-            <Route path="/tocicPage" element={<TocicPage />} />
+            <Route path="/tocic" element={<TocicPage />} />
+            <Route path="/apply" element={<PrismApplyPage />} />
 
             <Route path="/" element={<Home />}></Route>
             <Route path="/login" element={<Login />} />
