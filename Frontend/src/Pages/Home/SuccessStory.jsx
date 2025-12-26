@@ -57,7 +57,7 @@ const stories = [
     designation: "University of Madras",
     story:
       "Iron-based redox flow battery designed for efficient, low-cost, and scalable renewable energy storage solutions.",
-    image: "/successImage/Dr_Umesh_Flow_Battery.jpg",
+    image: "/successImage/Dr_Umesh_Flow_Battery.png",
   },
 ];
 
