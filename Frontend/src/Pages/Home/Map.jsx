@@ -4,17 +4,37 @@ import {
   Geographies,
   Geography,
   Marker,
-  ZoomableGroup,
 } from "react-simple-maps";
 import { Tooltip } from "react-tooltip";
 import { MapPin, Navigation } from "lucide-react";
-import SectionHeading from "./../../components/SectionHeading"; // Assuming path
-import { cn } from "@/lib/utils";
+import SectionHeading from "./../../components/SectionHeading";
+// Ensure this path matches your project structure, or remove if not needed
 
-// 1. TopoJSON URL (Ensure this file exists in your public folder)
+// 1. TopoJSON URL
 const INDIA_TOPO_JSON = "/india.json";
 
-// 2. Data Grouped by Zones
+// 2. Updated Color Definition (Light/Blue Theme)
+const COLORS = {
+  // Map Colors2563eb
+  mapBase: "#2563eb", // Blue-100: Light blue base (replaces dark slate)
+  mapActive: "#fbbf24", // Blue-600: Deep blue for active states
+  mapHover: "#baccf5",
+  // Amber-400: High-vis yellow for interaction
+  mapStroke: "#ffffff", // White: Clean borders for light theme
+  mapStrokeActive: "#ffffff",
+
+  // Markers
+  markerFill: "#ef4444", // Red-500: Standard alert color for pins
+  markerPulse: "#fca5a5", // Red-300: Soft pulse
+  markerStroke: "#ffffff", // White
+
+  // Sidebar / UI Highlights
+  uiHighlightBg: "#eff6ff", // Blue-50: Very light blue background for active items
+  uiHighlightBorder: "#2563eb", // Blue-600: Border matches map active color
+  uiTextHighlight: "#1d4ed8", // Blue-700: Requested text color
+  uiIcon: "#334155", // Slate-700: Standard icon color
+};
+
 const zoneData = {
   "North Zone": [
     {
@@ -112,13 +132,11 @@ const zoneData = {
   ],
 };
 
-// Flatten markers for map rendering
 const allMarkers = Object.values(zoneData).flat();
 
 export default function IndiaSimpleMap() {
   const [hoveredZone, setHoveredZone] = useState(null);
 
-  // Create a Set of active states for O(1) lookup
   const activeStates = useMemo(() => {
     return new Set(allMarkers.map((m) => m.state));
   }, []);
@@ -126,7 +144,6 @@ export default function IndiaSimpleMap() {
   return (
     <section className="relative w-full py-16 bg-white">
       <div className="container mx-auto px-4 max-w-7xl">
-        {/* Header */}
         <SectionHeading
           heading="TOCIC Network"
           headingSuffix="Coverage"
@@ -138,9 +155,12 @@ export default function IndiaSimpleMap() {
         <div className="flex flex-col-reverse lg:flex-row gap-8 mt-10">
           {/* LEFT: Zone-wise Sidebar */}
           <div className="w-full lg:w-1/3 space-y-6">
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-6 shadow-sm h-[600px] overflow-y-auto custom-scrollbar">
+            <div className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm h-[600px] overflow-y-auto custom-scrollbar">
               <h3 className="text-lg font-bold text-slate-800 mb-6 flex items-center gap-2">
-                <Navigation className="w-5 h-5 text-red-500" />
+                <Navigation
+                  className="w-5 h-5"
+                  style={{ color: COLORS.uiIcon }}
+                />
                 Regional Centers
               </h3>
 
@@ -152,19 +172,26 @@ export default function IndiaSimpleMap() {
                     onMouseEnter={() => setHoveredZone(zone)}
                     onMouseLeave={() => setHoveredZone(null)}
                   >
-                    <h4 className="text-xs font-bold text-slate-400 uppercase tracking-wider border-b border-slate-200 pb-1">
+                    <h4
+                      className="text-md font-bold uppercase tracking-wider pl-3 py-2 rounded-r-md border-l-4 transition-colors duration-200"
+                      style={{
+                        backgroundColor: COLORS.uiHighlightBg,
+                        borderColor: COLORS.uiHighlightBorder,
+                        color: COLORS.uiTextHighlight, // Applied requested Blue-700 text color
+                      }}
+                    >
                       {zone}
                     </h4>
-                    <ul className="space-y-3">
+                    <ul className="space-y-3 pl-2">
                       {centers.map((center, idx) => (
                         <li key={idx} className="group">
                           <a
                             href={center.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="block p-3 rounded-lg bg-white border border-slate-100 shadow-sm hover:border-red-200 hover:shadow-md transition-all"
+                            className="block p-3 rounded-lg bg-white border border-slate-100 shadow-sm hover:shadow-md transition-all group-hover:border-blue-200"
                           >
-                            <div className="font-semibold text-sm text-slate-800 group-hover:text-red-600 transition-colors">
+                            <div className="font-semibold text-sm text-slate-800 group-hover:text-blue-700 transition-colors">
                               {center.name}
                             </div>
                             <div className="flex items-center gap-1.5 mt-1 text-xs text-slate-500">
@@ -181,100 +208,107 @@ export default function IndiaSimpleMap() {
             </div>
           </div>
 
-          {/* RIGHT: Map */}
-          <div className="w-full lg:w-2/3 h-[600px] rounded-2xl border border-slate-200 bg-blue-50/30 relative overflow-hidden flex items-center justify-center shadow-inner">
+          {/* RIGHT: Map Container */}
+          <div className="w-full lg:w-2/3 h-160 rounded-2xl border border-slate-200 bg-slate-50 relative overflow-hidden flex items-center justify-center shadow-inner">
             <ComposableMap
               projection="geoMercator"
-              projectionConfig={{
-                scale: 1100,
-                center: [82, 23],
-              }}
+              projectionConfig={{ scale: 1000, center: [82, 23] }}
               className="w-full h-full"
             >
-              <ZoomableGroup zoom={1} maxZoom={3}>
-                {/* Render Geography */}
-                <Geographies geography={INDIA_TOPO_JSON}>
-                  {({ geographies }) =>
-                    geographies.map((geo) => {
-                      const stateName =
-                        geo.properties.NAME_1 || geo.properties.name;
-                      const isActive = activeStates.has(stateName);
+              <Geographies geography={INDIA_TOPO_JSON}>
+                {({ geographies }) =>
+                  geographies.map((geo) => {
+                    const stateName =
+                      geo.properties.st_nm ||
+                      geo.properties.NAME_1 ||
+                      geo.properties.name;
 
-                      // Check if state belongs to currently hovered zone
-                      let isHoveredZoneState = false;
-                      if (hoveredZone) {
-                        const zoneStates = zoneData[hoveredZone].map(
-                          (c) => c.state
-                        );
-                        if (zoneStates.includes(stateName))
-                          isHoveredZoneState = true;
-                      }
+                    const isActive = activeStates.has(stateName);
 
-                      return (
-                        <Geography
-                          key={geo.rsmKey}
-                          geography={geo}
-                          data-tooltip-id="map-tooltip"
-                          data-tooltip-content={stateName}
-                          style={{
-                            default: {
-                              // Active States = Light Red, Others = Slate Gray
-                              fill: isActive ? "#fee2e2" : "#f1f5f9",
-                              stroke: isActive ? "#fca5a5" : "#cbd5e1",
-                              strokeWidth: isActive ? 1 : 0.5,
-                              outline: "none",
-                              transition: "all 0.3s",
-                            },
-                            hover: {
-                              fill: isActive ? "#fecaca" : "#e2e8f0",
-                              stroke: "#ef4444",
-                              strokeWidth: 1,
-                              outline: "none",
-                              cursor: "pointer",
-                            },
-                          }}
-                        />
+                    let isHoveredZoneState = false;
+                    if (hoveredZone) {
+                      const zoneStates = zoneData[hoveredZone].map(
+                        (c) => c.state
                       );
-                    })
-                  }
-                </Geographies>
+                      if (zoneStates.includes(stateName))
+                        isHoveredZoneState = true;
+                    }
 
-                {/* Render Markers */}
-                {allMarkers.map(({ name, city, coordinates, url }) => (
-                  <Marker
-                    key={name}
-                    coordinates={coordinates}
-                    data-tooltip-id="map-tooltip"
-                    data-tooltip-content={`${city}`}
-                    onClick={() => window.open(url, "_blank")}
-                    className="cursor-pointer group"
-                  >
-                    {/* Pulsating Effect */}
-                    <circle
-                      r={8}
-                      fill="#ef4444"
-                      fillOpacity={0.3}
-                      className="animate-ping"
-                    />
-                    {/* Pin Head */}
-                    <circle
-                      r={3.5}
-                      fill="#dc2626"
-                      stroke="#fff"
-                      strokeWidth={1.5}
-                      className="transition-transform duration-300 group-hover:scale-150"
-                    />
-                  </Marker>
-                ))}
-              </ZoomableGroup>
+                    // Apply Colors
+                    const baseFill = isActive
+                      ? COLORS.mapActive
+                      : COLORS.mapBase;
+
+                    const hoverFill = COLORS.mapHover;
+
+                    const strokeColor = isActive
+                      ? COLORS.mapStrokeActive
+                      : COLORS.mapStroke;
+
+                    const finalFill = isHoveredZoneState
+                      ? COLORS.mapHover
+                      : baseFill;
+
+                    return (
+                      <Geography
+                        key={geo.rsmKey}
+                        geography={geo}
+                        data-tooltip-id="map-tooltip"
+                        data-tooltip-content={stateName}
+                        style={{
+                          default: {
+                            fill: finalFill,
+                            stroke: strokeColor,
+                            strokeWidth: isActive ? 1 : 0.5,
+                            outline: "none",
+                            transition: "all 0.3s ease",
+                          },
+                          hover: {
+                            fill: hoverFill,
+                            stroke: "#fff",
+                            strokeWidth: 1,
+                            outline: "none",
+                            cursor: "default",
+                          },
+                          pressed: { outline: "none" },
+                        }}
+                      />
+                    );
+                  })
+                }
+              </Geographies>
+
+              {allMarkers.map(({ name, city, coordinates, url }) => (
+                <Marker
+                  key={name}
+                  coordinates={coordinates}
+                  data-tooltip-id="map-tooltip"
+                  data-tooltip-content={`${city}`}
+                  onClick={() => window.open(url, "_blank")}
+                  className="cursor-pointer group"
+                >
+                  <circle
+                    r={8}
+                    fill={COLORS.markerPulse}
+                    fillOpacity={0.6}
+                    className="animate-ping"
+                  />
+                  <circle
+                    r={3.5}
+                    fill={COLORS.markerFill}
+                    stroke={COLORS.markerStroke}
+                    strokeWidth={1.5}
+                    className="transition-transform duration-300 group-hover:scale-150"
+                  />
+                </Marker>
+              ))}
             </ComposableMap>
 
-            {/* Tooltip */}
             <Tooltip
               id="map-tooltip"
               style={{
                 backgroundColor: "#1e293b",
-                color: "#fff",
+                color: "#f8fafc",
                 borderRadius: "8px",
                 fontSize: "12px",
                 fontWeight: "500",
@@ -283,15 +317,16 @@ export default function IndiaSimpleMap() {
               }}
             />
 
-            {/* Legend Overlay */}
-            <div className="absolute bottom-4 right-4 bg-white/90 backdrop-blur-sm p-3 rounded-lg border border-slate-200 shadow-sm text-xs space-y-2">
+            {/* Legend */}
+            <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm p-3 rounded-lg border border-slate-200 shadow-lg text-xs space-y-2">
               <div className="flex items-center gap-2">
-                <span className="w-3 h-3 rounded bg-red-100 border border-red-300"></span>
-                <span className="text-slate-600 font-medium">Active State</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-red-600"></span>
-                <span className="text-slate-600 font-medium">PRISM Center</span>
+                <span
+                  className="w-3 h-3 rounded-full shadow-sm"
+                  style={{ backgroundColor: COLORS.markerFill }}
+                ></span>
+                <span className="text-slate-700 font-medium">
+                  TOCIC Outreach
+                </span>
               </div>
             </div>
           </div>
@@ -300,4 +335,3 @@ export default function IndiaSimpleMap() {
     </section>
   );
 }
-
