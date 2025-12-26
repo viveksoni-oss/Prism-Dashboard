@@ -1,54 +1,66 @@
 import React, { useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { motion } from "framer-motion";
+import { ChevronLeft, ChevronRight, Award } from "lucide-react";
 
-// --- Data Mapped to Specific Images in /public/success_stories/ ---
+// --- Data Mapped to Specific Images in /public/successImage/ ---
 const stories = [
   {
-    title: "Fire Fighter Drone",
-    name: "Quazi Tarique A Ally",
-    designation: "IIT Kharagpur",
-    story: "Reduces fire response time in high-rise buildings.",
-    // Matches file: Bebeto Ally.jpg
-    image: "/success_stories/Bebeto Ally.jpg",
+    title: "Any-Time Medicine Dispenser",
+    name: "Dr. Sumit Singh Phukela",
+    designation: "CSIR-CSIO, Chandigarh",
+    story:
+      "Automated medicine dispensing machine enabling round-the-clock access to essential medicines and inventory control.",
+    image: "/successImage/Sumit_Phukela_Medicine_Dispenser.jpg",
   },
   {
-    title: "Malnutrition Detection",
-    name: "Dr. Komal Shah",
-    designation: "GSBTM Gujarat",
+    title: "Smart Health Vest",
+    name: "Mr. Amit Kumar",
+    designation: "CSIR-CSIO, Chandigarh",
     story:
-      "CASAM – Malnutrition Detection Solution via community health workers.",
-    // Matches file: Dr. Komal Shah Prototype.png
-    image: "/success_stories/Dr. Komal Shah Prototype.png",
+      "Wearable smart vest designed for monitoring physiological parameters to enhance health tracking and early diagnosis.",
+    image: "/successImage/Amit_Kumar_Smart_Vest.jpg",
   },
   {
-    title: "EV Motor Innovation",
-    name: "Sumeet Gattewar",
-    designation: "IIT Kharagpur",
+    title: "CD Space Mapping Drone",
+    name: "Mr. Nikhil Upadhye",
+    designation: "IIT Kanpur",
     story:
-      "Switched Reluctance Motor boosts EV efficiency and supports self-reliant manufacturing.",
-    // Matches file: Sumeet Gattewar prototype.png
-    image: "/success_stories/Sumeet Gattewar prototype.png",
+      "DGCA type-certified PPK-enabled aerial mapping drone for high-precision survey and mapping applications.",
+    image: "/successImage/Nikhil_Upadhye_Drone.jpg",
   },
   {
-    title: "Smart Energy Monitor",
-    name: "Ms. Devalina Das",
-    designation: "CSIR-CGCRI",
+    title: "Smart Assistive Device",
+    name: "Mr. Kumar Kalika",
+    designation: "IIT Kanpur",
     story:
-      "Automatic Energy Monitoring Device that monitors appliance-wise energy usage via SMS.",
-    // Matches file: Devlina Das prototype.png
-    image: "/success_stories/Devlina Das prototype.png",
+      "Assistive device aimed at supporting differently-abled individuals through smart sensing and feedback mechanisms.",
+    image: "/successImage/Kumar_Kalika_Assistive_Device.jpg",
   },
   {
-    title: "Livestock Health Device",
-    name: "Dr. Debeshi Dutta",
-    designation: "CSIR-CGCRI",
+    title: "Braille Math Slate",
+    name: "Mr. Anupam Kumar Garg",
+    designation: "IIT Kanpur",
     story:
-      "Wearable device for Estrous & FMD detection in cattle for early disease detection.",
-    // Matches file: Dr. Debeshi Dutta Biswas prototype (1).png
-    image: "/success_stories/Dr. Debeshi Dutta Biswas prototype (1).png",
+      "Tactile Braille-based slate enabling visually impaired students to learn mathematics through hands-on interaction.",
+    image: "/successImage/Anupam_Garg_Braille_Slate.jpg",
+  },
+  {
+    title: "Tunable Photo Reactor",
+    name: "Dr. Sanjeev Kumar Bhardwaj",
+    designation: "CSIR-CSIO, Chandigarh",
+    story:
+      "Indigenous photo-reactor designed for multi-colour tunable light irradiation, enabling controlled photo-chemical reactions.",
+    image: "/successImage/Sanjeev_Bhardwaj_Photo_Reactor.jpg",
+  },
+  {
+    title: "Iron Flow Battery",
+    name: "Dr. Umesh",
+    designation: "University of Madras",
+    story:
+      "Iron-based redox flow battery designed for efficient, low-cost, and scalable renewable energy storage solutions.",
+    image: "/successImage/Dr_Umesh_Flow_Battery.jpg",
   },
 ];
+
 
 export default function SuccessStoryCarousel() {
   const [index, setIndex] = useState(0);
@@ -94,11 +106,9 @@ export default function SuccessStoryCarousel() {
         >
           {/* SLIDER TRACK */}
           <div className="overflow-hidden py-4 -mx-4 px-4">
-            <motion.div
-              className="flex"
-              initial={false}
-              animate={{ x: `-${index * 100}%` }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            <div
+              className="flex transition-transform duration-500 ease-out"
+              style={{ transform: `translateX(-${index * 100}%)` }}
             >
               {Array.from({ length: totalSlides }).map((_, slideIndex) => (
                 <div
@@ -111,64 +121,72 @@ export default function SuccessStoryCarousel() {
                       slideIndex * itemsPerSlide + itemsPerSlide
                     )
                     .map((item, i) => (
-                      <motion.div
+                      <div
                         key={i}
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.1 }}
-                        className="group relative h-[450px] w-full overflow-hidden rounded-3xl bg-slate-900 shadow-lg hover:shadow-2xl transition-all duration-500"
+                        className="group relative h-[500px] w-full overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-2xl transition-all duration-500 border border-slate-200"
                       >
-                        {/* 1. FULL BACKGROUND IMAGE */}
-                        <div className="absolute inset-0 z-0 bg-slate-800">
+                        {/* IMAGE SECTION (Top 55%) */}
+                        <div className="relative h-[55%] w-full overflow-hidden bg-slate-100">
                           <img
                             src={item.image}
                             alt={item.name}
-                            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                            className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                             onError={(e) => {
-                              e.target.style.display = "none"; // Hide broken images if path is wrong
+                              e.target.style.display = "none";
                             }}
                           />
 
-                          {/* Gradient Overlays for Readability */}
-                          <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/60 to-transparent opacity-90 transition-opacity duration-300 group-hover:opacity-80" />
-                          <div className="absolute inset-0 bg-gradient-to-b from-black/40 to-transparent opacity-60" />
-                        </div>
+                          {/* Subtle gradient at bottom of image for smooth transition */}
+                          <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent" />
 
-                        {/* 2. CONTENT OVERLAY */}
-                        <div className="relative z-10 flex h-full flex-col justify-end p-6 md:p-8">
-                          {/* Top Badge (Designation) */}
-                          <div className="absolute top-6 left-6">
-                            <span className="inline-flex items-center rounded-full bg-white/20 px-3 py-1 text-xs font-medium text-white backdrop-blur-md border border-white/10 shadow-sm">
+                          {/* Designation Badge (Floating on Image) */}
+                          <div className="absolute top-4 right-4">
+                            <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-bold text-slate-700 backdrop-blur-sm shadow-md border border-slate-200">
+                              <Award className="w-3 h-3 text-blue-600" />
                               {item.designation}
                             </span>
                           </div>
+                        </div>
 
-                          {/* Text Content */}
-                          <div className="transform transition-transform duration-300 translate-y-2 group-hover:translate-y-0">
-                            {/* Project Title */}
-                            <h3 className="text-2xl font-bold text-white mb-2 leading-tight drop-shadow-md">
+                        {/* CONTENT SECTION (Bottom 45%) */}
+                        <div className="relative h-[45%] flex flex-col justify-between p-6 bg-white">
+                          {/* Project Title */}
+                          <div>
+                            <h3 className="text-xl font-bold text-slate-900 mb-2 leading-tight group-hover:text-blue-700 transition-colors">
                               {item.title}
                             </h3>
 
                             {/* Innovator Name */}
-                            <p className="text-blue-300 font-medium mb-4 text-sm uppercase tracking-wider">
+                            <p className="text-blue-600 font-semibold mb-3 text-sm">
                               {item.name}
                             </p>
 
                             {/* Separator Line */}
-                            <div className="h-0.5 w-12 bg-blue-500 mb-4 transition-all duration-300 group-hover:w-20" />
+                            <div className="h-0.5 w-12 bg-blue-500 mb-3 transition-all duration-300 group-hover:w-20" />
 
                             {/* Description */}
-                            <p className="text-slate-200 text-sm leading-relaxed line-clamp-3 group-hover:line-clamp-none group-hover:text-white transition-colors duration-300 drop-shadow-sm">
+                            <p className="text-slate-600 text-sm leading-relaxed line-clamp-3">
                               {item.story}
                             </p>
                           </div>
+
+                          {/* Bottom Accent */}
+                          <div className="flex items-center justify-between pt-4 border-t border-slate-100 mt-auto">
+                            <span className="text-xs text-slate-400 font-medium uppercase tracking-wider">
+                              Success Story
+                            </span>
+                            <div className="flex gap-1">
+                              <div className="h-1 w-8 bg-blue-500 rounded-full" />
+                              <div className="h-1 w-4 bg-blue-300 rounded-full" />
+                              <div className="h-1 w-2 bg-blue-200 rounded-full" />
+                            </div>
+                          </div>
                         </div>
-                      </motion.div>
+                      </div>
                     ))}
                 </div>
               ))}
-            </motion.div>
+            </div>
           </div>
 
           {/* ARROWS (Floating) */}

@@ -2,70 +2,88 @@ import React from "react";
 import { motion } from "framer-motion";
 import { SparkleParticles } from "@/components/ui/sparkle-particles";
 
-const Hero7 = () => {
+const PrismHero = () => {
+  // Animation variants for staggered entrance
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15, // Delay between each child animation
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, ease: "easeOut" },
+    },
+  };
+
   return (
-    <section className="relative overflow-hidden min-h-[35vh] flex flex-col justify-center items-center bg-slate-50 border-b border-slate-100">
+    <section className="relative overflow-hidden min-h-[40vh] flex flex-col justify-center items-center bg-slate-50/50 border-b border-slate-100">
       {/* 1. Background Effects */}
-      <div className="absolute inset-0 z-0 opacity-30">
+      <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
         <SparkleParticles
-          enableParallax="true"
-          particleColor="#3b82f6"
-          density={40}
+          enableParallax={true}
+          particleColor="#2563eb" // Blue-600
+          density={45}
+          speed={0.5}
         />
       </div>
 
-      {/* Subtle Background Glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-100/40 rounded-full blur-[80px] pointer-events-none" />
+      {/* Subtle Central Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-200/30 rounded-full blur-[100px] pointer-events-none" />
 
       {/* 2. Content Container */}
-      <div className="relative z-10 container mx-auto px-6 text-center max-w-4xl pt-8 pb-4">
-        {/* Status Pill */}
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="relative z-10 container mx-auto px-6 text-center max-w-5xl py-10"
+      >
+        {/* Status Pill (Glassmorphic) */}
         <motion.div
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
+          variants={itemVariants}
           className="mb-6 flex justify-center"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-200 bg-emerald-50 text-emerald-700 text-xs font-semibold uppercase tracking-wide shadow-sm">
+          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full border border-emerald-200/60 bg-white/60 backdrop-blur-sm text-emerald-700 text-[11px] md:text-xs font-bold uppercase tracking-widest shadow-sm hover:shadow-md transition-shadow">
             <span className="relative flex h-2 w-2">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
             </span>
-          Applications open throughout the year.
+            Applications Open Year-Round
           </div>
         </motion.div>
 
-        {/* DSIR Label (Now Bolder) */}
+        {/* DSIR Label */}
         <motion.h2
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.1 }}
-          className="text-lg md:text-xl font-extrabold text-slate-800 mb-2 uppercase tracking-wide"
+          variants={itemVariants}
+          className="text-sm md:text-base font-bold text-slate-600 mb-1 uppercase tracking-[0.2em]"
         >
           Department of Scientific and Industrial Research
         </motion.h2>
 
-        {/* Main Title (Simple Color) */}
-        <motion.h1
-          initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.2, type: "spring" }}
-          className="mx-auto text-6xl md:text-8xl font-black tracking-tighter text-blue-600 mb-4"
-        >
-          PRISM
-        </motion.h1>
+        {/* Main Title */}
+        <motion.div variants={itemVariants} className="relative">
+          <h1 className="mx-auto text-7xl md:text-8xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-br from-blue-900 via-blue-700 to-indigo-600 pb-2 drop-shadow-sm">
+            PRISM
+          </h1>
+        </motion.div>
 
-        {/* Description (Light weight) */}
+        {/* Description */}
         <motion.p
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="text-lg md:text-xl text-slate-500 font-light max-w-2xl mx-auto"
+          variants={itemVariants}
+          className="text-lg md:text-xl text-slate-600 font-normal max-w-3xl mx-auto leading-relaxed"
         >
-          Promoting Innovations in Individuals, Start-ups, and MSMEs
+          Promoting Innovations inIndividuals, Start-ups, MSMEs{" "}
         </motion.p>
-      </div>
+      </motion.div>
     </section>
   );
 };
 
-export default Hero7;
+export default PrismHero;
