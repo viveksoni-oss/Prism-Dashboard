@@ -1,66 +1,68 @@
-// Hero.tsx
 import React from "react";
-import TextType from "@/components/TextType";
+import { motion } from "framer-motion";
 import { SparkleParticles } from "@/components/ui/sparkle-particles";
-
-// Inline marquee component for the ribbon
-const Marquee = ({ children, speed = "20s" }) => {
-  return (
-    <div className="relative overflow-hidden border border-primary/20 bg-primary/10 py-2 rounded-full">
-      <div
-        className="whitespace-nowrap will-change-transform"
-        style={{
-          display: "inline-block",
-          animation: `marquee ${speed} linear infinite`,
-        }}
-      >
-        <span className="mx-8 text-xs font-medium text-primary">
-          {children}
-        </span>
-        <span className="mx-8 text-xs font-medium text-primary">
-          {children}
-        </span>
-      </div>
-
-      {/* Edge fades */}
-      <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-background to-transparent" />
-      <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-background to-transparent" />
-    </div>
-  );
-};
 
 const Hero7 = () => {
   return (
-    <section className="relative overflow-hidden bg-background pb-5 ">
-      {/* Background particles */}
-      <div className="pointer-events-none absolute inset-0 z-0 ">
-        <SparkleParticles enableParallax="true" particleColor="#0ea5e9" />
+    <section className="relative overflow-hidden min-h-[35vh] flex flex-col justify-center items-center bg-slate-50 border-b border-slate-100">
+      {/* 1. Background Effects */}
+      <div className="absolute inset-0 z-0 opacity-30">
+        <SparkleParticles
+          enableParallax="true"
+          particleColor="#3b82f6"
+          density={40}
+        />
       </div>
 
-      {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 text-center">
-        {/* Marquee ribbon */}
-        <div className="mb-4 flex justify-center">
-          <div className="w-full max-w-2xl"></div>
-        </div>
+      {/* Subtle Background Glows */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-100/40 rounded-full blur-[80px] pointer-events-none" />
 
-        <p className="mt-1 text-2xl capitalize font-medium text-muted-foreground ">
-          Department of Scientific and Industrial Research (DSIR)
-        </p>
+      {/* 2. Content Container */}
+      <div className="relative z-10 container mx-auto px-6 text-center max-w-4xl pt-8 pb-4">
+        {/* Status Pill */}
+        <motion.div
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-6 flex justify-center"
+        >
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-200 bg-emerald-50 text-emerald-700 text-xs font-semibold uppercase tracking-wide shadow-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+          Applications open throughout the year.
+          </div>
+        </motion.div>
 
-        <h1 className="mx-auto mt-6 max-w-5xl text-primary text-5xl font-semibold tracking-tight  lg:text-7xl">
+        {/* DSIR Label (Now Bolder) */}
+        <motion.h2
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.1 }}
+          className="text-lg md:text-xl font-extrabold text-slate-800 mb-2 uppercase tracking-wide"
+        >
+          Department of Scientific and Industrial Research
+        </motion.h2>
+
+        {/* Main Title (Simple Color) */}
+        <motion.h1
+          initial={{ opacity: 0, scale: 0.98 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.2, type: "spring" }}
+          className="mx-auto text-6xl md:text-8xl font-black tracking-tighter text-blue-600 mb-4"
+        >
           PRISM
-        </h1>
+        </motion.h1>
 
-        <p className="mt-4 text-lg text-muted-foreground italic lg:text-xl">
-          <TextType
-            text={["Promoting Innovations in Individuals, Start-ups and MSMEs"]}
-            typingSpeed={60}
-            pauseDuration={500000000}
-            showCursor
-            cursorCharacter="|"
-          />
-        </p>
+        {/* Description (Light weight) */}
+        <motion.p
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="text-lg md:text-xl text-slate-500 font-light max-w-2xl mx-auto"
+        >
+          Promoting Innovations in Individuals, Start-ups, and MSMEs
+        </motion.p>
       </div>
     </section>
   );

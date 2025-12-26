@@ -1,20 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
-  Lightbulb,
-  Users,
-  Briefcase,
-  Banknote,
-  ScrollText,
-  FlaskConical,
+  GraduationCap,
+  Megaphone,
+  ScanSearch,
+  BrainCircuit,
+  FileCheck,
+  Rocket,
   TrendingUp,
-  X,
+  ArrowUpRight,
+  History,
+  Sigma,
 } from "lucide-react";
 import {
   Card,
   CardHeader,
   CardTitle,
   CardContent,
-  CardFooter,
   CardDescription,
 } from "@/components/ui/card";
 import {
@@ -24,9 +25,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogTrigger,
-  DialogClose,
 } from "@/components/ui/dialog";
-
 import {
   Bar,
   BarChart,
@@ -42,259 +41,335 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { SparkleParticles } from "@/components/ui/sparkle-particles";
+import { motion, useSpring, useTransform } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 // --- DATA ---
-// Full dataset (2019–2025)
-const fullData = {
+
+const graphData = {
   "Workshops Conducted": [
-    { year: "2019", value: 364 },
-    { year: "2020", value: 55 },
-    { year: "2021", value: 60 },
-    { year: "2022", value: 72 },
-    { year: "2023", value: 59 },
-    { year: "2024", value: 70 },
-    { year: "2025", value: 316 },
+    { year: "20-21", value: 90 },
+    { year: "21-22", value: 98 },
+    { year: "22-23", value: 130 },
+    { year: "23-24", value: 138 },
+    { year: "24-25", value: 142 },
   ],
   "Outreach Activities": [
-    { year: "2019", value: 180 },
-    { year: "2020", value: 60 },
-    { year: "2021", value: 136 },
-    { year: "2022", value: 150 },
-    { year: "2023", value: 162 },
-    { year: "2024", value: 88 },
-    { year: "2025", value: 596 },
+    { year: "20-21", value: 50 },
+    { year: "21-22", value: 55 },
+    { year: "22-23", value: 67 },
+    { year: "23-24", value: 68 },
+    { year: "24-25", value: 76 },
   ],
   "Proposals Scouted": [
-    { year: "2019", value: 515 },
-    { year: "2020", value: 210 },
-    { year: "2021", value: 242 },
-    { year: "2022", value: 275 },
-    { year: "2023", value: 412 },
-    { year: "2024", value: 370 },
-    { year: "2025", value: 1509 },
+    { year: "20-21", value: 210 },
+    { year: "21-22", value: 242 },
+    { year: "22-23", value: 275 },
+    { year: "23-24", value: 412 },
+    { year: "24-25", value: 370 },
   ],
   "Innovators Supported": [
-    { year: "2019", value: 147 },
-    { year: "2020", value: 22 },
-    { year: "2021", value: 15 },
-    { year: "2022", value: 27 },
-    { year: "2023", value: 14 },
-    { year: "2024", value: 32 },
-    { year: "2025", value: 110 },
+    { year: "20-21", value: 22 },
+    { year: "21-22", value: 15 },
+    { year: "22-23", value: 27 },
+    { year: "23-24", value: 14 },
+    { year: "24-25", value: 32 },
   ],
   "Patents Filed": [
-    { year: "2019", value: 42 },
-    { year: "2020", value: 10 },
-    { year: "2021", value: 14 },
-    { year: "2022", value: 17 },
-    { year: "2023", value: 15 },
-    { year: "2024", value: 14 },
-    { year: "2025", value: 70 },
+    { year: "20-21", value: 10 },
+    { year: "21-22", value: 14 },
+    { year: "22-23", value: 17 },
+    { year: "23-24", value: 15 },
+    { year: "24-25", value: 14 },
   ],
   "Start-ups Catalysed": [
-    { year: "2019", value: 40 },
-    { year: "2020", value: 6 },
-    { year: "2021", value: 5 },
-    { year: "2022", value: 7 },
-    { year: "2023", value: 5 },
-    { year: "2024", value: 8 },
-    { year: "2025", value: 31 },
+    { year: "20-21", value: 6 },
+    { year: "21-22", value: 5 },
+    { year: "22-23", value: 7 },
+    { year: "23-24", value: 5 },
+    { year: "24-25", value: 8 },
   ],
 };
 
-// Colors for bars
+const metaData = {
+  "Workshops Conducted": {
+    before2020: 82,
+    total2020_25: 598,
+    grandTotal: 680,
+  },
+  "Outreach Activities": {
+    before2020: 100,
+    total2020_25: 316,
+    grandTotal: 416,
+  },
+  "Proposals Scouted": {
+    before2020: 515,
+    total2020_25: 1509,
+    grandTotal: 2024,
+  },
+  "Innovators Supported": {
+    before2020: 147,
+    total2020_25: 110,
+    grandTotal: 257,
+  },
+  "Patents Filed": {
+    before2020: 42,
+    total2020_25: 70,
+    grandTotal: 112,
+  },
+  "Start-ups Catalysed": {
+    before2020: 40,
+    total2020_25: 31,
+    grandTotal: 71,
+  },
+};
+
 const BAR_COLORS = [
-  "#3b82f6", // blue-500
-  "#10b981", // emerald-500
-  "#f59e0b", // amber-500
-  "#ef4444", // red-500
-  "#8b5cf6", // violet-500
-  "#06b6d4", // cyan-500
+  "#3b82f6",
+  "#10b981",
+  "#f59e0b",
+  "#ef4444",
+  "#8b5cf6",
+  "#06b6d4",
 ];
 
-// Stats info
+// Stats Configuration - Updated Icons
 const stats = [
   {
-    icon: Lightbulb,
+    icon: GraduationCap, // Education/Workshops
     title: "Workshops Conducted",
-    value: "680+",
-    desc: "Innovation & entrepreneurship workshops conducted.",
-    detail:
-      "More than 680 workshops conducted to build awareness, capacity, and skills in innovation, entrepreneurship, and technology commercialization.",
-    color: "from-amber-200 to-yellow-400",
+    suffix: "+",
+    desc: "Innovation & entrepreneurship workshops.",
+    detail: "Workshops conducted to build awareness and skills in innovation.",
+    gradient:
+      "bg-gradient-to-br from-amber-50 to-orange-100 border-orange-200/60",
+    iconColor: "text-orange-600",
+    iconBg: "bg-orange-100",
   },
   {
-    icon: Users,
+    icon: Megaphone, // Outreach
     title: "Outreach Activities",
-    value: "776+",
+    suffix: "+",
     desc: "Outreach and engagement activities.",
     detail:
-      "Over 776 outreach activities carried out to reach students, innovators, startups, and ecosystem stakeholders across regions.",
-    color: "from-blue-200 to-indigo-400",
+      "Activities carried out to reach students and ecosystem stakeholders.",
+    gradient:
+      "bg-gradient-to-br from-blue-50 to-indigo-100 border-indigo-200/60",
+    iconColor: "text-indigo-600",
+    iconBg: "bg-indigo-100",
   },
   {
-    icon: Briefcase,
+    icon: ScanSearch, // Scouting
     title: "Proposals Scouted",
-    value: "2024+",
+    suffix: "+",
     desc: "Innovation proposals identified.",
-    detail:
-      "More than 2024 innovation proposals scouted through calls, events, and outreach initiatives under the program.",
-    color: "from-emerald-200 to-green-400",
+    detail: "Innovation proposals scouted through calls and events.",
+    gradient:
+      "bg-gradient-to-br from-emerald-50 to-green-100 border-green-200/60",
+    iconColor: "text-emerald-600",
+    iconBg: "bg-emerald-100",
   },
   {
-    icon: FlaskConical,
+    icon: BrainCircuit, // Innovators
     title: "Innovators Supported",
-    value: "257+",
+    suffix: "+",
     desc: "Individual innovators supported.",
-    detail:
-      "Over 257 innovators supported with mentoring, funding access, infrastructure, or incubation support.",
-    color: "from-cyan-200 to-sky-400",
+    detail: "Innovators supported with mentoring, funding, or infrastructure.",
+    gradient: "bg-gradient-to-br from-cyan-50 to-sky-100 border-sky-200/60",
+    iconColor: "text-sky-600",
+    iconBg: "bg-sky-100",
   },
   {
-    icon: ScrollText,
-    title: "IPR Generated ",
-    value: "112",
+    icon: FileCheck, // Patents/IPR
+    title: "IPR Generated",
+    lookupKey: "Patents Filed",
+    suffix: "",
     desc: "Intellectual property filings.",
-    detail:
-      "112 patents filed as a direct or indirect outcome of supported innovations and technology development efforts.",
-    color: "from-purple-200 to-violet-400",
+    detail: "Patents filed as an outcome of supported innovations.",
+    gradient:
+      "bg-gradient-to-br from-violet-50 to-purple-100 border-purple-200/60",
+    iconColor: "text-violet-600",
+    iconBg: "bg-violet-100",
   },
   {
-    icon: Banknote,
+    icon: Rocket, // Startups
     title: "Start-ups Catalysed",
-    value: "71",
+    suffix: "",
     desc: "New startups enabled.",
-    detail:
-      "71 startups catalysed through incubation, acceleration, mentoring, and ecosystem support under the innovation program.",
-    color: "from-orange-200 to-red-400",
+    detail: "Startups catalysed through incubation and ecosystem support.",
+    gradient: "bg-gradient-to-br from-rose-50 to-red-100 border-red-200/60",
+    iconColor: "text-rose-600",
+    iconBg: "bg-rose-100",
   },
 ];
 
 const chartConfig = {
   value: {
     label: "Count",
-    color: "hsl(var(--chart-1))",
+    color: "hsl(var(--primary))",
   },
 };
 
+// --- COUNTER COMPONENT ---
+function Counter({ value, suffix = "" }) {
+  const spring = useSpring(0, { mass: 0.8, stiffness: 75, damping: 15 });
+  const display = useTransform(spring, (current) =>
+    Math.round(current).toLocaleString()
+  );
+
+  useEffect(() => {
+    spring.set(value);
+  }, [value, spring]);
+
+  return (
+    <span className="flex items-center">
+      <motion.span>{display}</motion.span>
+      {suffix}
+    </span>
+  );
+}
+
 export default function InnovationStats() {
   return (
-    <div className="relative bg-gray-50 ">
-      <SparkleParticles className={"absolute inset-0 z-0"} />
-      <div className="">
-        <section className="backdrop-blur-2xl pt-5 pb-10 px-4 ">
-          <div className="mx-auto max-w-[1400px]">
-            {/* Header */}
-            <div className="mb-4 flex flex-col items-center justify-center text-center">
-              <h2 className="text-[26px] font-bold tracking-tight text-foreground">
-                Innovation Impact
-              </h2>
+    <div className="relative min-h-screen bg-white/50">
+      <SparkleParticles className={"absolute inset-0 z-0 opacity-40"} />
+
+      <section className="relative z-10 py-16 px-6">
+        <div className="mx-auto max-w-[1400px]">
+          {/* Header */}
+          <div className="mb-12 text-center space-y-4">
+            <div className="inline-flex items-center justify-center p-1.5 px-4 rounded-full bg-slate-100 text-slate-600 text-sm font-medium mb-2">
+              <TrendingUp className="w-4 h-4 mr-2 text-slate-500" />
+              Impact Report
             </div>
+            <h2 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
+              Innovation <span className="text-blue-600">Impact</span>
+            </h2>
+            <p className="text-slate-500 max-w-2xl mx-auto text-lg">
+              Driving growth through workshops, outreach, and startup support.
+            </p>
+          </div>
 
-            {/* Grid: Stats Cards */}
-            <div className="grid grid-cols-2 gap-8 md:grid-cols-3 max-w-7xl mx-auto lg:grid-cols-3 lg:grid-rows-2">
-              {stats.map((stat, index) => {
-                // Filter data: 2020 onwards
-                const chartData = (fullData[stat.title] || []).filter(
-                  (d) => parseInt(d.year) >= 2020
-                );
+          {/* Grid: Stats Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {stats.map((stat, index) => {
+              const key = stat.lookupKey || stat.title;
+              const currentGraphData = graphData[key] || [];
+              const currentMeta = metaData[key] || {
+                grandTotal: 0,
+                before2020: 0,
+                total2020_25: 0,
+              };
 
-                return (
-                  <Dialog key={index}>
-                    <DialogTrigger asChild>
-                      <button
-                        type="button"
-                        className="group relative h-full w-full text-left"
-                      >
-                        {/* Hover glow */}
-                        <div
-                          className={`pointer-events-none absolute inset-0 -z-10 rounded-xl bg-gradient-to-br ${stat.color} opacity-0 blur-xl transition-opacity duration-500 group-hover:opacity-40`}
-                        />
-                        <div className="h-full rounded-xl border border-border bg-blue-50 shadow-sm transition-transform duration-200 group-hover:-translate-y-1 group-hover:shadow-md">
-                          <CardHeader className="space-y-0 p-4 pb-2 text-center">
-                            <div className="mb-2 flex items-center justify-center">
-                              <div
-                                className={`inline-flex items-center justify-center rounded-lg bg-gradient-to-tl ${stat.color} p-2.5 shadow-sm`}
-                              >
-                                <stat.icon className="size-8 text-slate-900/80" />
-                              </div>
-                            </div>
-                            <div className="text-4xl font-semibold text-foreground">
-                              {stat.value}
-                            </div>
-                            <CardTitle className="mt-1 text-lg font-medium text-muted-foreground">
-                              {stat.title}
-                            </CardTitle>
-                          </CardHeader>
-                        </div>
-                      </button>
-                    </DialogTrigger>
-
-                    {/* Big Popup Content */}
-                    <DialogContent className="min-w-[85vw] w-full h-[80vh] p-0 overflow-hidden flex flex-col">
-                      <div className="p-6 pb-0 flex justify-between items-start">
-                        <DialogHeader>
-                          <DialogTitle className="text-2xl font-bold">
-                            {stat.title}
-                          </DialogTitle>
-                          <DialogDescription className="text-base mt-1.5">
-                            {stat.detail}
-                          </DialogDescription>
-                        </DialogHeader>
-                        {/* Close button is usually auto-added by DialogContent, but ensuring layout balance */}
+              return (
+                <Dialog key={index}>
+                  <DialogTrigger asChild>
+                    <motion.button
+                      whileHover={{ scale: 1.02, y: -4 }}
+                      whileTap={{ scale: 0.98 }}
+                      className={cn(
+                        "group relative flex flex-col items-center justify-center text-center w-full p-8 rounded-2xl border transition-all duration-300 shadow-sm hover:shadow-xl",
+                        stat.gradient
+                      )}
+                    >
+                      {/* Centered Icon */}
+                      <div className={cn("p-4 rounded-full mb-4", stat.iconBg)}>
+                        <stat.icon className={cn("w-8 h-8", stat.iconColor)} />
                       </div>
 
-                      <div className="flex-1 grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 p-6 min-h-0">
-                        {/* LEFT: Main Bar Chart (2020-Present) */}
-                        <Card className="flex flex-col shadow-none border bg-card/50">
-                          <CardHeader>
-                            <CardTitle>Year-wise Growth</CardTitle>
-                            <CardDescription>2020 – Present</CardDescription>
+                      {/* Centered Stats (No Description) */}
+                      <div className="space-y-1">
+                        <div className="text-4xl font-bold text-slate-900 tracking-tight flex justify-center">
+                          <Counter
+                            value={currentMeta.grandTotal}
+                            suffix={stat.suffix}
+                          />
+                        </div>
+                        <h3 className="text-lg font-semibold text-slate-700">
+                          {stat.title}
+                        </h3>
+                      </div>
+
+                      {/* Hover Arrow Indicator */}
+                      <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ArrowUpRight className="w-5 h-5 text-slate-400" />
+                      </div>
+                    </motion.button>
+                  </DialogTrigger>
+
+                  {/* Compact Dialog Content */}
+                  <DialogContent className="min-w-6xl max-w-[90vw] h-auto max-h-[85vh] overflow-hidden bg-white/95 backdrop-blur-xl border-slate-200 shadow-2xl rounded-2xl flex flex-col p-0">
+                    {/* Compact Header */}
+                    <DialogHeader className="px-6 py-4 border-b border-slate-100 flex-shrink-0 flex flex-row items-center gap-4 bg-white/50">
+                      <div className={cn("p-2 rounded-lg", stat.iconBg)}>
+                        <stat.icon className={cn("w-6 h-6", stat.iconColor)} />
+                      </div>
+                      <div className="text-left">
+                        <DialogTitle className="text-xl font-bold text-slate-900">
+                          {stat.title}
+                        </DialogTitle>
+                        <p className="text-xs text-slate-500 line-clamp-1">
+                          {stat.detail}
+                        </p>
+                      </div>
+                    </DialogHeader>
+
+                    {/* Body Content */}
+                    <div className="flex-1 overflow-y-auto p-6 bg-slate-50/30">
+                      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        {/* LEFT: Compact Graph */}
+                        <Card className="lg:col-span-2 shadow-sm border-slate-200 bg-white flex flex-col h-[320px]">
+                          <CardHeader className="py-3 px-4 border-b border-slate-50">
+                            <CardTitle className="text-sm font-semibold text-slate-700">
+                              Recent Cycle Growth (2020-25)
+                            </CardTitle>
                           </CardHeader>
-                          <CardContent className="flex-1 min-h-0">
+                          <CardContent className="flex-1 p-2">
                             <ChartContainer
                               config={chartConfig}
                               className="w-full h-full"
                             >
                               <ResponsiveContainer width="100%" height="100%">
                                 <BarChart
-                                  data={chartData}
+                                  data={currentGraphData}
                                   margin={{
-                                    top: 20,
-                                    right: 30,
-                                    left: 20,
-                                    bottom: 5,
+                                    top: 10,
+                                    right: 10,
+                                    left: -20,
+                                    bottom: 0,
                                   }}
                                 >
                                   <CartesianGrid
                                     vertical={false}
                                     strokeDasharray="3 3"
+                                    stroke="#e2e8f0"
                                   />
                                   <XAxis
                                     dataKey="year"
                                     tickLine={false}
-                                    tickMargin={10}
                                     axisLine={false}
+                                    tickMargin={8}
+                                    tick={{ fill: "#64748b", fontSize: 10 }}
                                   />
                                   <YAxis
                                     tickLine={false}
                                     axisLine={false}
-                                    tickMargin={10}
+                                    tick={{ fill: "#64748b", fontSize: 10 }}
                                   />
                                   <ChartTooltip
-                                    cursor={{ fill: "rgba(0,0,0,0.05)" }}
                                     content={
-                                      <ChartTooltipContent indicator="dashed" />
+                                      <ChartTooltipContent
+                                        indicator="line"
+                                        className="bg-white shadow-md border-slate-100 rounded-md text-xs"
+                                      />
                                     }
                                   />
                                   <Bar
                                     dataKey="value"
                                     radius={[4, 4, 0, 0]}
-                                    isAnimationActive={true}
-                                    animationDuration={1500}
-                                    animationEasing="ease-out"
+                                    animationDuration={1000}
                                   >
-                                    {chartData.map((entry, idx) => (
+                                    {currentGraphData.map((entry, idx) => (
                                       <Cell
                                         key={`cell-${idx}`}
                                         fill={
@@ -307,48 +382,58 @@ export default function InnovationStats() {
                               </ResponsiveContainer>
                             </ChartContainer>
                           </CardContent>
-                          <CardFooter className="flex-col items-start gap-2 text-sm border-t bg-muted/20 p-4">
-                            <div className="flex gap-2 font-medium leading-none">
-                              Trending up by 5.2% this year{" "}
-                              <TrendingUp className="h-4 w-4 text-emerald-500" />
-                            </div>
-                            <div className="leading-none text-muted-foreground">
-                              Showing total for the last 5 years
-                            </div>
-                          </CardFooter>
                         </Card>
 
-                        {/* RIGHT: Summary & Pie Chart */}
-                        <div className="flex flex-col gap-4">
-                          {/* Summary Box */}
-                          <Card className="bg-primary/5 border-primary/10 shadow-none">
-                            <CardHeader className="pb-2">
-                              <CardTitle className="text-sm font-medium text-muted-foreground">
-                                Cumulative Total (All Time)
-                              </CardTitle>
-                              <div className="text-4xl font-bold text-primary">
-                                {stat.value}
-                              </div>
-                            </CardHeader>
-                            <CardContent>
-                              <p className="text-xs text-muted-foreground">
-                                Includes legacy data from 2019 which is not
-                                shown in the yearly chart.
-                              </p>
-                            </CardContent>
+                        {/* RIGHT: Compact Stats Cards */}
+                        <div className="flex flex-col gap-3 h-[320px]">
+                          {/* Card 1 */}
+                          <Card className="bg-white border-slate-200 shadow-sm flex-1 flex flex-col justify-center px-4 py-2">
+                            <div className="flex justify-between items-center mb-1">
+                              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
+                                <History className="w-3 h-3" /> Before 2020
+                              </span>
+                            </div>
+                            <div className="text-2xl font-bold text-slate-700">
+                              {currentMeta.before2020.toLocaleString()}
+                            </div>
                           </Card>
 
-                          {/* Pie Chart */}
+                          {/* Card 2 */}
+                          <Card className="bg-blue-50/50 border-blue-100 shadow-sm flex-1 flex flex-col justify-center px-4 py-2 border-l-4 border-l-blue-500">
+                            <div className="flex justify-between items-center mb-1">
+                              <span className="text-[10px] font-bold uppercase tracking-wider text-blue-600 flex items-center gap-1">
+                                <TrendingUp className="w-3 h-3" /> 2020-2025
+                              </span>
+                            </div>
+                            <div className="text-2xl font-bold text-blue-900">
+                              {currentMeta.total2020_25.toLocaleString()}
+                            </div>
+                          </Card>
+
+                          {/* Card 3 */}
+                          <Card className="bg-slate-900 text-white shadow-md border-none flex-1 flex flex-col justify-center px-4 py-2">
+                            <div className="flex justify-between items-center mb-1">
+                              <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1">
+                                <Sigma className="w-3 h-3" /> Total
+                              </span>
+                            </div>
+                            <div className="text-3xl font-bold text-white">
+                              <Counter
+                                value={currentMeta.grandTotal}
+                                suffix={stat.suffix}
+                              />
+                            </div>
+                          </Card>
                         </div>
                       </div>
-                    </DialogContent>
-                  </Dialog>
-                );
-              })}
-            </div>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              );
+            })}
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
     </div>
   );
 }

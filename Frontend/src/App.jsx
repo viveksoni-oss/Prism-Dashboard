@@ -11,9 +11,10 @@ import { AuthProvider } from "@/Context/AuthContext.jsx";
 import TocicDetails from "./Pages/Tocic-center";
 import ApplicationsPage from "./Pages/Applications/ApplicationsPage";
 import ProtectedRoute from "./components/ProtectedRoute";
-import PrismVideoPage from "./Pages/Home/YtPage";
+import PrismVideoPage from "./Pages/MediaPage/YtPage";
 import Layout from "./Pages/Home/Layout";
 import TocicPage from "./Pages/Home/TocicPage";
+import PrismApplyPage from "./Pages/Home/HowToApply";
 // --- LAYOUT COMPONENT ---
 // This wrapper ensures Sidebar and Navbar only show for dashboard pages
 const DashboardLayout = () => {
@@ -45,6 +46,7 @@ function App() {
           <Route element={<Layout />}>
             <Route path="/YtPage" element={<PrismVideoPage />} />
             <Route path="/tocic" element={<TocicPage />} />
+            <Route path="/apply" element={<PrismApplyPage />} />
 
             <Route path="/" element={<Home />}></Route>
             <Route path="/login" element={<Login />} />

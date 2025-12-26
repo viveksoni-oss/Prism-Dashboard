@@ -14,11 +14,13 @@ import InnovationStats from "./StatsLayout";
 import GalleryAndNews from "./GalleryAndNews";
 import SuccessStoryCarousel from "./SuccessStory";
 import Map from "./Map";
+import { GradientBackground } from "@/components/gradient-background";
 
 function Home() {
   const navigate = useNavigate();
   return (
     <div className="  mx-auto text-foreground">
+      <GradientBackground />
       <Hero7></Hero7>
       <div className="space-y-12">
         <SuccessStoryCarousel />
