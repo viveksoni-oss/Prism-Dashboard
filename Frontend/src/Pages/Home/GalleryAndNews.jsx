@@ -131,13 +131,13 @@ function VerticalScrollList({ title, data, type = "news" }) {
 export default function GalleryAndNews() {
   // Updated images from /one.jpg to /eight.png
   const images = [
-    "/one.jpg",
-    "/two.jpg",
-    "/three.jpg",
+    "/one.png",
+    "/two.png",
+    "/three.png",
     "/four.jpg",
     "/five.jpg",
-    "/six.jpg",
-    "/seven.jpg",
+    "/six.png",
+    "/seven.png",
   ];
 
   return (
