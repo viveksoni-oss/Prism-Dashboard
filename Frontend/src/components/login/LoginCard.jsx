@@ -100,8 +100,8 @@ export default function LoginCard() {
                 <SelectValue placeholder="Select Portal" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="dsir">DSIR Admin Portal</SelectItem>
-                <SelectItem value="tocic">TOCIC Center Portal</SelectItem>
+                <SelectItem value="dsir">DSIR Admin </SelectItem>
+                <SelectItem value="tocic">TOCIC Center </SelectItem>
               </SelectContent>
             </Select>
           </div>

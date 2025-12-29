@@ -20,10 +20,10 @@ const STEPS = [
     title: "Identify a Nearby Outreach Centre",
     subtitle: "Find your local TOCIC",
     description:
-      "Locate the Technology Oriented Centre in Innovation Cluster (TOCIC) closest to your region. These centers are your primary point of contact for evaluation and guidance.",
+      "Select a TePP Outreach cum Cluster Innovation Centres (TOCIC) closest to your location from the official TOCIC list.",
     icon: MapPin,
     actionLabel: "View TOCIC List",
-    actionLink: "#", // Replace with actual TOCIC list URL if available
+    actionLink: "/tocic", // Replace with actual TOCIC list URL if available
     color: "blue",
   },
   {
@@ -77,7 +77,7 @@ export default function PrismApplyPage() {
       <div className="absolute -top-20 right-0 w-[500px] h-[500px] bg-blue-200/20 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute top-40 left-[-100px] w-[300px] h-[300px] bg-emerald-200/20 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="max-w-4xl mx-auto px-6 py-20 relative z-10">
+      <div className="max-w-4xl mx-auto px-6 py-10 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -85,12 +85,8 @@ export default function PrismApplyPage() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16 space-y-4"
         >
-          <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-white border border-slate-200 shadow-sm text-sm font-medium text-slate-600 mb-2">
-            <span className="flex h-2 w-2 rounded-full bg-blue-500 mr-2 animate-pulse" />
-            Application Process
-          </div>
           <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900">
-            Apply to the <span className="text-blue-600">PRISM Scheme</span>
+            Apply to the PRISM Scheme
           </h1>
           <p className="text-lg text-slate-600 max-w-2xl mx-auto">
             Follow these three simple steps to secure support for your

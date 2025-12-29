@@ -141,7 +141,7 @@ export default function GalleryAndNews() {
   ];
 
   return (
-    <section className="w-full px-4 py-8 bg-slate-50/50">
+    <section className="w-full px-4 -mt-4 bg-slate-50/50">
       <div className="max-w-7xl mx-auto">
         <SectionHeading heading={"Gallery &"} headingSuffix={"Updates"} />
 

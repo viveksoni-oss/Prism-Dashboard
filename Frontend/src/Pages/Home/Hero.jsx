@@ -24,16 +24,16 @@ const PrismHero = () => {
   };
 
   return (
-    <section className="relative overflow-hidden min-h-[40vh] flex flex-col justify-center items-center bg-slate-50/50 border-b border-slate-100">
+    <section className="relative overflow-hidden min-h-[40vh] flex flex-col justify-center items-center ">
       {/* 1. Background Effects */}
       <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
-        <SparkleParticles
+        {/* <SparkleParticles
           enableParallax={true}
           particleColor="#2563eb" // Blue-600
           density={45}
           speed={0.5}
-        />
-      </div>
+        />*/}
+      </div> 
 
       {/* Subtle Central Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-200/30 rounded-full blur-[100px] pointer-events-none" />
