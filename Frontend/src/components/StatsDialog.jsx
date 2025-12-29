@@ -1,5 +1,5 @@
-import React from "react";
-import { History, TrendingUp } from "lucide-react";
+import React, { useState, useEffect } from "react";
+import { History, TrendingUp, Award, Calendar, Percent } from "lucide-react";
 import {
   DialogContent,
   DialogHeader,
@@ -16,6 +16,8 @@ import {
   Cell,
   LabelList,
   Tooltip,
+  PieChart,
+  Pie,
 } from "recharts";
 import { ChartContainer } from "@/components/ui/chart";
 import { cn } from "@/lib/utils";
@@ -26,130 +28,381 @@ const chartConfig = {
   value: { label: "Count", color: "hsl(var(--primary))" },
 };
 
-export default function StatsDialog({ stat, graphData, metaData }) {
+export default function StatsDialog({
+  stat,
+  graphData,
+  metaData,
+  animationKey,
+}) {
+  const [shouldRender, setShouldRender] = useState(false);
+
+  useEffect(() => {
+    setShouldRender(false);
+    const timer = setTimeout(() => {
+      setShouldRender(true);
+    }, 50);
+    return () => clearTimeout(timer);
+  }, [animationKey]);
+
+  const total2020_25 = metaData.total2020_25 || 0;
+  const before2020 = metaData.before2020 || 0;
+  const grandTotal = total2020_25 + before2020;
+  const growthPercentage = before2020
+    ? (((total2020_25 - before2020) / before2020) * 100).toFixed(1)
+    : 0;
+
+  const donutData = [
+    { name: "Legacy Data", value: before2020, fill: "#64748b" },
+    { name: "Recent Growth", value: total2020_25, fill: "#3b82f6" },
+  ];
+
+  const avgPerYear = (total2020_25 / 6).toFixed(0);
+
   return (
-    <DialogContent className="max-w-[95vw] w-full lg:max-w-6xl h-[90vh] overflow-hidden bg-white border-slate-300 shadow-2xl rounded-2xl flex flex-col p-0">
-      {/* Header */}
-      <DialogHeader className="px-6 py-4 border-b-2 border-slate-200 flex-shrink-0 flex flex-row items-center gap-4 bg-gradient-to-r from-slate-50 to-white">
-        <div className={cn("p-3 rounded-xl shadow-sm", stat.iconBg)}>
+    <DialogContent className="max-w-[98vw] w-full lg:max-w-[92vw] xl:max-w-[88vw] h-[94vh] overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-50 border-slate-300 shadow-2xl rounded-3xl flex flex-col p-0">
+      {/* Enhanced Header */}
+      <DialogHeader className="px-8 py-4 border-b-2 border-slate-200 flex-shrink-0 flex flex-row items-center gap-4 bg-gradient-to-r from-white via-slate-50 to-white shadow-sm">
+        <div
+          className={cn(
+            "p-3 rounded-2xl shadow-lg ring-2 ring-white",
+            stat.iconBg
+          )}
+        >
           <stat.icon className={cn("w-7 h-7", stat.iconColor)} />
         </div>
         <div className="text-left flex-1">
-          <DialogTitle className="text-2xl font-black text-slate-900">
+          <DialogTitle className="text-2xl font-black text-slate-900 tracking-tight">
             {stat.title}
           </DialogTitle>
-          <p className="text-sm text-slate-600 mt-0.5">{stat.detail}</p>
+          <p className="text-sm text-slate-600 font-medium mt-0.5">
+            {stat.detail}
+          </p>
         </div>
-        {/* Total removed from header right side as requested, or kept minimal */}
+        <div className="hidden md:flex items-center gap-3 px-5 py-2.5 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border-2 border-blue-200 shadow-md">
+          <Award className="w-6 h-6 text-blue-600" />
+          <div className="text-right">
+            <div className="text-xs text-blue-700 font-bold uppercase tracking-wide">
+              Grand Total
+            </div>
+            <div className="text-2xl font-black text-blue-900">
+              <Counter value={grandTotal} />
+            </div>
+          </div>
+        </div>
       </DialogHeader>
 
-      {/* Main Content */}
-      <div className="flex-1 overflow-y-auto p-6 bg-slate-50">
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6 h-full">
-          {/* --- Graph Section (3 Cols) --- */}
-          <Card className="lg:col-span-3 shadow-md border-2 border-slate-200 bg-white flex flex-col min-h-[450px]">
-            <CardHeader className="py-4 px-6 border-b-2 border-slate-100 bg-slate-50/50">
-              <CardTitle className="text-base font-bold text-slate-800 flex items-center gap-2">
-                <TrendingUp className="w-4 h-4 text-blue-600" />
-                Year-wise Growth Trend (2020-2025)
+      {/* Main Content - NO SCROLL, Better Proportions */}
+      <div className="flex-1 overflow-hidden p-6 bg-gradient-to-br from-slate-50 to-slate-100">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 h-full">
+          {/* Left Column - Bar Chart (Takes 2 columns = 66% width) */}
+          <Card className="lg:col-span-2 shadow-xl border-2 border-slate-200 bg-white flex flex-col overflow-hidden h-full rounded-2xl">
+            <CardHeader className="py-4 px-6 border-b-2 border-slate-100 bg-gradient-to-r from-blue-50 via-blue-50/50 to-slate-50 flex-shrink-0">
+              <CardTitle className="text-lg font-black text-slate-800 flex items-center gap-2">
+                <TrendingUp className="w-5 h-5 text-blue-600" />
+                Year-wise Growth Analysis (2020-2025)
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex-1 p-6">
-              <ChartContainer
-                config={chartConfig}
-                className="w-full h-full min-h-[350px]"
-              >
+            <CardContent className="flex-1 p-6 overflow-hidden">
+              <ChartContainer config={chartConfig} className="w-full h-full">
                 <ResponsiveContainer width="100%" height="100%">
-                  <BarChart
-                    data={graphData}
-                    margin={{ top: 20, right: 20, left: 0, bottom: 20 }}
-                  >
-                    <CartesianGrid
-                      vertical={false}
-                      strokeDasharray="3 3"
-                      stroke="#cbd5e1"
-                    />
-                    <XAxis
-                      dataKey="year"
-                      tickLine={false}
-                      axisLine={{ stroke: "#94a3b8" }}
-                      tickMargin={12}
-                      tick={{ fill: "#475569", fontSize: 13, fontWeight: 600 }}
-                    />
-                    <YAxis
-                      tickLine={false}
-                      axisLine={{ stroke: "#94a3b8" }}
-                      tickMargin={8}
-                      tick={{ fill: "#475569", fontSize: 12, fontWeight: 500 }}
-                    />
-                    <Tooltip
-                      cursor={{ fill: "#f1f5f9" }}
-                      content={({ active, payload }) => {
-                        if (active && payload && payload.length) {
-                          return (
-                            <div className="bg-white shadow-xl border-2 border-slate-200 rounded-lg px-4 py-2 z-50">
-                              <p className="text-xs font-bold text-slate-500 uppercase">
-                                {payload[0].payload.year}
-                              </p>
-                              <p className="text-xl font-black text-slate-900 mt-1">
-                                {payload[0].value.toLocaleString()}
-                              </p>
-                            </div>
-                          );
-                        }
-                        return null;
-                      }}
-                    />
-                    <Bar
-                      dataKey="value"
-                      radius={[8, 8, 0, 0]}
-                      isAnimationActive={false} // DISABLED ANIMATION
+                  {shouldRender ? (
+                    <BarChart
+                      key={`bar-${animationKey}`}
+                      data={graphData}
+                      margin={{ top: 25, right: 20, left: 0, bottom: 20 }}
                     >
-                      <LabelList
-                        dataKey="value"
-                        position="top"
-                        offset={10}
-                        className="fill-slate-700 text-xs font-bold"
-                        formatter={(value) => value.toLocaleString()}
+                      <defs>
+                        {BAR_COLORS.map((color, idx) => (
+                          <linearGradient
+                            key={`gradient-${idx}`}
+                            id={`colorGradient${idx}`}
+                            x1="0"
+                            y1="0"
+                            x2="0"
+                            y2="1"
+                          >
+                            <stop
+                              offset="0%"
+                              stopColor={color}
+                              stopOpacity={1}
+                            />
+                            <stop
+                              offset="100%"
+                              stopColor={color}
+                              stopOpacity={0.7}
+                            />
+                          </linearGradient>
+                        ))}
+                      </defs>
+                      <CartesianGrid
+                        vertical={false}
+                        strokeDasharray="3 3"
+                        stroke="#e2e8f0"
+                        strokeWidth={1.5}
                       />
-                      {graphData.map((_, idx) => (
-                        <Cell
-                          key={`cell-${idx}`}
-                          fill={BAR_COLORS[idx % BAR_COLORS.length]}
+                      <XAxis
+                        dataKey="year"
+                        tickLine={false}
+                        axisLine={{ stroke: "#94a3b8", strokeWidth: 2 }}
+                        tickMargin={12}
+                        tick={{
+                          fill: "#475569",
+                          fontSize: 14,
+                          fontWeight: 700,
+                        }}
+                      />
+                      <YAxis
+                        tickLine={false}
+                        axisLine={{ stroke: "#94a3b8", strokeWidth: 2 }}
+                        tickMargin={8}
+                        tick={{
+                          fill: "#475569",
+                          fontSize: 13,
+                          fontWeight: 600,
+                        }}
+                      />
+                      <Tooltip
+                        cursor={{ fill: "#f1f5f9", opacity: 0.5 }}
+                        content={({ active, payload }) => {
+                          if (active && payload && payload.length) {
+                            return (
+                              <div className="bg-gradient-to-br from-slate-900 to-slate-800 shadow-2xl border-2 border-slate-700 rounded-xl px-5 py-3">
+                                <p className="text-xs font-bold text-slate-400 uppercase tracking-wider">
+                                  {payload[0].payload.year}
+                                </p>
+                                <p className="text-2xl font-black text-white mt-2">
+                                  {payload[0].value.toLocaleString()}
+                                </p>
+                                <p className="text-xs text-slate-400 mt-1">
+                                  {stat.title}
+                                </p>
+                              </div>
+                            );
+                          }
+                          return null;
+                        }}
+                      />
+                      <Bar
+                        dataKey="value"
+                        radius={[10, 10, 0, 0]}
+                        maxBarSize={90}
+                        isAnimationActive={true}
+                        animationDuration={1000}
+                        animationBegin={0}
+                        animationEasing="ease-out"
+                      >
+                        <LabelList
+                          dataKey="value"
+                          position="top"
+                          offset={10}
+                          className="fill-slate-800 text-sm font-black drop-shadow-sm"
+                          formatter={(value) => value.toLocaleString()}
                         />
-                      ))}
-                    </Bar>
-                  </BarChart>
+                        {graphData.map((_, idx) => (
+                          <Cell
+                            key={`cell-${idx}`}
+                            fill={`url(#colorGradient${
+                              idx % BAR_COLORS.length
+                            })`}
+                            strokeWidth={2}
+                            stroke="white"
+                          />
+                        ))}
+                      </Bar>
+                    </BarChart>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center h-full gap-3">
+                      <div className="relative">
+                        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-blue-600"></div>
+                        <TrendingUp className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-6 h-6 text-blue-600" />
+                      </div>
+                      <span className="text-slate-600 font-semibold text-sm">
+                        Loading analytics...
+                      </span>
+                    </div>
+                  )}
                 </ResponsiveContainer>
               </ChartContainer>
             </CardContent>
           </Card>
 
-          {/* --- Detail Cards Section (2 Cols) --- */}
-          <div className="lg:col-span-2 flex flex-col gap-4 min-h-[450px]">
-            {/* 1. Legacy Data Card */}
-            <StatDetailCard
-              icon={History}
-              label="Legacy Data"
-              sublabel="Before 2020"
-              value={metaData.before2020}
-              colorClass="text-slate-800"
-              bgClass="bg-gradient-to-br from-slate-100 to-slate-200 border-2 border-slate-300 h-1/2" // Make them split height
-              iconColor="text-slate-600"
-            />
+          {/* Right Column - Donut & Stats (Takes 1 column = 33% width) */}
+          <div className="lg:col-span-1 flex flex-col gap-6 h-full overflow-hidden">
+            {/* Donut Chart - Fixed Height */}
+            <Card
+              className="shadow-xl border-2 border-slate-200 bg-white flex flex-col rounded-2xl"
+              style={{ height: "52%" }}
+            >
+              <CardHeader className="py-3 px-5 border-b-2 border-slate-100 bg-gradient-to-r from-purple-50 via-purple-50/50 to-slate-50 flex-shrink-0">
+                <CardTitle className="text-base font-black text-slate-800 flex items-center gap-2">
+                  <History className="w-4 h-4 text-purple-600" />
+                  Distribution
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="flex-1 p-4 flex items-center justify-center overflow-hidden">
+                {shouldRender ? (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart key={`pie-${animationKey}`}>
+                        <defs>
+                          <linearGradient
+                            id="legacyGradient"
+                            x1="0"
+                            y1="0"
+                            x2="0"
+                            y2="1"
+                          >
+                            <stop
+                              offset="0%"
+                              stopColor="#64748b"
+                              stopOpacity={1}
+                            />
+                            <stop
+                              offset="100%"
+                              stopColor="#475569"
+                              stopOpacity={0.8}
+                            />
+                          </linearGradient>
+                          <linearGradient
+                            id="recentGradient"
+                            x1="0"
+                            y1="0"
+                            x2="0"
+                            y2="1"
+                          >
+                            <stop
+                              offset="0%"
+                              stopColor="#3b82f6"
+                              stopOpacity={1}
+                            />
+                            <stop
+                              offset="100%"
+                              stopColor="#2563eb"
+                              stopOpacity={0.8}
+                            />
+                          </linearGradient>
+                        </defs>
+                        <Pie
+                          data={donutData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius="55%"
+                          outerRadius="85%"
+                          paddingAngle={4}
+                          dataKey="value"
+                          isAnimationActive={true}
+                          animationBegin={200}
+                          animationDuration={1000}
+                          animationEasing="ease-out"
+                          stroke="white"
+                          strokeWidth={3}
+                        >
+                          <Cell fill="url(#legacyGradient)" />
+                          <Cell fill="url(#recentGradient)" />
+                        </Pie>
+                        <Tooltip
+                          content={({ active, payload }) => {
+                            if (active && payload && payload.length) {
+                              const percentage = (
+                                (payload[0].value / grandTotal) *
+                                100
+                              ).toFixed(1);
+                              return (
+                                <div className="bg-white shadow-xl border-2 border-slate-200 rounded-lg px-4 py-2">
+                                  <p className="text-xs font-bold text-slate-500 uppercase">
+                                    {payload[0].name}
+                                  </p>
+                                  <p className="text-xl font-black text-slate-900 mt-1">
+                                    {payload[0].value.toLocaleString()}
+                                  </p>
+                                  <p className="text-xs text-slate-600">
+                                    {percentage}%
+                                  </p>
+                                </div>
+                              );
+                            }
+                            return null;
+                          }}
+                        />
+                        <text
+                          x="50%"
+                          y="48%"
+                          textAnchor="middle"
+                          dominantBaseline="middle"
+                          className="fill-slate-900 font-black text-2xl"
+                        >
+                          {grandTotal.toLocaleString()}
+                        </text>
+                        <text
+                          x="50%"
+                          y="58%"
+                          textAnchor="middle"
+                          dominantBaseline="middle"
+                          className="fill-slate-500 font-semibold text-xs"
+                        >
+                          Total Entries
+                        </text>
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-center h-full w-full">
+                    <div className="animate-pulse flex flex-col items-center gap-2">
+                      <div className="rounded-full bg-slate-200 h-32 w-32"></div>
+                      <div className="h-2 bg-slate-200 rounded w-24"></div>
+                    </div>
+                  </div>
+                )}
+              </CardContent>
+            </Card>
 
-            {/* 2. Recent Growth Card */}
-            <StatDetailCard
-              icon={TrendingUp}
-              label="Recent Growth"
-              sublabel="2020-2025 Cycle"
-              value={metaData.total2020_25}
-              colorClass="text-blue-900"
-              bgClass="bg-gradient-to-br from-blue-50 to-blue-100 border-2 border-blue-300 shadow-lg shadow-blue-100/50 h-1/2" // Make them split height
-              iconColor="text-blue-700"
-            />
-
-            {/* REMOVED THE 3rd "Grand Total" CARD */}
+            {/* Stats Cards Grid - Fixed Height */}
+            <div className="grid grid-cols-2 gap-3" style={{ height: "44%" }}>
+              <StatDetailCard
+                icon={History}
+                label="Legacy"
+                sublabel="Before 2020"
+                value={before2020}
+                colorClass="text-slate-800"
+                bgClass="bg-gradient-to-br from-slate-100 to-slate-200 border-2 border-slate-300 shadow-lg"
+                iconColor="text-slate-600"
+              />
+              <StatDetailCard
+                icon={TrendingUp}
+                label="Recent"
+                sublabel="2020-2025"
+                value={total2020_25}
+                colorClass="text-blue-900"
+                bgClass="bg-gradient-to-br from-blue-100 to-blue-200 border-2 border-blue-300 shadow-lg"
+                iconColor="text-blue-700"
+              />
+              <StatDetailCard
+                icon={Calendar}
+                label="Avg/Year"
+                sublabel="2020-25 Cycle"
+                value={avgPerYear}
+                colorClass="text-emerald-900"
+                bgClass="bg-gradient-to-br from-emerald-100 to-emerald-200 border-2 border-emerald-300 shadow-lg"
+                iconColor="text-emerald-700"
+              />
+              <StatDetailCard
+                icon={Percent}
+                label="Growth"
+                sublabel="vs Legacy"
+                value={`${growthPercentage > 0 ? "+" : ""}${growthPercentage}%`}
+                colorClass={
+                  growthPercentage > 0 ? "text-green-900" : "text-red-900"
+                }
+                bgClass={
+                  growthPercentage > 0
+                    ? "bg-gradient-to-br from-green-100 to-green-200 border-2 border-green-300 shadow-lg"
+                    : "bg-gradient-to-br from-red-100 to-red-200 border-2 border-red-300 shadow-lg"
+                }
+                iconColor={
+                  growthPercentage > 0 ? "text-green-700" : "text-red-700"
+                }
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -157,7 +410,6 @@ export default function StatsDialog({ stat, graphData, metaData }) {
   );
 }
 
-// Reusable Detail Card
 function StatDetailCard({
   icon: Icon,
   label,
@@ -170,27 +422,27 @@ function StatDetailCard({
   return (
     <Card
       className={cn(
-        "shadow-md flex flex-col justify-between px-6 py-6",
+        "shadow-md flex flex-col justify-between px-4 py-3 hover:shadow-xl hover:scale-105 transition-all duration-300 rounded-xl h-full",
         bgClass
       )}
     >
-      <div className="flex justify-between items-start mb-2">
-        <div>
+      <div className="flex items-start justify-between mb-2">
+        <div className="flex-1">
           <span
             className={cn(
-              "text-xs font-bold uppercase tracking-wider flex items-center gap-1.5",
+              "text-xs font-black uppercase tracking-wider flex items-center gap-1.5",
               iconColor
             )}
           >
             <Icon className="w-4 h-4" /> {label}
           </span>
-          <p className="text-[10px] text-slate-500 mt-1 font-medium">
+          <p className="text-[10px] text-slate-600 mt-1 font-semibold">
             {sublabel}
           </p>
         </div>
       </div>
-      <div className={cn("text-5xl font-black mt-4", colorClass)}>
-        <Counter value={value} />
+      <div className={cn("text-3xl font-black", colorClass)}>
+        {typeof value === "number" ? <Counter value={value} /> : value}
       </div>
     </Card>
   );

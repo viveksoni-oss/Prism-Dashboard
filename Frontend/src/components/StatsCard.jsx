@@ -1,13 +1,12 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { motion, useSpring, useTransform } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import StatsDialog from "./StatsDialog";
 
-// --- Internal Counter Component (Slower/More Noticeable) ---
+// --- Internal Counter Component ---
 export function Counter({ value, suffix = "" }) {
-  // Increased damping and stiffness for a longer, smoother count
   const spring = useSpring(0, { mass: 1, stiffness: 50, damping: 20 });
   const display = useTransform(spring, (current) =>
     Math.round(current).toLocaleString()
@@ -27,8 +26,19 @@ export function Counter({ value, suffix = "" }) {
 
 // --- Main Stats Card ---
 export function StatsCard({ stat, graphData, metaData }) {
+  const [animationKey, setAnimationKey] = useState(0);
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Increment key whenever dialog opens
+  const handleOpenChange = (open) => {
+    setIsOpen(open);
+    if (open) {
+      setAnimationKey((prev) => prev + 1);
+    }
+  };
+
   return (
-    <Dialog>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <motion.button
           whileHover={{ scale: 1.03, y: -6 }}
@@ -40,8 +50,8 @@ export function StatsCard({ stat, graphData, metaData }) {
           {/* Background Gradient Layer */}
           <div
             className={cn(
-              "absolute inset-0 bg-gradient-to-br opacity-100", // Full Opacity
-              stat.gradient // Should be vibrant classes like 'from-blue-600 to-blue-800'
+              "absolute inset-0 bg-gradient-to-br opacity-100",
+              stat.gradient
             )}
           />
 
@@ -63,9 +73,9 @@ export function StatsCard({ stat, graphData, metaData }) {
             </div>
           </div>
 
-          {/* Hover Arrow */}
-          <div className="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-all duration-200 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 z-20">
-            <div className="bg-white p-1.5 rounded-full shadow-lg">
+          {/* Permanent Arrow - Always visible with hover animation */}
+          <div className="absolute top-4 right-4 transition-all duration-300 transform group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:scale-110 z-20">
+            <div className="bg-white/90 p-1.5 rounded-full shadow-lg group-hover:bg-white group-hover:shadow-xl transition-all">
               <ArrowUpRight className="w-4 h-4 text-slate-900" />
             </div>
           </div>
@@ -75,7 +85,12 @@ export function StatsCard({ stat, graphData, metaData }) {
         </motion.button>
       </DialogTrigger>
 
-      <StatsDialog stat={stat} graphData={graphData} metaData={metaData} />
+      <StatsDialog
+        stat={stat}
+        graphData={graphData}
+        metaData={metaData}
+        animationKey={animationKey}
+      />
     </Dialog>
   );
 }

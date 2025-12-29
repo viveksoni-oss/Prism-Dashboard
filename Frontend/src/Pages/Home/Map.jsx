@@ -8,31 +8,27 @@ import {
 import { Tooltip } from "react-tooltip";
 import { MapPin, Navigation } from "lucide-react";
 import SectionHeading from "./../../components/SectionHeading";
-// Ensure this path matches your project structure, or remove if not needed
 
 // 1. TopoJSON URL
 const INDIA_TOPO_JSON = "/india.json";
 
-// 2. Updated Color Definition (Light/Blue Theme)
+// 2. Zone-based color palette (Accessible & Distinct)
+const ZONE_COLORS = {
+  "North Zone": "#3B82F6", // Blue
+  "South Zone": "#F59E0B", // Amber
+  "East Zone": "#10B981", // Emerald
+  "West Zone": "#8B5CF6", // Purple
+  "North East Zone": "#EF4444", // Red
+};
+
 const COLORS = {
-  // Map Colors2563eb
-  mapBase: "#2563eb", // Blue-100: Light blue base (replaces dark slate)
-  mapActive: "#fbbf24", // Blue-600: Deep blue for active states
-  mapHover: "#baccf5",
-  // Amber-400: High-vis yellow for interaction
-  mapStroke: "#ffffff", // White: Clean borders for light theme
-  mapStrokeActive: "#ffffff",
-
-  // Markers
-  markerFill: "#ef4444", // Red-500: Standard alert color for pins
-  markerPulse: "#fca5a5", // Red-300: Soft pulse
-  markerStroke: "#ffffff", // White
-
-  // Sidebar / UI Highlights
-  uiHighlightBg: "#eff6ff", // Blue-50: Very light blue background for active items
-  uiHighlightBorder: "#2563eb", // Blue-600: Border matches map active color
-  uiTextHighlight: "#1d4ed8", // Blue-700: Requested text color
-  uiIcon: "#334155", // Slate-700: Standard icon color
+  mapStroke: "#ffffff",
+  mapHover: "#FCD34D",
+  markerFill: "#DC2626",
+  markerPulse: "#FCA5A5",
+  markerStroke: "#ffffff",
+  uiHighlightBg: "#eff6ff",
+  uiIcon: "#334155",
 };
 
 const zoneData = {
@@ -43,6 +39,8 @@ const zoneData = {
       state: "Uttar Pradesh",
       coordinates: [80.3319, 26.5113],
       url: "https://siicincubator.com",
+      contact: "+91-512-259-7346",
+      email: "siic@iitk.ac.in",
     },
     {
       name: "CSIR–Central Scientific Instruments Organisation (CSIO)",
@@ -50,6 +48,8 @@ const zoneData = {
       state: "Chandigarh",
       coordinates: [76.7794, 30.7333],
       url: "https://www.csio.res.in",
+      contact: "+91-172-265-7811",
+      email: "csio@csio.res.in",
     },
     {
       name: "College of Technology and Engineering (CTAE)",
@@ -57,6 +57,8 @@ const zoneData = {
       state: "Rajasthan",
       coordinates: [73.7125, 24.5854],
       url: "https://www.ctae.ac.in",
+      contact: "+91-294-247-1004",
+      email: "ctae@mpuat.ac.in",
     },
   ],
   "South Zone": [
@@ -66,6 +68,8 @@ const zoneData = {
       state: "Andhra Pradesh",
       coordinates: [79.4192, 13.6288],
       url: "https://www.spmvv.ac.in",
+      contact: "+91-877-228-6170",
+      email: "info@spmvv.ac.in",
     },
     {
       name: "CSIR–National Aerospace Laboratories (NAL)",
@@ -73,6 +77,8 @@ const zoneData = {
       state: "Karnataka",
       coordinates: [77.5946, 12.9716],
       url: "https://www.tocic-nal.org",
+      contact: "+91-80-2508-6235",
+      email: "tocic@nal.res.in",
     },
     {
       name: "University of Madras",
@@ -80,6 +86,8 @@ const zoneData = {
       state: "Tamil Nadu",
       coordinates: [80.2707, 13.0827],
       url: "https://www.unom.ac.in",
+      contact: "+91-44-2539-5919",
+      email: "registrar@unom.ac.in",
     },
   ],
   "East Zone": [
@@ -89,6 +97,8 @@ const zoneData = {
       state: "West Bengal",
       coordinates: [88.3639, 22.5726],
       url: "https://www.cgcri.res.in",
+      contact: "+91-33-2473-3469",
+      email: "cgcri@cgcri.res.in",
     },
     {
       name: "CSIR–CMERI",
@@ -96,6 +106,8 @@ const zoneData = {
       state: "West Bengal",
       coordinates: [87.3119, 23.5204],
       url: "#",
+      contact: "+91-343-254-8200",
+      email: "cmeri@cmeri.res.in",
     },
     {
       name: "Indian Institute of Technology (IIT) Kharagpur",
@@ -103,6 +115,8 @@ const zoneData = {
       state: "West Bengal",
       coordinates: [87.3105, 22.346],
       url: "https://respark.iitkgp.ac.in",
+      contact: "+91-322-228-3560",
+      email: "respark@iitkgp.ac.in",
     },
   ],
   "West Zone": [
@@ -112,6 +126,8 @@ const zoneData = {
       state: "Gujarat",
       coordinates: [72.6369, 23.2156],
       url: "https://btm.gujarat.gov.in",
+      contact: "+91-79-2324-8477",
+      email: "gsbtm@gujarat.gov.in",
     },
   ],
   "North East Zone": [
@@ -121,6 +137,8 @@ const zoneData = {
       state: "Assam",
       coordinates: [94.2167, 26.7509],
       url: "https://neist.res.in",
+      contact: "+91-376-237-0121",
+      email: "neist@neist.res.in",
     },
     {
       name: "Indian Institute of Technology (IIT) Guwahati",
@@ -128,18 +146,68 @@ const zoneData = {
       state: "Assam",
       coordinates: [91.6916, 26.1878],
       url: "https://www.iitg.ac.in",
+      contact: "+91-361-258-2000",
+      email: "info@iitg.ac.in",
     },
   ],
 };
 
-const allMarkers = Object.values(zoneData).flat();
+const allMarkers = Object.entries(zoneData).flatMap(([zone, centers]) =>
+  centers.map((center) => ({ ...center, zone }))
+);
+
+// Map states to zones for coloring
+const stateToZone = {
+  // North Zone
+  "Uttar Pradesh": "North Zone",
+  Chandigarh: "North Zone",
+  Rajasthan: "North Zone",
+  Punjab: "North Zone",
+  Haryana: "North Zone",
+  "Himachal Pradesh": "North Zone",
+  Uttarakhand: "North Zone",
+  Delhi: "North Zone",
+  "Jammu and Kashmir": "North Zone",
+  Ladakh: "North Zone",
+
+  // South Zone
+  "Andhra Pradesh": "South Zone",
+  Karnataka: "South Zone",
+  "Tamil Nadu": "South Zone",
+  Kerala: "South Zone",
+  Telangana: "South Zone",
+  Puducherry: "South Zone",
+  Lakshadweep: "South Zone",
+  "Andaman and Nicobar Islands": "South Zone",
+
+  // East Zone
+  "West Bengal": "East Zone",
+  Odisha: "East Zone",
+  Bihar: "East Zone",
+  Jharkhand: "East Zone",
+
+  // West Zone
+  Gujarat: "West Zone",
+  Maharashtra: "West Zone",
+  Goa: "West Zone",
+  "Madhya Pradesh": "West Zone",
+  Chhattisgarh: "West Zone",
+  "Dadra and Nagar Haveli and Daman and Diu": "West Zone",
+
+  // North East Zone
+  Assam: "North East Zone",
+  "Arunachal Pradesh": "North East Zone",
+  Manipur: "North East Zone",
+  Meghalaya: "North East Zone",
+  Mizoram: "North East Zone",
+  Nagaland: "North East Zone",
+  Tripura: "North East Zone",
+  Sikkim: "North East Zone",
+};
 
 export default function IndiaSimpleMap() {
   const [hoveredZone, setHoveredZone] = useState(null);
-
-  const activeStates = useMemo(() => {
-    return new Set(allMarkers.map((m) => m.state));
-  }, []);
+  const [hoveredMarker, setHoveredMarker] = useState(null);
 
   return (
     <section className="relative w-full py-16 bg-white">
@@ -175,12 +243,18 @@ export default function IndiaSimpleMap() {
                     <h4
                       className="text-md font-bold uppercase tracking-wider pl-3 py-2 rounded-r-md border-l-4 transition-colors duration-200"
                       style={{
-                        backgroundColor: COLORS.uiHighlightBg,
-                        borderColor: COLORS.uiHighlightBorder,
-                        color: COLORS.uiTextHighlight, // Applied requested Blue-700 text color
+                        backgroundColor: `${ZONE_COLORS[zone]}15`,
+                        borderColor: ZONE_COLORS[zone],
+                        color: ZONE_COLORS[zone],
                       }}
                     >
-                      {zone}
+                      <span className="flex items-center gap-2">
+                        <span
+                          className="w-3 h-3 rounded-full"
+                          style={{ backgroundColor: ZONE_COLORS[zone] }}
+                        />
+                        {zone}
+                      </span>
                     </h4>
                     <ul className="space-y-3 pl-2">
                       {centers.map((center, idx) => (
@@ -189,9 +263,24 @@ export default function IndiaSimpleMap() {
                             href={center.url}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="block p-3 rounded-lg bg-white border border-slate-100 shadow-sm hover:shadow-md transition-all group-hover:border-blue-200"
+                            className="block p-3 rounded-lg bg-white border border-slate-100 shadow-sm hover:shadow-md transition-all"
+                            style={{
+                              borderLeftWidth: "3px",
+                              borderLeftColor:
+                                hoveredZone === zone
+                                  ? ZONE_COLORS[zone]
+                                  : "transparent",
+                            }}
                           >
-                            <div className="font-semibold text-sm text-slate-800 group-hover:text-blue-700 transition-colors">
+                            <div
+                              className="font-semibold text-sm text-slate-800 transition-colors"
+                              style={{
+                                color:
+                                  hoveredZone === zone
+                                    ? ZONE_COLORS[zone]
+                                    : undefined,
+                              }}
+                            >
                               {center.name}
                             </div>
                             <div className="flex items-center gap-1.5 mt-1 text-xs text-slate-500">
@@ -209,7 +298,7 @@ export default function IndiaSimpleMap() {
           </div>
 
           {/* RIGHT: Map Container */}
-          <div className="w-full lg:w-2/3 h-160 rounded-2xl border border-slate-200 bg-slate-50 relative overflow-hidden flex items-center justify-center shadow-inner">
+          <div className="w-full lg:w-2/3 h-[600px] rounded-2xl border border-slate-200 bg-gradient-to-br from-slate-50 to-slate-100 relative overflow-hidden flex items-center justify-center shadow-inner">
             <ComposableMap
               projection="geoMercator"
               projectionConfig={{ scale: 1000, center: [82, 23] }}
@@ -223,54 +312,38 @@ export default function IndiaSimpleMap() {
                       geo.properties.NAME_1 ||
                       geo.properties.name;
 
-                    const isActive = activeStates.has(stateName);
+                    const zone = stateToZone[stateName];
+                    const zoneColor = zone ? ZONE_COLORS[zone] : "#CBD5E1";
 
-                    let isHoveredZoneState = false;
-                    if (hoveredZone) {
-                      const zoneStates = zoneData[hoveredZone].map(
-                        (c) => c.state
-                      );
-                      if (zoneStates.includes(stateName))
-                        isHoveredZoneState = true;
-                    }
-
-                    // Apply Colors
-                    const baseFill = isActive
-                      ? COLORS.mapActive
-                      : COLORS.mapBase;
-
-                    const hoverFill = COLORS.mapHover;
-
-                    const strokeColor = isActive
-                      ? COLORS.mapStrokeActive
-                      : COLORS.mapStroke;
-
-                    const finalFill = isHoveredZoneState
-                      ? COLORS.mapHover
-                      : baseFill;
+                    const isHoveredZone = hoveredZone && zone === hoveredZone;
 
                     return (
                       <Geography
                         key={geo.rsmKey}
                         geography={geo}
-                        data-tooltip-id="map-tooltip"
-                        data-tooltip-content={stateName}
                         style={{
                           default: {
-                            fill: finalFill,
-                            stroke: strokeColor,
-                            strokeWidth: isActive ? 1 : 0.5,
+                            fill: isHoveredZone
+                              ? `${zoneColor}DD`
+                              : `${zoneColor}99`,
+                            stroke: COLORS.mapStroke,
+                            strokeWidth: zone ? 1 : 0.5,
                             outline: "none",
                             transition: "all 0.3s ease",
+                            opacity: isHoveredZone ? 1 : 0.85,
                           },
                           hover: {
-                            fill: hoverFill,
-                            stroke: "#fff",
-                            strokeWidth: 1,
+                            fill: isHoveredZone
+                              ? `${zoneColor}DD`
+                              : `${zoneColor}99`,
+                            stroke: COLORS.mapStroke,
+                            strokeWidth: zone ? 1 : 0.5,
                             outline: "none",
                             cursor: "default",
                           },
-                          pressed: { outline: "none" },
+                          pressed: {
+                            outline: "none",
+                          },
                         }}
                       />
                     );
@@ -278,56 +351,118 @@ export default function IndiaSimpleMap() {
                 }
               </Geographies>
 
-              {allMarkers.map(({ name, city, coordinates, url }) => (
-                <Marker
-                  key={name}
-                  coordinates={coordinates}
-                  data-tooltip-id="map-tooltip"
-                  data-tooltip-content={`${city}`}
-                  onClick={() => window.open(url, "_blank")}
-                  className="cursor-pointer group"
-                >
-                  <circle
-                    r={8}
-                    fill={COLORS.markerPulse}
-                    fillOpacity={0.6}
-                    className="animate-ping"
-                  />
-                  <circle
-                    r={3.5}
-                    fill={COLORS.markerFill}
-                    stroke={COLORS.markerStroke}
-                    strokeWidth={1.5}
-                    className="transition-transform duration-300 group-hover:scale-150"
-                  />
-                </Marker>
-              ))}
+              {allMarkers.map((center) => {
+                const isHovered = hoveredMarker === center.name;
+
+                return (
+                  <Marker
+                    key={center.name}
+                    coordinates={center.coordinates}
+                    data-tooltip-id="center-tooltip"
+                    data-tooltip-html={`
+                      <div class="text-left">
+                        <div class="font-bold text-sm mb-2 border-b border-slate-600 pb-1">${
+                          center.name
+                        }</div>
+                        <div class="space-y-1 text-xs">
+                          <div class="flex items-start gap-1.5">
+                            <span class="opacity-70">📍</span>
+                            <span>${center.city}, ${center.state}</span>
+                          </div>
+                          ${
+                            center.contact
+                              ? `
+                          <div class="flex items-center gap-1.5">
+                            <span class="opacity-70">📞</span>
+                            <span>${center.contact}</span>
+                          </div>`
+                              : ""
+                          }
+                          ${
+                            center.email
+                              ? `
+                          <div class="flex items-center gap-1.5">
+                            <span class="opacity-70">✉️</span>
+                            <span class="text-blue-300">${center.email}</span>
+                          </div>`
+                              : ""
+                          }
+                          <div class="mt-2 pt-1 border-t border-slate-600">
+                            <span class="inline-block px-2 py-0.5 rounded text-xs font-medium" 
+                              style="background-color: ${
+                                ZONE_COLORS[center.zone]
+                              }30; color: ${ZONE_COLORS[center.zone]}">
+                              ${center.zone}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    `}
+                    onClick={() => window.open(center.url, "_blank")}
+                    onMouseEnter={() => setHoveredMarker(center.name)}
+                    onMouseLeave={() => setHoveredMarker(null)}
+                    className="cursor-pointer group"
+                  >
+                    {!isHovered && (
+                      <circle
+                        r={10}
+                        fill={COLORS.markerPulse}
+                        fillOpacity={0.4}
+                        className="animate-ping"
+                      />
+                    )}
+                    <circle
+                      r={isHovered ? 8 : 6}
+                      fill={ZONE_COLORS[center.zone]}
+                      stroke={COLORS.markerStroke}
+                      strokeWidth={2}
+                      className="transition-all duration-300 drop-shadow-lg"
+                      style={{
+                        filter: isHovered
+                          ? "drop-shadow(0 0 8px rgba(0,0,0,0.3))"
+                          : undefined,
+                      }}
+                    />
+                  </Marker>
+                );
+              })}
             </ComposableMap>
 
             <Tooltip
-              id="map-tooltip"
+              id="center-tooltip"
               style={{
-                backgroundColor: "#1e293b",
+                backgroundColor: "#0f172a",
                 color: "#f8fafc",
-                borderRadius: "8px",
+                borderRadius: "10px",
                 fontSize: "12px",
-                fontWeight: "500",
-                padding: "8px 12px",
-                boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1)",
+                padding: "12px",
+                boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.3)",
+                maxWidth: "320px",
+                zIndex: 1001,
               }}
             />
 
             {/* Legend */}
-            <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm p-3 rounded-lg border border-slate-200 shadow-lg text-xs space-y-2">
-              <div className="flex items-center gap-2">
-                <span
-                  className="w-3 h-3 rounded-full shadow-sm"
-                  style={{ backgroundColor: COLORS.markerFill }}
-                ></span>
-                <span className="text-slate-700 font-medium">
-                  TOCIC Outreach
-                </span>
-              </div>
+            <div className="absolute bottom-4 right-4 bg-white/95 backdrop-blur-sm p-4 rounded-xl border border-slate-200 shadow-lg text-xs space-y-3">
+              <h4 className="font-bold text-slate-700 text-sm mb-2">
+                Zone Coverage
+              </h4>
+              {Object.entries(ZONE_COLORS).map(([zone, color]) => (
+                <div
+                  key={zone}
+                  className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+                  onMouseEnter={() => setHoveredZone(zone)}
+                  onMouseLeave={() => setHoveredZone(null)}
+                >
+                  <span
+                    className="w-4 h-4 rounded-sm shadow-sm border border-white"
+                    style={{ backgroundColor: color }}
+                  />
+                  <span className="text-slate-700 font-medium text-xs">
+                    {zone.replace(" Zone", "")}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

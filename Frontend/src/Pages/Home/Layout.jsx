@@ -32,7 +32,6 @@ const Header = () => {
       <div className="container mx-auto px-4 md:px-6">
         {/* Mobile: Flex Column | Desktop: 3-Column Grid for True Centering */}
         <div className="flex flex-col gap-4 md:grid md:grid-cols-3 md:items-center">
-          
           {/* LEFT: Government Emblem */}
           <div className="flex justify-center md:justify-start">
             <a
@@ -62,9 +61,21 @@ const Header = () => {
           {/* RIGHT: Campaign Logos */}
           <div className="flex flex-wrap justify-center items-center gap-4 md:justify-end">
             {[
-              { src: "/logos/G.20.png", alt: "G20 India", href: "https://www.g20.in/" },
-              { src: "/logos/azadi.jpg", alt: "Azadi Ka Amrit Mahotsav", href: "https://amritmahotsav.nic.in/" },
-              { src: "/logos/swach-bharat.png", alt: "Swachh Bharat", href: "https://swachhbharatmission.gov.in/" },
+              {
+                src: "/logos/G.20.png",
+                alt: "G20 India",
+                href: "https://www.g20.in/",
+              },
+              {
+                src: "/logos/azadi.jpg",
+                alt: "Azadi Ka Amrit Mahotsav",
+                href: "https://amritmahotsav.nic.in/",
+              },
+              {
+                src: "/logos/swach-bharat.png",
+                alt: "Swachh Bharat",
+                href: "https://swachhbharatmission.gov.in/",
+              },
             ].map((logo, idx) => (
               <a
                 key={idx}
@@ -94,9 +105,12 @@ const NavBar = ({ user, dashboardInfo, handleLogout }) => {
   const navItems = [
     { label: "Home", route: "/" },
     ...(user && dashboardInfo
-      ? [{ label: dashboardInfo.label, route: dashboardInfo.route, icon: LayoutDashboard }]
+      ? [{ label: dashboardInfo.label, route: dashboardInfo.route, icon: null }]
       : []),
-    { label: "About PRISM", href: "https://www.dsir.gov.in/promoting-innovations-individuals-start-ups-and-msmes-prism" },
+    {
+      label: "About PRISM",
+      href: "https://www.dsir.gov.in/promoting-innovations-individuals-start-ups-and-msmes-prism",
+    },
     { label: "TOCIC Outreach", route: "/tocic" },
     { label: "Media", route: "/YtPage" },
     { label: "How to Apply", route: "/apply" },
@@ -105,10 +119,13 @@ const NavBar = ({ user, dashboardInfo, handleLogout }) => {
   return (
     <nav className="sticky top-0 z-50 w-full border-b border-blue-800 bg-blue-950 shadow-xl backdrop-blur-xl">
       <div className="mx-auto container flex h-16 items-center justify-between px-4 md:px-6">
-        
         {/* Mobile Menu Trigger */}
         <div className="md:hidden">
-          <Button variant="ghost" size="icon" className="text-blue-100 hover:bg-blue-900/50">
+          <Button
+            variant="ghost"
+            size="icon"
+            className="text-blue-100 hover:bg-blue-900/50"
+          >
             <Menu className="h-6 w-6" />
           </Button>
         </div>
@@ -117,14 +134,18 @@ const NavBar = ({ user, dashboardInfo, handleLogout }) => {
         <div className="hidden md:flex items-center gap-1">
           {navItems.map((item) => {
             const isActive = item.route === location.pathname;
-            
+
             return item.route ? (
               <Button
                 key={item.label}
                 variant="ghost"
                 onClick={() => navigate(item.route)}
                 className={`relative h-10 px-4 text-sm font-medium transition-all duration-200
-                  ${isActive ? "text-white bg-blue-900/40" : "text-blue-200 hover:text-white hover:bg-blue-900/30"}
+                  ${
+                    isActive
+                      ? "text-white bg-blue-900/40"
+                      : "text-blue-200 hover:text-white hover:bg-blue-900/30"
+                  }
                 `}
               >
                 <span className="flex items-center gap-2">
@@ -156,7 +177,10 @@ const NavBar = ({ user, dashboardInfo, handleLogout }) => {
           {user ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="h-10 w-10 rounded-full p-0 hover:bg-blue-900/50">
+                <Button
+                  variant="ghost"
+                  className="h-10 w-10 rounded-full p-0 hover:bg-blue-900/50"
+                >
                   <Avatar className="h-9 w-9 border-2 border-blue-400/50 transition-colors hover:border-blue-400">
                     <AvatarImage src={user.avatar} alt={user.name} />
                     <AvatarFallback className="bg-blue-800 text-blue-100 font-bold">
@@ -168,13 +192,19 @@ const NavBar = ({ user, dashboardInfo, handleLogout }) => {
               <DropdownMenuContent className="w-56 mt-2" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none">{user.name || "User"}</p>
-                    <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+                    <p className="text-sm font-medium leading-none">
+                      {user.name || "User"}
+                    </p>
+                    <p className="text-xs leading-none text-muted-foreground">
+                      {user.email}
+                    </p>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {dashboardInfo && (
-                  <DropdownMenuItem onClick={() => navigate(dashboardInfo.route)}>
+                  <DropdownMenuItem
+                    onClick={() => navigate(dashboardInfo.route)}
+                  >
                     <LayoutDashboard className="mr-2 h-4 w-4" />
                     <span>{dashboardInfo.label}</span>
                   </DropdownMenuItem>
@@ -188,7 +218,10 @@ const NavBar = ({ user, dashboardInfo, handleLogout }) => {
                   <span>Settings</span>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleLogout} className="text-red-600 focus:text-red-600 focus:bg-red-50">
+                <DropdownMenuItem
+                  onClick={handleLogout}
+                  className="text-red-600 focus:text-red-600 focus:bg-red-50"
+                >
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Log out</span>
                 </DropdownMenuItem>
@@ -238,10 +271,10 @@ export default function Layout() {
   return (
     <div className="flex min-h-screen flex-col bg-slate-50 dark:bg-slate-950">
       <Header />
-      <NavBar 
-        user={user} 
-        dashboardInfo={dashboardInfo} 
-        handleLogout={handleLogout} 
+      <NavBar
+        user={user}
+        dashboardInfo={dashboardInfo}
+        handleLogout={handleLogout}
       />
       <main className="flex-1 w-full">
         <Outlet />

@@ -1,15 +1,16 @@
 import React from "react";
-import { MapPin, Phone, Mail, ExternalLink } from "lucide-react";
+import { MapPin, ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom"; // Import Link for internal routing
 
 const Footer = () => {
   return (
-    <footer className="relative bg-blue-950 text-blue-100">
+    <footer className="relative bg-blue-950 text-blue-100 z-50">
       {/* Subtle top border for separation if needed */}
       <div className="absolute top-0 h-px w-full bg-blue-800" />
 
       <div className="mx-auto max-w-7xl px-6 py-16 xl:px-10">
         <div className="grid gap-12 sm:grid-cols-2 md:grid-cols-4 lg:gap-8">
-          {/* 1. BRAND (Socials Removed) */}
+          {/* 1. BRAND */}
           <div className="flex flex-col gap-6">
             <div>
               <h2 className="text-2xl font-bold text-white tracking-tight">
@@ -29,16 +30,33 @@ const Footer = () => {
               Quick Links
             </h3>
             <ul className="flex flex-col gap-3 text-sm text-blue-200">
-              {["Home", "How to Apply", "About PRISM"].map((item) => (
-                <li key={item}>
-                  <a
-                    href="#"
-                    className="inline-flex items-center gap-2 hover:text-white hover:underline hover:underline-offset-4 transition-all"
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
+              <li>
+                <Link
+                  to="/"
+                  className="inline-flex items-center gap-2 hover:text-white hover:underline hover:underline-offset-4 transition-all"
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/apply"
+                  className="inline-flex items-center gap-2 hover:text-white hover:underline hover:underline-offset-4 transition-all"
+                >
+                  How to Apply
+                </Link>
+              </li>
+              <li>
+                <a
+                  href="https://dsir.gov.in/"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 hover:text-white hover:underline hover:underline-offset-4 transition-all group"
+                >
+                  About PRISM
+                  <ExternalLink className="h-3 w-3 opacity-50 transition-opacity group-hover:opacity-100" />
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -48,22 +66,25 @@ const Footer = () => {
               Resources
             </h3>
             <ul className="flex flex-col gap-3 text-sm text-blue-200">
-              {[
-                { name: "DSIR Official Website", link: "https://dsir.gov.in" },
-                { name: "TOCIC Centers List", link: "#" },
-              ].map((item) => (
-                <li key={item.name}>
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 hover:text-white transition-colors group"
-                  >
-                    {item.name}
-                    <ExternalLink className="h-3 w-3 opacity-50 -translate-y-1 transition-all group-hover:opacity-100 group-hover:translate-y-0" />
-                  </a>
-                </li>
-              ))}
+              <li>
+                <a
+                  href="https://dsir.gov.in"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 hover:text-white transition-colors group"
+                >
+                  DSIR Official Website
+                  <ExternalLink className="h-3 w-3 opacity-50 -translate-y-1 transition-all group-hover:opacity-100 group-hover:translate-y-0" />
+                </a>
+              </li>
+              <li>
+                <Link
+                  to="/tocic"
+                  className="inline-flex items-center gap-2 hover:text-white transition-colors"
+                >
+                  TOCIC Centers List
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -83,10 +104,6 @@ const Footer = () => {
                   New Delhi-110016
                 </span>
               </li>
-              <li className="flex items-center gap-3">
-                <Phone className="h-4 w-4 shrink-0 text-blue-400" />
-                <span>011-2651 8019, 2659 0387</span>
-              </li>
             </ul>
           </div>
         </div>
@@ -96,18 +113,22 @@ const Footer = () => {
 
         {/* BOTTOM BAR */}
         <div className="flex flex-col gap-4 text-xs text-blue-300 md:flex-row md:items-center md:justify-between">
-          <p>© {new Date().getFullYear()} PRISM (DSIR). All rights reserved.</p>
+          <p>
+            © {new Date().getFullYear()} PRISM (DSIR). All rights reserved.{" "}
+            <span className="mx-1 opacity-50">|</span> Site maintained by{" "}
+            <span className="font-semibold text-blue-200">IIT Kanpur</span>.
+          </p>
 
           <div className="flex gap-8">
-            <a href="#" className="hover:text-white transition-colors">
+            <Link to="#" className="hover:text-white transition-colors">
               Privacy Policy
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
+            </Link>
+            <Link to="#" className="hover:text-white transition-colors">
               Terms of Use
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
+            </Link>
+            <Link to="#" className="hover:text-white transition-colors">
               Sitemap
-            </a>
+            </Link>
           </div>
         </div>
       </div>

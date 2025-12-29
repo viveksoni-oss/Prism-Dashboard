@@ -11,7 +11,7 @@ import InnovationStats from "./InnovationStats";
 function Home() {
   const navigate = useNavigate();
   return (
-    <div className="  mx-auto text-foreground">
+    <div className=" container mx-auto text-foreground">
       <GradientBackground />
       <PrismHero></PrismHero>
       <div className="space-y-12">

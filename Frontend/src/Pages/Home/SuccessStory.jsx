@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight, Award } from "lucide-react";
+import SectionHeading from "@/components/SectionHeading";
 
-// --- Data Mapped to Specific Images in /public/successImage/ ---
+// --- Data ---
 const stories = [
   {
     title: "Any-Time Medicine Dispenser",
@@ -51,22 +52,14 @@ const stories = [
       "Indigenous photo-reactor designed for multi-colour tunable light irradiation, enabling controlled photo-chemical reactions.",
     image: "/successImage/Sanjeev_Bhardwaj_Photo_Reactor.jpg",
   },
-  {
-    title: "Iron Flow Battery",
-    name: "Dr. Umesh",
-    designation: "University of Madras",
-    story:
-      "Iron-based redox flow battery designed for efficient, low-cost, and scalable renewable energy storage solutions.",
-    image: "/successImage/Dr_Umesh_Flow_Battery.png",
-  },
 ];
-
 
 export default function SuccessStoryCarousel() {
   const [index, setIndex] = useState(0);
   const intervalRef = useRef(null);
   const [itemsPerSlide, setItemsPerSlide] = useState(3);
 
+  // Responsive Handler
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth < 768) setItemsPerSlide(1);
@@ -80,6 +73,7 @@ export default function SuccessStoryCarousel() {
 
   const totalSlides = Math.ceil(stories.length / itemsPerSlide);
 
+  // Autoplay Logic
   const startAutoplay = () => {
     stopAutoplay();
     intervalRef.current = setInterval(() => {
@@ -97,15 +91,21 @@ export default function SuccessStoryCarousel() {
   }, [totalSlides]);
 
   return (
-    <section className="relative w-full py-20 pt-5 bg-slate-50/50">
+    <section className="relative w-full py-16 bg-slate-50/50">
       <div className="max-w-[1400px] mx-auto px-6">
+        {/* --- HEADING --- */}
+
+        <SectionHeading heading="Success Stories"> </SectionHeading>
+        {/* --- CAROUSEL CONTAINER --- */}
         <div
           className="relative group/carousel"
           onMouseEnter={stopAutoplay}
           onMouseLeave={startAutoplay}
         >
-          {/* SLIDER TRACK */}
-          <div className="overflow-hidden py-4 -mx-4 px-4">
+          {/* SLIDER TRACK - FIXED OVERFLOW & PADDING */}
+          <div className="overflow-hidden px-1 py-4">
+            {" "}
+            {/* Added padding to show shadows without cut-off */}
             <div
               className="flex transition-transform duration-500 ease-out"
               style={{ transform: `translateX(-${index * 100}%)` }}
@@ -113,7 +113,7 @@ export default function SuccessStoryCarousel() {
               {Array.from({ length: totalSlides }).map((_, slideIndex) => (
                 <div
                   key={slideIndex}
-                  className="grid w-full flex-shrink-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+                  className="flex w-full flex-shrink-0 gap-6 px-1" // Gap handles spacing between cards
                 >
                   {stories
                     .slice(
@@ -123,7 +123,12 @@ export default function SuccessStoryCarousel() {
                     .map((item, i) => (
                       <div
                         key={i}
-                        className="group relative h-[500px] w-full overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-2xl transition-all duration-500 border border-slate-200"
+                        // Dynamic Width based on itemsPerSlide to fix layout
+                        className={`group relative h-[500px] flex-shrink-0 overflow-hidden rounded-2xl bg-white shadow-lg hover:shadow-2xl transition-all duration-500 border border-slate-200
+                          ${itemsPerSlide === 1 ? "w-full" : ""}
+                          ${itemsPerSlide === 2 ? "w-[calc(50%-12px)]" : ""}
+                          ${itemsPerSlide === 3 ? "w-[calc(33.333%-16px)]" : ""}
+                        `}
                       >
                         {/* IMAGE SECTION (Top 55%) */}
                         <div className="relative h-[55%] w-full overflow-hidden bg-slate-100">
@@ -136,10 +141,10 @@ export default function SuccessStoryCarousel() {
                             }}
                           />
 
-                          {/* Subtle gradient at bottom of image for smooth transition */}
+                          {/* Subtle gradient at bottom of image */}
                           <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent" />
 
-                          {/* Designation Badge (Floating on Image) */}
+                          {/* Designation Badge */}
                           <div className="absolute top-4 right-4">
                             <span className="inline-flex items-center gap-1.5 rounded-full bg-white/95 px-3 py-1.5 text-xs font-bold text-slate-700 backdrop-blur-sm shadow-md border border-slate-200">
                               <Award className="w-3 h-3 text-blue-600" />
@@ -150,9 +155,9 @@ export default function SuccessStoryCarousel() {
 
                         {/* CONTENT SECTION (Bottom 45%) */}
                         <div className="relative h-[45%] flex flex-col justify-between p-6 bg-white">
-                          {/* Project Title */}
                           <div>
-                            <h3 className="text-xl font-bold text-slate-900 mb-2 leading-tight group-hover:text-blue-700 transition-colors">
+                            {/* Project Title */}
+                            <h3 className="text-xl font-bold text-slate-900 mb-2 leading-tight group-hover:text-blue-700 transition-colors line-clamp-1">
                               {item.title}
                             </h3>
 
