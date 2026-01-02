@@ -107,7 +107,7 @@ export default function PrismVideoPage() {
       {/* 1. Background Layer */}
       <GradientBackground />
 
-      <section className="px-6 relative z-20 py-20 xl:px-10">
+      <section className="px-6 relative z-20 py-12 xl:px-10">
         <div className="mx-auto max-w-7xl">
           {/* Header */}
           <motion.div
@@ -115,12 +115,9 @@ export default function PrismVideoPage() {
             animate={{ opacity: 1, y: 0 }}
             className="mb-12 text-center"
           >
-            <div className="inline-flex items-center justify-center px-4 py-1.5 rounded-full bg-white/60 border border-slate-200 shadow-sm text-sm font-medium text-slate-600 mb-4 backdrop-blur-md">
-              <Play className="w-3 h-3 mr-2 text-blue-500 fill-current" />
-              Video Showcase
-            </div>
+          
             <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 mb-4">
-              Innovation <span className="text-blue-600">Gallery</span>
+              Innovation Gallery
             </h1>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
               Explore success stories, workshops, and transformative ideas from

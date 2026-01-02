@@ -111,9 +111,11 @@ const NavBar = ({ user, dashboardInfo, handleLogout }) => {
       label: "About PRISM",
       href: "https://www.dsir.gov.in/promoting-innovations-individuals-start-ups-and-msmes-prism",
     },
-    { label: "TOCIC Outreach", route: "/tocic" },
-    { label: "Media", route: "/YtPage" },
-    { label: "How to Apply", route: "/apply" },
+    { label: "TOCIC Outreach", route: "/tocic-info" },
+    { label: "Media", route: "/media" },
+    { label: "How to Apply", route: "/how-to-apply" },
+
+    { label: "Creative India", route: "/creativeIndia" },
   ];
 
   return (

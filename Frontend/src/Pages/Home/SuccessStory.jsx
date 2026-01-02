@@ -91,7 +91,7 @@ export default function SuccessStoryCarousel() {
   }, [totalSlides]);
 
   return (
-    <section className="relative w-full py-16 bg-slate-50/50">
+    <section className="relative w-full py-16 ">
       <div className="max-w-[1400px] mx-auto px-6">
         {/* --- HEADING --- */}
 

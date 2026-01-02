@@ -23,7 +23,7 @@ const STEPS = [
       "Select a TePP Outreach cum Cluster Innovation Centres (TOCIC) closest to your location from the official TOCIC list.",
     icon: MapPin,
     actionLabel: "View TOCIC List",
-    actionLink: "/tocic", // Replace with actual TOCIC list URL if available
+    actionLink: "/tocic-info", // Replace with actual TOCIC list URL if available
     color: "blue",
   },
   {

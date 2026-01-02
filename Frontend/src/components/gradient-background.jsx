@@ -5,7 +5,7 @@ export function GradientBackground({ className }) {
   return (
     <div
       className={cn(
-        "fixed inset-0 -z-10 h-full w-full bg-slate-50 overflow-hidden ",
+        "fixed inset-0 z-0 h-full w-full bg-slate-50 overflow-hidden ",
         className
       )}
     >

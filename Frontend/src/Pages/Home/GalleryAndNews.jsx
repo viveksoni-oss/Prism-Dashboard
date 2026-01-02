@@ -9,14 +9,14 @@ const eventsData = [
   {
     id: 1,
     text: "Creative India 2025 launch under PRISM Scheme on DSIR Foundation Day",
-    date: "2 Jan 2026",
+    date: "4 Jan 2026",
     isNew: true, // Highlights this item
   },
   {
     id: 2,
     text: "Unveiling of PRISM Network Platform & TOCIC Innovator Pulse Connect",
-    date: "2 Jan 2026",
-    isNew: false,
+    date: "4 Jan 2026",
+    isNew: true,
   },
 ];
 
@@ -141,7 +141,7 @@ export default function GalleryAndNews() {
   ];
 
   return (
-    <section className="w-full px-4 -mt-4 bg-slate-50/50">
+    <section className="w-full px-4 py-8">
       <div className="max-w-7xl mx-auto">
         <SectionHeading heading={"Gallery &"} headingSuffix={"Updates"} />
 

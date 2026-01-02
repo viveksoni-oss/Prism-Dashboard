@@ -15,6 +15,8 @@ import PrismVideoPage from "./Pages/MediaPage/YtPage";
 import Layout from "./Pages/Home/Layout";
 import PrismApplyPage from "./Pages/Home/HowToApply";
 import TocicInfo from "./Pages/TocicInfo/TocicInfo";
+import { useScrollToTop } from "./hooks/useScrollToTop";
+import CreativeIndia from "./Pages/CreativeIndia/CreativeIndia";
 // --- LAYOUT COMPONENT ---
 // This wrapper ensures Sidebar and Navbar only show for dashboard pages
 const DashboardLayout = () => {
@@ -37,19 +39,21 @@ const DashboardLayout = () => {
 };
 
 function App() {
+  const scrolltop = useScrollToTop();
   return (
     <AuthProvider>
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
         {/* Note: SidebarProvider is now inside DashboardLayout */}
-
+        {scrolltop}
         <Routes>
           <Route element={<Layout />}>
-            <Route path="/YtPage" element={<PrismVideoPage />} />
-            <Route path="/tocic" element={<TocicInfo/>} />
-            <Route path="/apply" element={<PrismApplyPage />} />
+            <Route path="/media" element={<PrismVideoPage />} />
+            <Route path="/tocic-info" element={<TocicInfo />} />
+            <Route path="/how-to-apply" element={<PrismApplyPage />} />
 
             <Route path="/" element={<Home />}></Route>
             <Route path="/login" element={<Login />} />
+            <Route path="/creativeIndia" element={<CreativeIndia/>} />
           </Route>
 
           {/* --- PROTECTED ROUTES (With Sidebar/Navbar) --- */}

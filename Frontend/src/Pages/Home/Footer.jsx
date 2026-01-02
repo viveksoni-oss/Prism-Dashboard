@@ -1,6 +1,13 @@
 import React from "react";
-import { MapPin, ExternalLink } from "lucide-react";
-import { Link } from "react-router-dom"; // Import Link for internal routing
+import {
+  MapPin,
+  ExternalLink,
+  Phone,
+  Mail,
+  Building,
+  Building2,
+} from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -40,7 +47,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/apply"
+                  to="/how-to-apply"
                   className="inline-flex items-center gap-2 hover:text-white hover:underline hover:underline-offset-4 transition-all"
                 >
                   How to Apply
@@ -77,14 +84,6 @@ const Footer = () => {
                   <ExternalLink className="h-3 w-3 opacity-50 -translate-y-1 transition-all group-hover:opacity-100 group-hover:translate-y-0" />
                 </a>
               </li>
-              <li>
-                <Link
-                  to="/tocic"
-                  className="inline-flex items-center gap-2 hover:text-white transition-colors"
-                >
-                  TOCIC Centers List
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -104,6 +103,15 @@ const Footer = () => {
                   New Delhi-110016
                 </span>
               </li>
+              <li className="flex gap-3  items-start">
+                <Building2 className="h-5 w-5 shrink-0 text-blue-400" />
+                <Link
+                  to="/tocic-info"
+                  className="inline-flex items-center gap-2 hover:text-white hover:underline hover:underline-offset-4 transition-all"
+                >
+                  TOCIC Centers List
+                </Link>
+              </li>
             </ul>
           </div>
         </div>
@@ -115,7 +123,7 @@ const Footer = () => {
         <div className="flex flex-col gap-4 text-xs text-blue-300 md:flex-row md:items-center md:justify-between">
           <p>
             © {new Date().getFullYear()} PRISM (DSIR). All rights reserved.{" "}
-            <span className="mx-1 opacity-50">|</span> Site maintained by{" "}
+            <span className="mx-1 opacity-50">|</span> Developed & Maintained by{" "}
             <span className="font-semibold text-blue-200">IIT Kanpur</span>.
           </p>
 

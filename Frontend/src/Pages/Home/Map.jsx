@@ -210,7 +210,7 @@ export default function IndiaSimpleMap() {
   const [hoveredMarker, setHoveredMarker] = useState(null);
 
   return (
-    <section className="relative w-full py-16 bg-white">
+    <section className="relative w-full py-16">
       <div className="container mx-auto px-4 max-w-7xl">
         <SectionHeading
           heading="TOCIC Network"
@@ -407,7 +407,7 @@ export default function IndiaSimpleMap() {
                       <circle
                         r={10}
                         fill={COLORS.markerPulse}
-                        fillOpacity={0.4}
+                        fillOpacity={0.9}
                         className="animate-ping"
                       />
                     )}

@@ -24,19 +24,24 @@ const PrismHero = () => {
   };
 
   return (
-    <section className="relative overflow-hidden min-h-[40vh] flex flex-col justify-center items-center ">
+    <section className="relative overflow-hidden min-h-[40vh] flex flex-col justify-center items-center">
       {/* 1. Background Effects */}
       <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
         {/* <SparkleParticles
-          enableParallax={true}
+          maxParticleSize={2.5}
+          customDirection="bottom"
           particleColor="#2563eb" // Blue-600
-          density={45}
+          density={50}
           speed={0.5}
-        />*/}
-      </div> 
+        /> */}
+      </div>
 
-      {/* Subtle Central Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-blue-200/30 rounded-full blur-[100px] pointer-events-none" />
+      {/* Subtle blur orbs in background */}
+      <div className="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-blue-100/40 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 w-[300px] h-[300px] bg-indigo-100/30 rounded-full blur-[100px] pointer-events-none" />
+
+      {/* Subtle central glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[200px] bg-blue-200/20 rounded-full blur-[80px] pointer-events-none" />
 
       {/* 2. Content Container */}
       <motion.div
@@ -79,9 +84,15 @@ const PrismHero = () => {
           variants={itemVariants}
           className="text-lg md:text-xl text-slate-600 font-normal max-w-3xl mx-auto leading-relaxed"
         >
-          Promoting Innovations inIndividuals, Start-ups, MSMEs{" "}
+          <span className="text-blue-600 font-bold">PR</span>omoting Innovations
+          in <span className="text-blue-600 font-bold">I</span>ndividuals,{" "}
+          <span className="text-blue-600 font-bold">S</span>tart-ups &{" "}
+          <span className="text-blue-600 font-bold">M</span>SMEs
         </motion.p>
       </motion.div>
+
+      {/* 3. Bottom Divider - Very Subtle */}
+      <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-slate-200/50 to-transparent pointer-events-none" />
     </section>
   );
 };

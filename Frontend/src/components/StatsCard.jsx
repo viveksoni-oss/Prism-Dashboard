@@ -64,7 +64,7 @@ export function StatsCard({ stat, graphData, metaData }) {
 
             {/* Stats Text */}
             <div className="space-y-2">
-              <div className="text-5xl font-black text-white tracking-tight flex justify-center drop-shadow-lg">
+              <div className="text-5xl font-bold text-white tracking-wider flex justify-center drop-shadow-lg">
                 <Counter value={metaData.grandTotal} suffix={stat.suffix} />
               </div>
               <h3 className="text-base font-bold text-white leading-tight px-2 uppercase tracking-wide drop-shadow-md">
