@@ -35,7 +35,7 @@ const STEPS = [
     icon: FileText,
     actionLabel: "Download Forms",
     actionLink:
-      "https://www.dsir.gov.in/promoting-innovations-individuals-start-ups-and-msmes-prism",
+      "https://www.dsir.gov.in/offerings/schemes-and-services/details/promoting-innovations-in-individuals-start-ups-and-msmes-prism-kjMwITMtQWa",
     color: "emerald",
   },
   {

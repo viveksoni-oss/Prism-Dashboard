@@ -109,7 +109,7 @@ const NavBar = ({ user, dashboardInfo, handleLogout }) => {
       : []),
     {
       label: "About PRISM",
-      href: "https://www.dsir.gov.in/promoting-innovations-individuals-start-ups-and-msmes-prism",
+      href: "https://www.dsir.gov.in/offerings/schemes-and-services/details/promoting-innovations-in-individuals-start-ups-and-msmes-prism-kjMwITMtQWa",
     },
     { label: "TOCIC Outreach", route: "/tocic-info" },
     { label: "Media", route: "/media" },

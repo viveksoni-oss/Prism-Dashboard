@@ -14,7 +14,7 @@ const eventsData = [
   },
   {
     id: 2,
-    text: "Unveiling of PRISM Network Platform & TOCIC Innovator Pulse Connect",
+    text: "Unveiling of PRISM Network Platform PRISM PULSE CONNECT",
     date: "4 Jan 2026",
     isNew: true,
   },

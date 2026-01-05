@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { motion, useSpring, useTransform } from "framer-motion";
+import React, { useEffect, useState, useRef } from "react";
+import { motion, useSpring, useTransform, useInView } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
@@ -7,17 +7,26 @@ import StatsDialog from "./StatsDialog";
 
 // --- Internal Counter Component ---
 export function Counter({ value, suffix = "" }) {
-  const spring = useSpring(0, { mass: 1, stiffness: 50, damping: 20 });
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  const spring = useSpring(value / 1.2, {
+    mass: 1,
+    stiffness: 50,
+    damping: 20,
+  });
   const display = useTransform(spring, (current) =>
     Math.round(current).toLocaleString()
   );
 
   useEffect(() => {
-    spring.set(value);
-  }, [value, spring]);
+    if (isInView) {
+      spring.set(value);
+    }
+  }, [value, spring, isInView]);
 
   return (
-    <span className="flex items-center">
+    <span ref={ref} className="flex items-center">
       <motion.span>{display}</motion.span>
       {suffix}
     </span>

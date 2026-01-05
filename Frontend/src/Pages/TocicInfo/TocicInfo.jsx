@@ -1,18 +1,16 @@
 import React, { useState, useMemo } from "react";
 import {
   MapPin,
-  Phone,
   Mail,
-  ExternalLink,
   Building2,
   Search,
   Globe2,
   ChevronRight,
-  User,
+  Users,
   Navigation,
 } from "lucide-react";
 
-// --- Data ---
+// --- Updated Data Structure ---
 const tocicCenters = [
   // North Zone
   {
@@ -22,11 +20,17 @@ const tocicCenters = [
     zone: "North",
     city: "Kanpur",
     state: "Uttar Pradesh",
-    contactPerson: "Dr. Amitabha Bandyopadhyay / Prof. Deepu Philip",
-    phone: "+91-512-259-7979",
-    email: "siic@iitk.ac.in",
-    address:
-      "Room No. S-2, Bio-incubator, SIIC, IIT Kanpur, Kalyanpur, Kanpur-208016",
+    contacts: [
+      {
+        name: "Prof. Deepu Philip",
+        designation: "Professor In-charge, SIIC",
+      },
+      {
+        name: "Mrs. Anushree Gupta",
+        designation: "Program Manager, SIIC",
+      },
+    ],
+    email: "anushreeg@iitkfirst.com",
     website: "https://siicincubator.com",
   },
   {
@@ -36,10 +40,13 @@ const tocicCenters = [
     zone: "North",
     city: "Chandigarh",
     state: "Chandigarh",
-    contactPerson: "Mr. Narinder Singh Jassal",
-    phone: "+91-172-2672389",
+    contacts: [
+      {
+        name: "Mr. Narinder Singh Jassal",
+        designation: "Sr. Principal Scientist",
+      },
+    ],
     email: "nsjassal@csio.res.in",
-    address: "Sector 30-C, Chandigarh - 160 030",
     website: "https://www.csio.res.in",
   },
   {
@@ -49,10 +56,13 @@ const tocicCenters = [
     zone: "North",
     city: "Udaipur",
     state: "Rajasthan",
-    contactPerson: "Dr. Sunil Joshi (Dean)",
-    phone: "0294-2470837",
-    email: "deanctae@mpuat.ac.in",
-    address: "University Campus, MPUAT, Udaipur - 313001, Rajasthan",
+    contacts: [
+      {
+        name: "Dr. Naveen Jain",
+        designation: "Professor",
+      },
+    ],
+    email: "tocic.ctae@gmail.com",
     website: "https://www.ctae.ac.in",
   },
 
@@ -64,10 +74,13 @@ const tocicCenters = [
     zone: "South",
     city: "Bengaluru",
     state: "Karnataka",
-    contactPerson: "Dr. Parthasarathi Naidu V",
-    phone: "+91-80-25273351",
-    email: "vpsnaidu@nal.res.in",
-    address: "Old Airport Road, Kodihalli, Bengaluru - 560017",
+    contacts: [
+      {
+        name: "Shri T. Karthikeyan",
+        designation: "Senior Scientist",
+      },
+    ],
+    email: "t_karthikeyan@nal.res.in",
     website: "https://www.nal.res.in",
   },
   {
@@ -77,11 +90,17 @@ const tocicCenters = [
     zone: "South",
     city: "Tirupati",
     state: "Andhra Pradesh",
-    contactPerson: "Prof. S. Jyothi (TOCIC Coordinator)",
-    phone: "+91-877-2284588",
-    email: "tocicspmvv@gmail.com",
-    address:
-      "Padmavati Nagar, Near West Railway Station, Tirupati, Andhra Pradesh 517502",
+    contacts: [
+      {
+        name: "Dr. D. Sujatha",
+        designation: "TOCIC Coordinator",
+      },
+      {
+        name: "Prof. P. Jyosthna",
+        designation: "TOCIC Coordinator",
+      },
+    ],
+    email: "tuc.spmvv@gmail.com",
     website: "https://www.spmvv.ac.in",
   },
   {
@@ -91,10 +110,13 @@ const tocicCenters = [
     zone: "South",
     city: "Chennai",
     state: "Tamil Nadu",
-    contactPerson: "Registrar / Innovation Cell",
-    phone: "044-25399422",
-    email: "registrar@unom.ac.in",
-    address: "Chepauk, Chennai, Tamil Nadu 600005",
+    contacts: [
+      {
+        name: "Dr. R. Manikandan",
+        designation: "Assistant Professor, Dept. of Zoology",
+      },
+    ],
+    email: "prism_unom@yahoo.com",
     website: "https://www.unom.ac.in",
   },
 
@@ -106,10 +128,13 @@ const tocicCenters = [
     zone: "East",
     city: "Kolkata",
     state: "West Bengal",
-    contactPerson: "Dr. Mrinal Pal (Nodal Officer)",
-    phone: "+91-33-2473-3496",
-    email: "palm@cgcri.res.in",
-    address: "196, Raja S.C. Mullick Road, Kolkata – 700 032",
+    contacts: [
+      {
+        name: "Dr. Ambarish Sanyal",
+        designation: "Principal Scientist",
+      },
+    ],
+    email: "ambarish.cgcri@csir.res.in",
     website: "https://www.cgcri.res.in",
   },
   {
@@ -119,10 +144,17 @@ const tocicCenters = [
     zone: "East",
     city: "Durgapur",
     state: "West Bengal",
-    contactPerson: "TOCIC Cell / Head BDG",
-    phone: "0343-6510232",
+    contacts: [
+      {
+        name: "Shri Soumya Sen Sharma",
+        designation: "Scientist-G",
+      },
+      {
+        name: "Dr. Sarita Ghosh",
+        designation: "Senior Scientist",
+      },
+    ],
     email: "tuc_cmeri@cmeri.res.in",
-    address: "Room # BA 125, Main Building, CSIR-CMERI, Durgapur 713209",
     website: "https://www.cmeri.res.in",
   },
   {
@@ -132,10 +164,13 @@ const tocicCenters = [
     zone: "East",
     city: "Kharagpur",
     state: "West Bengal",
-    contactPerson: "Sponsored Research & Industrial Consultancy (SRIC)",
-    phone: "+91-3222-282033",
-    email: "dean_sric@iitkgp.ac.in",
-    address: "SRIC Office, IIT Kharagpur, Kharagpur, West Bengal - 721302",
+    contacts: [
+      {
+        name: "Prof. Basab Chakraborty",
+        designation: "Managing Director, STEP",
+      },
+    ],
+    email: "mdstep@iitkgp.ac.in",
     website: "https://respark.iitkgp.ac.in",
   },
 
@@ -147,11 +182,17 @@ const tocicCenters = [
     zone: "West",
     city: "Gandhinagar",
     state: "Gujarat",
-    contactPerson: "Mission Director",
-    phone: "+91-79-232-52197",
-    email: "info-btm@gujarat.gov.in",
-    address:
-      "Block 11, 9th Floor, Udyog Bhavan, Sector 11, Gandhinagar - 382010",
+    contacts: [
+      {
+        name: "Dr. Snehal Bagtharia",
+        designation: "Joint Director-BD",
+      },
+      {
+        name: "Mr. Hadmat Gadhavi",
+        designation: "Manager",
+      },
+    ],
+    email: "gsbtmtocic@gmail.com",
     website: "https://btm.gujarat.gov.in",
   },
 
@@ -163,10 +204,13 @@ const tocicCenters = [
     zone: "North East",
     city: "Guwahati",
     state: "Assam",
-    contactPerson: "TIC Coordinator",
-    phone: "+91-361-2583191",
-    email: "tic@iitg.ac.in",
-    address: "Technology Complex, IIT Guwahati, Guwahati-781039, Assam",
+    contacts: [
+      {
+        name: "Dr. Sukhomay Pal",
+        designation: "Professor, Dept. of Mechanical Engineering",
+      },
+    ],
+    email: "spal@iitg.ac.in",
     website: "https://iitgtic.com",
   },
   {
@@ -176,10 +220,13 @@ const tocicCenters = [
     zone: "North East",
     city: "Jorhat",
     state: "Assam",
-    contactPerson: "Director / RPBD Division",
-    phone: "+91-376-2370009",
-    email: "director@neist.res.in",
-    address: "CSIR-NEIST, Jorhat-785006, Assam",
+    contacts: [
+      {
+        name: "Dr. Dipankar Neog",
+        designation: "Senior Principal Scientist (Scientist-F)",
+      },
+    ],
+    email: "dipankarneog.neist@csir.res.in",
     website: "https://neist.res.in",
   },
 ];
@@ -195,7 +242,7 @@ const ZoneBadge = ({ zone }) => {
   };
   return (
     <span
-      className={`px-2.5 py-0.5 rounded-full text-[11px] uppercase tracking-wide font-bold border ${
+      className={`px-2 py-0.5 rounded-full text-[10px] uppercase tracking-wide font-bold border ${
         colors[zone] || "bg-gray-100"
       }`}
     >
@@ -227,48 +274,50 @@ export default function TocicInfo() {
     tocicCenters.find((c) => c.id === activeCenterId) || filteredCenters[0];
 
   return (
-    <div className="min-h-screen bg-slate-50 py-10 px-4 sm:px-6">
+    <div className="min-h-screen bg-slate-50 py-6 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto h-[85vh] flex flex-col rounded-2xl border border-slate-200 bg-white shadow-2xl overflow-hidden">
         {/* === Top Bar (Header) === */}
-        <div className="bg-white border-b border-slate-200 px-6 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="bg-white border-b border-slate-200 px-4 py-3 flex flex-col md:flex-row justify-between items-center gap-3">
           <div>
-            <h1 className="text-xl font-extrabold text-slate-900 flex items-center gap-2">
-              <Building2 className="w-6 h-6 text-blue-600" />
+            <h1 className="text-lg font-extrabold text-slate-900 flex items-center gap-2">
+              <Building2 className="w-5 h-5 text-blue-600" />
               TOCIC Network Directory
             </h1>
-            <p className="text-sm text-slate-500">PRISM Centers across India</p>
+            <p className="text-xs text-slate-500">PRISM Centers across India</p>
           </div>
 
           {/* Quick Zone Filter in Header */}
-          <div className="flex gap-2">
-            {["All", "North", "South", "East", "West"].map((zone) => (
-              <button
-                key={zone}
-                onClick={() => setSelectedZone(zone)}
-                className={`px-3 py-1 rounded-md text-xs font-semibold transition-all ${
-                  selectedZone === zone
-                    ? "bg-slate-900 text-white"
-                    : "bg-slate-100 text-slate-600 hover:bg-slate-200"
-                }`}
-              >
-                {zone}
-              </button>
-            ))}
+          <div className="flex gap-1.5">
+            {["All", "North", "South", "East", "West", "North East"].map(
+              (zone) => (
+                <button
+                  key={zone}
+                  onClick={() => setSelectedZone(zone)}
+                  className={`px-2.5 py-1 rounded-md text-[11px] font-semibold transition-all ${
+                    selectedZone === zone
+                      ? "bg-slate-900 text-white"
+                      : "bg-slate-100 text-slate-600 hover:bg-slate-200"
+                  }`}
+                >
+                  {zone}
+                </button>
+              )
+            )}
           </div>
         </div>
 
         {/* === Content Area (Split View) === */}
         <div className="flex flex-1 overflow-hidden">
           {/* --- LEFT: Sidebar List (Inside Container) --- */}
-          <aside className="w-full md:w-80 lg:w-96 border-r border-slate-200 bg-slate-50 flex flex-col z-10">
+          <aside className="w-full md:w-72 lg:w-80 border-r border-slate-200 bg-slate-50 flex flex-col z-10">
             {/* Search Input */}
-            <div className="p-4 border-b border-slate-200 bg-white">
+            <div className="p-3 border-b border-slate-200 bg-white">
               <div className="relative">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4" />
+                <Search className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 h-3.5 w-3.5" />
                 <input
                   type="text"
                   placeholder="Find center..."
-                  className="w-full pl-9 pr-4 py-2 text-sm rounded-lg border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none"
+                  className="w-full pl-8 pr-3 py-1.5 text-xs rounded-lg border border-slate-200 bg-slate-50 focus:bg-white focus:ring-2 focus:ring-blue-500 outline-none"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
                 />
@@ -276,12 +325,12 @@ export default function TocicInfo() {
             </div>
 
             {/* Scrollable List */}
-            <div className="flex-1 overflow-y-auto p-2 space-y-1">
+            <div className="flex-1 overflow-y-auto p-1.5 space-y-0.5">
               {filteredCenters.map((center) => (
                 <button
                   key={center.id}
                   onClick={() => setActiveCenterId(center.id)}
-                  className={`w-full text-left p-3 rounded-lg border transition-all duration-200 group relative ${
+                  className={`w-full text-left p-2.5 rounded-lg border transition-all duration-200 group relative ${
                     activeCenterId === center.id
                       ? "bg-white border-blue-400 shadow-sm z-10"
                       : "bg-transparent border-transparent hover:bg-white hover:border-slate-200"
@@ -289,7 +338,7 @@ export default function TocicInfo() {
                 >
                   <div className="flex justify-between items-start mb-0.5">
                     <span
-                      className={`text-sm font-bold truncate pr-2 ${
+                      className={`text-xs font-bold truncate pr-2 ${
                         activeCenterId === center.id
                           ? "text-blue-700"
                           : "text-slate-700"
@@ -298,11 +347,11 @@ export default function TocicInfo() {
                       {center.name}
                     </span>
                     {activeCenterId === center.id && (
-                      <ChevronRight className="w-4 h-4 text-blue-500" />
+                      <ChevronRight className="w-3.5 h-3.5 text-blue-500" />
                     )}
                   </div>
-                  <div className="flex items-center gap-1.5 text-xs text-slate-500 truncate">
-                    <MapPin className="w-3 h-3" />
+                  <div className="flex items-center gap-1 text-[11px] text-slate-500 truncate">
+                    <MapPin className="w-2.5 h-2.5" />
                     {center.city}
                   </div>
                 </button>
@@ -318,91 +367,94 @@ export default function TocicInfo() {
               style={{
                 backgroundImage:
                   "radial-gradient(#cbd5e1 1px, transparent 1px)",
-                backgroundSize: "24px 24px",
+                backgroundSize: "20px 20px",
               }}
             ></div>
 
             {activeCenter ? (
-              <div className="relative z-10 p-8 max-w-3xl mx-auto animate-in fade-in duration-300">
+              <div className="relative z-10 p-5 max-w-3xl mx-auto animate-in fade-in duration-300">
                 {/* Title Block */}
-                <div className="mb-8">
+                <div className="mb-5">
                   <ZoneBadge zone={activeCenter.zone} />
-                  <h2 className="text-3xl font-black text-slate-900 mt-4 mb-2">
+                  <h2 className="text-xl font-black text-slate-900 mt-2.5 mb-1.5">
                     {activeCenter.name}
                   </h2>
-                  <p className="text-xl text-slate-600 font-medium">
+                  <p className="text-sm text-slate-600 font-medium">
                     {activeCenter.institution}
                   </p>
                 </div>
 
                 {/* Info Cards Grid */}
-                <div className="grid gap-6">
-                  {/* Contact Card */}
-                  <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6 flex flex-col gap-4">
-                    <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2">
-                      <User className="w-4 h-4" /> Point of Contact
+                <div className="grid gap-4">
+                  {/* Contact Card - Multiple Contacts */}
+                  <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+                    <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5 mb-3">
+                      <Users className="w-3.5 h-3.5" /> Point of Contact
                     </h3>
-                    <div className="flex items-start gap-4">
-                      <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-lg">
-                        {activeCenter.contactPerson.charAt(0)}
-                      </div>
-                      <div>
-                        <p className="font-semibold text-slate-900">
-                          {activeCenter.contactPerson}
-                        </p>
-                        <p className="text-slate-500 text-sm">
-                          Coordinator / Nodal Officer
-                        </p>
-                      </div>
+
+                    <div className="space-y-3">
+                      {activeCenter.contacts.map((contact, index) => (
+                        <div
+                          key={index}
+                          className={`flex items-start gap-3 ${
+                            index !== 0 ? "pt-3 border-t border-slate-100" : ""
+                          }`}
+                        >
+                          <div className="h-8 w-8 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-bold text-sm shrink-0">
+                            {contact.name.charAt(0)}
+                          </div>
+                          <div className="flex-1">
+                            <p className="font-semibold text-slate-900 text-sm">
+                              {contact.name}
+                            </p>
+                            <p className="text-slate-500 text-xs">
+                              {contact.designation}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-2 pt-4 border-t border-slate-100">
-                      <a
-                        href={`tel:${activeCenter.phone}`}
-                        className="flex items-center gap-2 text-slate-700 hover:text-blue-600 transition-colors"
-                      >
-                        <Phone className="w-4 h-4 text-slate-400" />
-                        <span className="text-sm font-mono">
-                          {activeCenter.phone}
-                        </span>
-                      </a>
+
+                    <div className="mt-3 pt-3 border-t border-slate-100">
                       <a
                         href={`mailto:${activeCenter.email}`}
                         className="flex items-center gap-2 text-slate-700 hover:text-blue-600 transition-colors"
                       >
-                        <Mail className="w-4 h-4 text-slate-400" />
-                        <span className="text-sm">{activeCenter.email}</span>
+                        <Mail className="w-3.5 h-3.5 text-slate-400" />
+                        <span className="text-xs">{activeCenter.email}</span>
                       </a>
                     </div>
                   </div>
 
                   {/* Location Card */}
-                  <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-6">
-                    <h3 className="text-sm font-bold text-slate-400 uppercase tracking-wider flex items-center gap-2 mb-4">
-                      <Navigation className="w-4 h-4" /> Address
+                  <div className="bg-white rounded-xl border border-slate-200 shadow-sm p-4">
+                    <h3 className="text-[11px] font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1.5 mb-3">
+                      <Navigation className="w-3.5 h-3.5" /> Location
                     </h3>
-                    <div className="flex gap-3">
-                      <MapPin className="w-5 h-5 text-red-500 mt-1 shrink-0" />
-                      <p className="text-slate-800 leading-relaxed">
-                        {activeCenter.address}
+                    <div className="flex gap-2.5">
+                      <MapPin className="w-4 h-4 text-red-500 mt-0.5 shrink-0" />
+                      <p className="text-slate-800 text-sm font-medium leading-relaxed">
+                        {activeCenter.city}, {activeCenter.state}
                       </p>
                     </div>
                   </div>
                 </div>
 
                 {/* Bottom Actions */}
-                <div className="mt-8 flex gap-4">
+                <div className="mt-5 flex gap-3">
                   <a
                     href={activeCenter.website}
                     target="_blank"
                     rel="noreferrer"
-                    className="flex-1 bg-blue-600 text-white text-center py-3 rounded-lg font-semibold shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all"
+                    className="flex-1 bg-blue-600 text-white text-center py-2.5 rounded-lg text-sm font-semibold shadow-lg shadow-blue-200 hover:bg-blue-700 transition-all flex items-center justify-center gap-2"
                   >
+                    <Globe2 className="w-4 h-4" />
                     Visit Official Website
                   </a>
                 </div>
               </div>
             ) : (
-              <div className="h-full flex items-center justify-center text-slate-400">
+              <div className="h-full flex items-center justify-center text-slate-400 text-sm">
                 Select a center
               </div>
             )}

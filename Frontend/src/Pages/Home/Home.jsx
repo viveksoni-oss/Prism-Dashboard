@@ -43,7 +43,7 @@ function Home() {
     setSearchParams(searchParams);
   };
 
-  return (
+   return (
     <>
       <AnimatePresence mode="wait">
         {showInauguration && (
@@ -54,11 +54,8 @@ function Home() {
       <div className="relative container mx-auto text-foreground">
         <GradientBackground />
 
-        {/* Wrap ALL content in relative z-10 to ensure it appears above backgrounds */}
         <div className="relative z-10">
-          {/* Sparkle Particles - Behind only these two sections with lazy load */}
           <div className="relative" ref={sparkleRef}>
-            {/* Sparkles background - Only renders when in view */}
             {sparkleInView && (
               <div className="absolute inset-0 z-0 opacity-40 pointer-events-none">
                 <SparkleParticles
@@ -70,22 +67,20 @@ function Home() {
               </div>
             )}
 
-            {/* Content with higher z-index */}
             <div className="relative z-10">
               <PrismHero />
-              <InnovationStats />
+              {/* Pass the inauguration state */}
+              <InnovationStats startAnimation={!showInauguration} />
             </div>
           </div>
 
           <SuccessStoryCarousel />
           <GalleryAndNews />
 
-          {/* Map - Only renders when in view */}
           <div ref={mapRef}>
             {mapInView ? (
               <Map />
             ) : (
-              // Placeholder to maintain layout height
               <div className="min-h-[400px] flex items-center justify-center text-slate-400">
                 <div className="animate-pulse">Loading map...</div>
               </div>
@@ -96,5 +91,6 @@ function Home() {
     </>
   );
 }
+
 
 export default Home;
